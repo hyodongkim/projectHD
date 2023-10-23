@@ -1,0 +1,62 @@
+body{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width: 1517px;
+    height: 1000px;
+}
+
+header{
+    position: relative;
+    border: 1px solid red;
+    width: 100%;
+    height: 5%;
+}
+
+nav{
+    position: relative;
+    border: 1px solid orange;
+    width: 100%;
+    height: 10%;
+}
+
+main{
+    position: relative;
+    border: 1px solid black;
+    width: 100%;
+    height: 65%;
+    display: flex;
+    flex-direction: row;
+}
+
+aside{
+    position: relative;
+    border: 1px solid yellow;
+    width: 20%;
+    height: 100%;
+}
+
+article{
+    position: relative;
+    border: 1px solid green;
+    width: 80%;
+    height: 100%;
+}
+
+
+/* section{
+    position: relative;
+    border: 1px solid blue;
+    width: 70%;
+    height: 10%;
+} */
+
+footer{
+    position: relative;
+    border: 1px solid purple;
+    width: 100%;
+    height: 20%;
+}
+
+
+

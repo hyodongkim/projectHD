@@ -16,9 +16,9 @@ public class MyController {
     private ServiceImpl Service;
     @GetMapping("/")
     public String main(Model model) {
-        List<entity> list = Service.findAll();
-        model.addAttribute("list", list);
-        return "views/aaa";
+//        List<entity> list = Service.findAll();
+//        model.addAttribute("list", list);
+        return "views/main";
     }
     @GetMapping("/leaf")
     public String ddd(Model model) {
