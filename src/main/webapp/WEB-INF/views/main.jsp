@@ -26,12 +26,21 @@
     <main>
 
         <aside>
-            <div class="click_aside" onclick="click_aside();">눌러봐</div>
+            <a href="/1"><span class="click_aside_st">눌러봐</span></a> <br>
+            <a href="/2"><span class="click_aside_nd">어서빨리</span></a>
         </aside>
 
 
         <article>
-            <jsp:include page="/WEB-INF/views/login.jsp"/>
+
+            <c:if test="${id eq 1}">
+                <c:import url="/WEB-INF/views/join.jsp"/>
+            </c:if>
+
+            <c:if test="${id eq 2}">
+                <c:import url="/WEB-INF/views/login.jsp"/>
+            </c:if>
+
         </article>
 
     </main>
