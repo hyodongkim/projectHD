@@ -1,6 +1,4 @@
-    window.onload = function(){
 
-    };
 
 
 //    function click_aside(e){
