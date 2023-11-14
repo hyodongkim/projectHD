@@ -19,8 +19,9 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./CSS/main.css">
-    <link rel="stylesheet" href="./IMG/*">
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="IMG/">
+    <script src="JS/main.js" defer></script>
   </head>
 <body>
 
@@ -68,21 +69,18 @@
   <footer>
     <div>
       <div class="footerLeft">
-        64, Chungjeong-ro 130beon-gil, Dong-gu, Daejeon 34510 Korea<br>
-        41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
-        100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-        41-1, Osanan-gil, Seongjeon-myeon, Gangjin-gun, Jeollanam-do 59204 Korea<br>
-        100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-        64, Chungjeong-ro 130beon-gil, Dong-gu, Daejeon 34510 Korea<br>
+
+        <h1>Wix</h1>
         41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
         100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
         100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
         Copyright 한국인력강화진흥원 All right reserved<br>
       </div>
       <div class="footerRight">
-         <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;&nbsp;
-         <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;&nbsp;
-         <i class="fa-brands fa-twitter"></i>트위터 &nbsp;&nbsp;
+
+        <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;&nbsp;
+        <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;&nbsp;
+        <i class="fa-brands fa-twitter"></i>트위터 &nbsp;&nbsp;
       </div>
     </div>
 
@@ -91,43 +89,5 @@
     </div>
   </footer>
 </div>
-
-    <script>
-        function fadeIn(){
-          $("header").css("opacity","1.0");
-          $(".fixBox").css("opacity","1.0");
-        }
-        function fadeOut(){
-          $("header").css("opacity","1.0");
-          $(".fixBox").css("opacity","0.7");
-        ;}
-
-        AOS.init();
-
-        let swiper = new Swiper('.swiper', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-            autoplay: {
-                delay: 9000,
-            },
-
-            // If we need pagination
-            pagination: {
-              el: '.swiper-pagination',
-            },
-
-            // Navigation arrows
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-
-            // And if we need scrollbar
-            scrollbar: {
-              el: '.swiper-scrollbar',
-            },
-          });
-    </script>
 </body>
 </html>
