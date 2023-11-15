@@ -9,6 +9,15 @@ body > .whole{
   height: 1550px;
   z-index:1;
 }
+header >.logo{
+  font-size: 40px;
+  font-family: 'DM Serif Display', serif;
+}
+.footerLeft > .logo{
+  font-size: 40px;
+  font-family: 'DM Serif Display', serif;
+  margin-bottom: 20px;
+}
 .fixBox{
   position: fixed;
   width: 100%;
@@ -140,7 +149,7 @@ footer > div > .footerLeft{
   flex-direction: column;
   justify-content: flex-end;
   width: 50%;
-  height: 200px;
+  padding-bottom: 20px;
   padding-left: 40px;
 }
 

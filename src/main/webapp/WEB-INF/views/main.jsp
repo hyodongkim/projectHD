@@ -22,13 +22,17 @@
     <link rel="stylesheet" href="CSS/main.css">
     <link rel="stylesheet" href="IMG/">
     <script src="JS/main.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   </head>
 <body>
 
 <div class="whole">
   <div class="fixBox" onmousemove="fadeIn();">
     <header>
-      <h1>Wix</h1>
+      <div class="logo">Mr.Kim</div>
     </header>
 
     <nav>
@@ -70,7 +74,7 @@
     <div>
       <div class="footerLeft">
 
-        <h1>Wix</h1>
+        <div class="logo">Mr.Kim</div>
         41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
         100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
         100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
