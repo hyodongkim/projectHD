@@ -32,7 +32,7 @@
 <div class="whole">
   <div class="fixBox" onmousemove="fadeIn();">
     <header>
-      <div class="logo">Mr.Kim</div>
+      <h1 class="logo">Mr.Kim</h1>
     </header>
 
     <nav>
@@ -59,11 +59,21 @@
             </div>
           </div>
         </div>
-        <div class="box" data-aos="zoom-in"><img src="./IMG/img10.webp"></div>
-        <div class="box" data-aos="zoom-in"><img src="./IMG/img6.webp"></div>
-        <div class="box" data-aos="zoom-in"><img src="./IMG/img9.webp"></div>
-        <div class="box" data-aos="zoom-in"><img src="./IMG/img12.webp"></div>
-        <div class="box" data-aos="zoom-in"><img src="./IMG/img7.webp"></div>
+
+            <div class="box" data-aos="zoom-in"><img src="./IMG/img10.webp"></div>
+
+
+            <div class="box" data-aos="zoom-in"><img src="./IMG/img6.webp"></div>
+
+
+            <div class="box" data-aos="zoom-in"><img src="./IMG/img9.webp"></div>
+
+
+            <div class="box" data-aos="zoom-in"><img src="./IMG/img12.webp"></div>
+
+
+            <div class="box" data-aos="zoom-in"><img src="./IMG/img7.webp"></div>
+
 
 
     </main>
@@ -75,16 +85,17 @@
       <div class="footerLeft">
 
         <div class="logo">Mr.Kim</div>
-        41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
-        100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-        100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-        Copyright 한국인력강화진흥원 All right reserved<br>
+        <address>
+          41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
+          100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
+          100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
+          Copyright 한국인력강화진흥원 All right reserved<br>
+        <address>
       </div>
       <div class="footerRight">
-
-        <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;&nbsp;
-        <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;&nbsp;
-        <i class="fa-brands fa-twitter"></i>트위터 &nbsp;&nbsp;
+        <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;
+        <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;
+        <i class="fa-brands fa-twitter"></i>트위터
       </div>
     </div>
 
