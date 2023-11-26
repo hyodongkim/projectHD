@@ -30,7 +30,7 @@
 <body>
 
 <div class="whole">
-  <div class="fixBox" onmousemove="fadeIn();">
+  <div class="fixBox" onmouseover="fadeIn();">
     <header>
       <h1 class="logo">Mr.Kim</h1>
     </header>
@@ -47,7 +47,7 @@
     </nav>
   </div>
 
-  <div class="main_background" onmousemove="fadeOut();">
+  <div class="main_background" onmouseover="fadeOut();">
     <main>
         <div class="box" data-aos="zoom-in">
           <div class="swiper">
@@ -81,28 +81,28 @@
 
   </div>
   <footer>
-    <div>
+
       <div class="footerLeft">
-
         <div class="logo">Mr.Kim</div>
-        <address>
-          41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
-          100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-          100-14, Pyeonghwa-ro 1257beon-gil, Yangju-si, Gyeonggi-do 11497 Korea<br>
-          Copyright 한국인력강화진흥원 All right reserved<br>
-        <address>
       </div>
-      <div class="footerRight">
-        <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;
-        <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;
-        <i class="fa-brands fa-twitter"></i>트위터
-      </div>
-    </div>
 
-    <div class="attention">
-        © 2035 hyodong.com을 통해 제작된 본 홈페이지에 대한 모든 권리는 김효동(사업자명)에 귀속됩니다.
-    </div>
+      <div class="footerRight">
+        41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
+        Copyright 한국인력강화진흥원 All right reserved
+
+        <div class="footerRight_i">
+          <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;
+          <i class="fa-brands fa-instagram"></i> 인스타그램 &nbsp;
+          <i class="fa-brands fa-twitter"></i>트위터
+        </div>
+      </div>
+
   </footer>
+
+  <div class="attention">
+    © 2035 hyodong.com을 통해 제작된 본 홈페이지에 대한 모든 권리는 김효동(사업자명)에 귀속됩니다.
+  </div>
+
 </div>
 </body>
 </html>

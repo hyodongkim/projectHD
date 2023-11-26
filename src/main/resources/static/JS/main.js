@@ -1,4 +1,4 @@
- function fadeIn(){
+        function fadeIn(){
           $("header").css("opacity","1.0");
           $(".fixBox").css("opacity","1.0");
         }
