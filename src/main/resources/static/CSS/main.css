@@ -52,7 +52,7 @@ nav{
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 200vh;
+  height: 210vh;
   background-color: #d8f1f4;
   z-index: -3;
   padding-top: 3rem;
@@ -106,8 +106,15 @@ main{
   transition: 1s;
 }
 
-.swiper-slide > img{
-  width: 530px;
+
+#box1 img:nth-of-type(1),
+#box1 img:nth-of-type(2){
+  width: 100%;
+}
+
+#box2 img:nth-of-type(1),
+#box2 img:nth-of-type(2){
+  width: 100%;
 }
 
 footer{
@@ -115,7 +122,7 @@ footer{
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 125px;
+  height: 205px;
   z-index: 0;
   background-color: #607D82;
 }
@@ -127,7 +134,7 @@ nav > a{
 
 .attention{
   width: 100vw;
-  height: 3vh;
+  height: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,12 +157,11 @@ footer > .footerLeft{
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   width: 50vw;
   float: left;
   text-overflow:ellipsis;white-space: nowrap;
-  padding-left: 4%;
-  padding-bottom: -5px;
+  padding-left: 1.5%;
 }
 
 .footerLeft > h1{
@@ -168,11 +174,12 @@ footer > .footerRight{
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 50vw;
   font-size: 1rem;
   text-overflow:ellipsis;overflow: hidden;white-space: nowrap;
   float: right;
-  padding-top: 30px;
+  padding-left: 3%;
 }
 
 .footerRight_i

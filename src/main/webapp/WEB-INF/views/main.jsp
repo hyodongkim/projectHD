@@ -49,8 +49,8 @@
 
   <div class="main_background" onmouseover="fadeOut();">
     <main>
-        <div class="box" data-aos="zoom-in">
-          <div class="swiper">
+        <div class="box" id="box1">
+          <div class="swiper1">
 
             <div class="swiper-wrapper">
 
@@ -83,12 +83,27 @@
   <footer>
 
       <div class="footerLeft">
-        <div class="logo">Mr.Kim</div>
+
+        <div class="box" id="box2">
+          <div class="swiper2">
+
+            <div class="swiper-wrapper">
+
+              <div class="swiper-slide"><img src="./IMG/ad1.png" style="height: 205px;"></div>
+              <div class="swiper-slide"><img src="./IMG/ad2.jpg" style="height: 205px;"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="footerRight">
-        41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
-        Copyright 한국인력강화진흥원 All right reserved
+        <div class="logo">Mr.Kim</div>
+
+        41-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 23533 Korea<br>
+        65-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 36460 Korea<br>
+        27-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 95311 Korea<br>
+        676-1, Gangguhaean-gil, Ganggu-myeon, Yeongdeok-gun, Gyeongsangbuk-do 55330 Korea<br>
+        Copyright 한국인력강화진흥원 All right reserved <br><br>
 
         <div class="footerRight_i">
           <i class="fa-brands fa-facebook"></i> 페이스북 &nbsp;
