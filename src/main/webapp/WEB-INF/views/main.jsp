@@ -28,23 +28,22 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   </head>
 <body>
-
-<div class="whole">
   <div class="fixBox" onmouseover="fadeIn();">
     <header>
       <h1 class="logo">Mr.Kim</h1>
     </header>
 
-    <nav>
-      <a href="">MD & CC</a>
-      <a href="">메인</a>
-      <a href="">인테리어</a>
-      <a href="">주방</a>
-      <a href="">침실</a>
-      <a href="">소개</a>
-      <a href="">문의</a>
-      <i class="fa-solid fa-bag-shopping"></i>
-    </nav>
+      <nav>
+            <a href="">MD & CC</a>
+            <a href="">메인</a>
+            <a href="">인테리어</a>
+            <a href="">주방</a>
+            <a href="">침실</a>
+            <a href="">소개</a>
+            <a href="">문의</a>
+            <i class="fa-solid fa-bag-shopping"></i>
+      </nav>
+
   </div>
 
   <div class="main_background" onmouseover="fadeOut();">
@@ -54,8 +53,8 @@
 
             <div class="swiper-wrapper">
 
-              <div class="swiper-slide"><img src="./IMG/img1.webp"></div>
-              <div class="swiper-slide"><img src="./IMG/img3.webp"></div>
+              <div class="swiper-slide"><img src="./IMG/img1.webp" style="height: 405px;"></div>
+              <div class="swiper-slide"><img src="./IMG/img3.webp" style="height: 405px;"></div>
             </div>
           </div>
         </div>
@@ -89,8 +88,8 @@
 
             <div class="swiper-wrapper">
 
-              <div class="swiper-slide"><img src="./IMG/ad1.png" style="height: 205px;"></div>
-              <div class="swiper-slide"><img src="./IMG/ad2.jpg" style="height: 205px;"></div>
+              <div class="swiper-slide"><img src="./IMG/ad1.png" style="height: 215px;"></div>
+              <div class="swiper-slide"><img src="./IMG/ad2.jpg" style="height: 215px;"></div>
             </div>
           </div>
         </div>
@@ -117,7 +116,5 @@
   <div class="attention">
     © 2035 hyodong.com을 통해 제작된 본 홈페이지에 대한 모든 권리는 김효동(사업자명)에 귀속됩니다.
   </div>
-
-</div>
 </body>
 </html>

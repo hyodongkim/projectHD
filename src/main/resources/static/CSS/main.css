@@ -1,41 +1,39 @@
 *{
-  margin: 0px;
-  padding: 0px;
+  margin: 0%;
+  padding: 0%;
 
 }
-body > .whole{
+:root{
   position: relative;
   width: 100vw;
   height: 200vh;
-  z-index:1;
+  z-index:5;
 }
 header >.logo{
   font-size: 2rem;
   font-family: 'DM Serif Display', serif;
+  margin-left: 1%;
 }
 .footerLeft > .logo{
   font-size: 2rem;
   font-family: 'DM Serif Display', serif;
-  margin-bottom: 40px;
+  margin-bottom: 5%;
 }
 .fixBox{
   position: fixed;
-  width: 100vw;
-  height: 150px;
+  min-height: 4vh;
   border: 1px solid black;
   background-color: white;
-  z-index: 2;
+  z-index: 6;
 }
 
 header{
   position: relative;
-  padding-top: 6px;
   width: 100vw;
-  height: 60px;
-  padding-left: 8%;
-  border: 1px solid black;
-  z-index: 3;
+  z-index: 7;
   opacity: 1.0;
+  background-color : white;
+  border: 1px solid black;
 }
 nav{
   display: flex;
@@ -43,8 +41,9 @@ nav{
   justify-content: space-around;
   align-items: center;
   width: 100vw;
-  height: 80px;
+  min-height: 5vh;
   margin: 0 auto;
+  border-top: 1px solid black;
 }
 .main_background{
   position: relative;
@@ -52,11 +51,11 @@ nav{
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 210vh;
+  height: 195vh;
   background-color: #d8f1f4;
-  z-index: -3;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  z-index: 1;
+  padding-top: 3%;
+  padding-bottom: 3%;
 }
 main{
   position: absolute;
@@ -66,10 +65,10 @@ main{
   grid-template-rows: repeat(4, 1fr);
   width: 50vw;
   height: 200vh;
-  z-index: 2;
+  z-index: 6;
 }
 .box{
-  z-index: 2;
+  z-index: 6;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -122,13 +121,13 @@ footer{
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 205px;
-  z-index: 0;
+  height: 30vh;
+  z-index: 4;
   background-color: #607D82;
 }
 
 nav > a{
-  font-size: 20px;
+  font-size: 1.5rem;
   text-decoration: none;
 }
 
@@ -141,7 +140,6 @@ nav > a{
   background-color: rgb(168, 159, 159);
   border: 1px solid rgb(168, 159, 159);
   color: rgb(119, 111, 111);
-  text-overflow:ellipsis;overflow: hidden;white-space: nowrap;
 }
 
 .attention:hover{
