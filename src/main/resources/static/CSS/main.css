@@ -14,10 +14,10 @@ header >.logo{
   font-family: 'DM Serif Display', serif;
   margin-left: 1%;
 }
-.footerLeft > .logo{
+div.logo{
   font-size: 2rem;
   font-family: 'DM Serif Display', serif;
-  margin-bottom: 5%;
+  font-weight: bold;
 }
 .fixBox{
   position: fixed;
@@ -121,7 +121,6 @@ footer{
   display: flex;
   flex-direction: row;
   width: 100vw;
-  height: 30vh;
   z-index: 4;
   background-color: #607D82;
 }
@@ -159,7 +158,6 @@ footer > .footerLeft{
   width: 50vw;
   float: left;
   text-overflow:ellipsis;white-space: nowrap;
-  padding-left: 1.5%;
 }
 
 .footerLeft > h1{
@@ -180,7 +178,7 @@ footer > .footerRight{
   padding-left: 3%;
 }
 
-.footerRight_i
+.footerRight_i{
   display: flex;
-  flex-direction: row
+  flex-direction: row;
 }

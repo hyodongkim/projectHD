@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="e580fead-7e92-46de-b22b-d4058c995b01">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="KIM" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -21,12 +21,13 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="e580fead-7e92-46de-b22b-d4058c995b01" object-ref="schemas/KIM/tables/AA" />
-      <object connection-id="e580fead-7e92-46de-b22b-d4058c995b01" object-ref="consoles/Connection" />
+      <object connection-id="e580fead-7e92-46de-b22b-d4058c995b01" object-ref="schemas/KIM/tables/MEMBER" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="e580fead-7e92-46de-b22b-d4058c995b01" dataset="KIM.AA" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e580fead-7e92-46de-b22b-d4058c995b01" dataset="KIM.ARTICLE" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e580fead-7e92-46de-b22b-d4058c995b01" dataset="KIM.BOARD" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="e580fead-7e92-46de-b22b-d4058c995b01" dataset="KIM.MEMBER" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -34,6 +35,11 @@
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces>
+      <mapping database-type="ORACLE" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -528,5 +534,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>

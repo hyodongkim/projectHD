@@ -1,6 +1,8 @@
-package org.example;
+package org.example.Controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.ServiceImpl.MyServiceImpl;
+import org.example.Entity.MyEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,7 @@ import java.util.List;
 public class MyController {
 
     @Autowired
-    private ServiceImpl Service;
+    private MyServiceImpl Service;
 
     @GetMapping("/")
     public String realmain(Model model) {
@@ -41,7 +43,7 @@ public class MyController {
 
     @GetMapping("/leaf")
     public String ddd(Model model) {
-        List<entity> list = Service.findAll();
+        List<MyEntity> list = Service.findAll();
         model.addAttribute("list", list);
         return "thymeleaf/ddd";
     }

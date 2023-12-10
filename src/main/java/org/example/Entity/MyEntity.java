@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @ToString
-public class entity {
+public class MyEntity {
     @Id
     @Column(name = "id")
     private Integer id;

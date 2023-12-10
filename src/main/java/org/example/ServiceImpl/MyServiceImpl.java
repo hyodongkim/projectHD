@@ -1,5 +1,8 @@
-package org.example;
+package org.example.ServiceImpl;
 
+import org.example.Entity.MyEntity;
+import org.example.Repository.MyRepository;
+import org.example.Service.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,13 +11,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ServiceImpl implements service {
+public class MyServiceImpl implements MyService {
 
     @Autowired
-    private repository Repository;
+    private MyRepository Repository;
 
     @Override
-    public List<entity> findAll() {
+    public List<MyEntity> findAll() {
         return Repository.findAll();
     }
 }
