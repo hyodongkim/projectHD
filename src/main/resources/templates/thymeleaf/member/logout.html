@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:replace="${title}">템플릿 타이틀</title>
+    <title>템플릿 타이틀</title>
     <!-- 공통 CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/bootswatch.min.css}" rel="stylesheet">
@@ -50,7 +50,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li th:if="${session.loginMember == null}"><a th:href="@{/Members/signup}">로그인</a></li>
-                <li th:if="${session.loginMember != null}"><a>[[${session.loginMember.name}]]님 즐거운 하루 되세요.</a></li>
+                <li th:if="${session.loginMember == null}"><a>로그인을 해주세요.</a></li>
                 <li th:if="${session.loginMember != null}"><a th:href="@{/Members/logout}">로그아웃</a></li>
 
                 <li class="dropdown">
@@ -68,16 +68,16 @@
 <!-- Top Menu End -->
 
 <!-- Community Intro Start -->
-<header th:replace="${header}">커뮤니티 소개</header>
+<header>커뮤니티 소개</header>
 <!-- Community Intro End -->
 <br>
 <!-- Navigation Start -->
-<nav th:replace="${navi}">내비게이션</nav>
+<nav>내비게이션</nav>
 <!-- Navigation Intro End -->
 
 <div class="container" >
     <!-- Contents Start -->
-    <section class="row" th:replace="${contents}">
+    <section class="row">
         <div class="col-lg-12">
             <div class="page-header">
                 <h2>홈페이지 컨텐츠</h2>

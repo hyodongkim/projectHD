@@ -60,7 +60,7 @@ public class MemberController {
         redirectAttributes.addAttribute("memberId", userId);
         redirectAttributes.addAttribute("status", "new");
         // 회원 상세로 리다이렉트
-        return "redirect:thymeleaf/members/{memberId}";
+        return "thymeleaf/member/view";
     }
     @GetMapping("/{memberId}")
     public String view(@PathVariable String memberId, Model model) {
@@ -146,11 +146,14 @@ public class MemberController {
         return "thymeleaf/member/view";
     }
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest request) {
         HttpSession session  = request.getSession(false);
         if(session != null) {
             session.invalidate();
         }
-        return "redirect:/";
+        Member loginMember = memberService.isMember(loginForm.getId(), loginForm.getPassword());
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("loginMember", loginMember);
+        return "thymeleaf/member/logout";
     }
 }
