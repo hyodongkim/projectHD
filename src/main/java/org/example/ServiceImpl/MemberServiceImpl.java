@@ -18,33 +18,38 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
-    private MemberRepository MemberRepository;
+    private MemberRepository memberRepository;
 
     @Override
     public String register(Member member) {
-        Member saveMember = MemberRepository.save(member);
+        Member saveMember = memberRepository.save(member);
         return saveMember.getId();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Member isMember(String id, String password) {
-        return MemberRepository.findByIdAndPassword(id, password);
+        return memberRepository.findByIdAndPassword(id, password);
     }
 
     @Override
     public Optional<Member> findMember(String id) {
-        return MemberRepository.findById(id);
+        return memberRepository.findById(id);
     }
 
     @Override
     public List<Member> findMembers() {
-        return MemberRepository.findAll();
+        return memberRepository.findAll();
     }
 
     @Override
     public Page<Member> findMembers(String searchValue, Pageable pageable) {
-        return MemberRepository.findAllByIdOrNameContaining(searchValue, searchValue, pageable);
+        return memberRepository.findAllByIdOrNameContaining(searchValue, searchValue, pageable);
     }
 
+    @Override
+    public String update(Member member) {
+        Member saveMember = memberRepository.save(member);
+        return saveMember.getId();
+    }
 }

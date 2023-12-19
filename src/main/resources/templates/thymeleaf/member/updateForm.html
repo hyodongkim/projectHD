@@ -40,7 +40,7 @@
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>우리 커뮤니티는 한번 가입하면 절대 탈퇴 불가능합니다.^^</strong>
         </div>
-
+        <form th:action="@{/Members/updateMember/{id}(id=${id})}"  th:object="${member}" method="post" >
         <div class="table-responsive">
             <table class="table table-bordered">
                 <colgroup>
@@ -49,28 +49,44 @@
                     <col width="15%">
                     <col width="35%">
                 </colgroup>
-                <tbody>
+
+                    <tbody>
+<!--                    <tbody th:each="member: ${member}">-->
                 <tr>
                     <th class="text-center">아이디</th>
-                    <td class="text-left" th:text="${member.id}">id</td>
+                    <label>
+                        <input type="text" th:field="*{id}"/>
+                    </label>
                     <th class="text-center">회원명</th>
-                    <td class="text-left" th:text="${member.name}">name</td>
+                    <label>
+                        <input type="text"th:field="*{name}"/>
+                    </label>
                 </tr>
                 <tr>
+                    <label>
+                        <input type="hidden"th:field="*{password}"/>
+                    </label>
+
                     <th class="text-center">나이</th>
-                    <td class="text-left" th:text="${member.age}">age</td>
+                    <label>
+                        <input type="text"th:field="*{age}" />
+                    </label>
                     <th class="text-center">가입일자</th>
-                    <td class="text-left"
-                        th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">regdate</td>
+                    <label>
+                        <input type="text" th:value="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}"  th:field="*{regdate}"/>
+                    </label>
                 </tr>
                 </tbody>
+
             </table>
         </div>
 
-        <div class="pull-right" th:each="member : ${member}">
-            <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+        <div class="pull-right">
+            <button type="submit" class="btn btn-warning">정보저장(form)</button>
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
         </div>
+
+        </form>
 
     </div>
 </section>

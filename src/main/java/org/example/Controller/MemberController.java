@@ -1,9 +1,11 @@
 package org.example.Controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.Dto.HdMemberForm;
 import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
 import org.example.Entity.Member;
+import org.example.Repository.MemberRepository;
 import org.example.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,9 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     @GetMapping("/register")
     public String registerForm(@ModelAttribute("member") Member member) {
@@ -146,14 +151,52 @@ public class MemberController {
         return "thymeleaf/member/view";
     }
     @GetMapping("/logout")
-    public String logout(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest request) {
+    public String logout(HttpServletRequest request) {
         HttpSession session  = request.getSession(false);
         if(session != null) {
             session.invalidate();
         }
-        Member loginMember = memberService.isMember(loginForm.getId(), loginForm.getPassword());
-        HttpSession session1 = request.getSession();
-        session1.setAttribute("loginMember", loginMember);
-        return "thymeleaf/member/logout";
+        return "redirect:/";
+    }
+
+    @GetMapping("/updateMember/{id}")
+    public String updateMember(@PathVariable String id,Model model){
+
+        Optional<Member> member = memberService.findMember(id);
+//        model.addAttribute("member",optional.get());
+        Member form = new Member();
+
+        form.setId(member.get().getId());
+        form.setPassword(member.get().getPassword());
+        form.setName(member.get().getName());
+        form.setAge(member.get().getAge());
+        form.setRegdate(member.get().getRegdate());
+
+        memberService.update(form);
+        model.addAttribute("member",form);
+
+
+
+        System.out.println("Get:"+form);
+
+        return "thymeleaf/member/updateForm";
+    }
+    @PostMapping("/updateMember/{id}")
+    public String updates(@ModelAttribute("form") HdMemberForm form, Model model){
+
+//        Optional<Member> member = memberService.findMember(id);
+
+        Member member = new Member();
+        member.setId(form.getId());
+        member.setPassword(form.getPassword());
+        member.setName(form.getName());
+        member.setAge(form.getAge());
+        member.setRegdate(form.getRegdate());
+
+        memberService.update(member);
+
+        System.out.println("post:"+member);
+
+        return "redirect:/";
     }
 }

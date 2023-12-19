@@ -20,9 +20,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="e580fead-7e92-46de-b22b-d4058c995b01" object-ref="schemas/KIM/tables/MEMBER" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="e580fead-7e92-46de-b22b-d4058c995b01" dataset="KIM.ARTICLE" active-filter-id="EMPTY_FILTER" />
