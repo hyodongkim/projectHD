@@ -48,8 +48,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String update(Member member) {
-        Member saveMember = memberRepository.save(member);
-        return saveMember.getId();
+    public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
+    @Override
+    public void deleteMember(String id) {
+         memberRepository.deleteById(id);
     }
 }

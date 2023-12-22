@@ -74,6 +74,16 @@ public class MemberController {
         return "thymeleaf/member/view";
     }
 
+    @GetMapping("/delete/{memberId}")
+    public String delete(@PathVariable String memberId, Model model) {
+        System.out.println(memberId);
+        memberService.deleteMember(memberId);
+        System.out.println("삭제");
+        return "redirect:/Members";
+    }
+
+
+
     @GetMapping
     /* default page = 0, default size = 10 */
     public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search, Model model) {
@@ -156,7 +166,7 @@ public class MemberController {
         if(session != null) {
             session.invalidate();
         }
-        return "redirect:/";
+        return "redirect:/Members";
     }
 
     @GetMapping("/updateMember/{id}")
@@ -172,12 +182,7 @@ public class MemberController {
         form.setAge(member.get().getAge());
         form.setRegdate(member.get().getRegdate());
 
-        memberService.update(form);
         model.addAttribute("member",form);
-
-
-
-        System.out.println("Get:"+form);
 
         return "thymeleaf/member/updateForm";
     }
@@ -193,10 +198,8 @@ public class MemberController {
         member.setAge(form.getAge());
         member.setRegdate(form.getRegdate());
 
-        memberService.update(member);
+        memberService.updateMember(member);
 
-        System.out.println("post:"+member);
-
-        return "redirect:/";
+        return "redirect:/Members";
     }
 }
