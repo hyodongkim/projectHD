@@ -9,6 +9,10 @@
     <!-- 공통 CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/bootswatch.min.css}" rel="stylesheet">
+    <link th:href="@{/CSS/templateV1.css}" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script th:src="@{/JS/templateV1.js}" defer></script>
     <style>
         .field-error {
           color: #ff0000;
@@ -17,16 +21,39 @@
 </head>
 
 <body>
+
+<div class="buttonToggle" onmouseover="fixBox_slideDown();">커서를 올려놔 주세요!</div>
+
+<div class="fixBox" >
+    <header>
+        <h1 class="logo">Mr.Kim</h1>
+    </header>
+
+    <nav>
+        <a href="">MD & CC</a>
+        <a href="">메인</a>
+        <a href="">인테리어</a>
+        <a href="">주방</a>
+        <a href="">침실</a>
+        <a href="">소개</a>
+        <a href="">문의</a>
+        <i class="fa-solid fa-bag-shopping"></i>
+    </nav>
+
+</div>
+
+
+<div class="main_background" onmousemove="fixBox_slideUp();">
 <!-- Top Menu Start -->
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target=".navbar-responsive-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+<!--            <button type="button" class="navbar-toggle" data-toggle="collapse"-->
+<!--                    data-target=".navbar-responsive-collapse">-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--                <span class="icon-bar"></span>-->
+<!--            </button>-->
 
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">커뮤니티 홈</a></li>
@@ -65,14 +92,17 @@
         </div>
     </div>
 </div>
+
+
+</div>
 <!-- Top Menu End -->
 
 <!-- Community Intro Start -->
-<header th:replace="${header}">커뮤니티 소개</header>
+<!--<header th:replace="${header}">커뮤니티 소개</header>-->
 <!-- Community Intro End -->
 <br>
 <!-- Navigation Start -->
-<nav th:replace="${navi}">내비게이션</nav>
+<!--<nav th:replace="${navi}">내비게이션</nav>-->
 <!-- Navigation Intro End -->
 
 <div class="container" >
