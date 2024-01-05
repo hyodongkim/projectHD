@@ -1,26 +1,36 @@
 <!DOCTYPE html>
+
+<link rel="stylesheet" href="CSS/list.css">
+<script src="JS/list.js" defer></script>
+
+<div class="fixBox" onmouseover="fadeIn();">
+    <header>
+        <h1 class="logo">Mr.Kim</h1>
+    </header>
+
+    <nav>
+        <a href="">MD & CC</a>
+        <a href="">메인</a>
+        <a href="">인테리어</a>
+        <a href="">주방</a>
+        <a href="">침실</a>
+        <a href="">소개</a>
+        <a href="">문의</a>
+        <i class="fa-solid fa-bag-shopping"></i>
+    </nav>
+
+</div>
+
+
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{layout/templateV1 :: layout(~{::title}, ~{::header}, ~{::nav}, ~{::section})}" lang="">
+
 
 <!-- 타이틀 -->
 <title>:: 커뮤니티 회원 목록 ::</title>
 
 <!-- 커뮤니티 소개 -->
-<header></header>
-
-<!-- 내비게이션 -->
-<nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-lg-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">홈</a></li>
-                    <li class="active">커뮤니티 회원목록</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</nav>
+<!--<header></header>-->
 
 <!-- 컨텐츠 -->
 <section class="row">
