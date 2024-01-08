@@ -34,7 +34,15 @@ a{
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color:transparent;
-    border:1px solid black;
+    background-color: transparent;
+    border:1px dashed black;
 
+}
+header > div:nth-of-type(1){
+    float:right;
+    margin-right: 5%;
+    font-size: 10px;
+}
+.main_background{
+    padding-top: 5%;
 }

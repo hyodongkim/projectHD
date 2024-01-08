@@ -50,7 +50,7 @@
                     <col width="35%">
                 </colgroup>
 
-                    <tbody>
+                    <tbody th:each="member: ${member}">
 <!--                    <tbody th:each="member: ${member}">-->
                 <tr>
                     <th class="text-center">아이디</th>
@@ -59,7 +59,7 @@
                     </label>
                     <th class="text-center">회원명</th>
                     <label>
-                        <input type="text"th:field="*{name}"/>
+                        <input type="text" th:field="*{name}"/>
                     </label>
                 </tr>
                 <tr>
@@ -69,14 +69,13 @@
 
                     <th class="text-center">나이</th>
                     <label>
-                        <input type="text"th:field="*{age}" />
+                        <input type="text" th:field="*{age}" />
                     </label>
                     <th class="text-center">가입일자</th>
                     <label>
-                        <input type="text" th:value="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}"  th:field="*{regdate}"/>
+                        <input type="text" th:field="*{regdate}"/>
                     </label>
                 </tr>
-                </tbody>
 
             </table>
         </div>

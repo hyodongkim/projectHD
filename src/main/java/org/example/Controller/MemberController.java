@@ -58,6 +58,7 @@ public class MemberController {
         registerMember.setPassword(member.getPassword());
         registerMember.setName(member.getName());
         registerMember.setAge(member.getAge());
+        registerMember.setRegdate(member.getRegdate());
 
         // 회원 등록
         String userId = memberService.register(registerMember);
@@ -65,7 +66,8 @@ public class MemberController {
         redirectAttributes.addAttribute("memberId", userId);
         redirectAttributes.addAttribute("status", "new");
         // 회원 상세로 리다이렉트
-        return "thymeleaf/member/view";
+//        return "thymeleaf/member/view";
+        return "redirect:/Members";
     }
     @GetMapping("/{memberId}")
     public String view(@PathVariable String memberId, Model model) {
@@ -187,7 +189,7 @@ public class MemberController {
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute("form") HdMemberForm form, Model model){
+    public String updates(@ModelAttribute("form") MemberForm form, Model model){
 
 //        Optional<Member> member = memberService.findMember(id);
 

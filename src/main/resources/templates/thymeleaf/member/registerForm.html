@@ -32,7 +32,7 @@
 
         <div class="well">
             <p>아래 항목들을 정성껏 작성해 주세요^^.</p>
-            <form class="form-horizontal" method="post" th:object="${member}">
+            <form th:action="@{/Members/register}" method="post" th:object="${member}">
                 <fieldset>
                     <div class="form-group">
                         <label class="col-lg-1 control-label">아이디</label>
@@ -76,9 +76,12 @@
                         </div>
                     </div>
 
-                    <input type="hidden" class="form-control"
-                           placeholder="테스트용 항목입니다." th:field="*{regdate}"
-                           th:errorclass="field-error">
+
+                            <input type="hidden" class="form-control"
+                                    placeholder="테스트용 항목입니다." th:field="*{regdate}"
+                                    th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{regdate}">생성날짜 오류</div>
+
 
                     <div class="form-group">
                         <div class="col-lg-11 col-lg-offset-5">
