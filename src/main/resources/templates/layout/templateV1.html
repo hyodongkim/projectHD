@@ -28,10 +28,12 @@
     <header>
         <div>
             <div th:if="${session.loginMember == null}"><a th:href="@{/Members/signup}">로그인</a></div>
-            <a th:href="@{/Members/register}">회원가입</a>
+            <div th:if="${session.loginMember == null}"><a th:href="@{/Members/register}">회원가입</a></div>
         </div>
-        <div th:if="${session.loginMember != null}"><a>[[${session.loginMember.name}]]님 즐거운 하루 되세요.</a></div>
-        <div th:if="${session.loginMember != null}"><a th:href="@{/Members/logout}">로그아웃</a></div>
+        <div>
+            <div th:if="${session.loginMember != null}"><a>[[${session.loginMember.name}]]님 즐거운 하루 되세요.</a></div>
+            <div th:if="${session.loginMember != null}"><a th:href="@{/Members/register}">회원가입</a> <a th:href="@{/Members/logout}">로그아웃</a></div>
+        </div>
         <h1 class="logo">Mr.Kim</h1>
     </header>
         <nav>
