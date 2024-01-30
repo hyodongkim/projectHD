@@ -1,12 +1,10 @@
-        function fadeIn(){
-          $("header").css("opacity","1.0");
-          $(".fixBox").css("opacity","1.0");
-        }
-        function fadeOut(){
-          $("header").css("opacity","1.0");
-          $(".fixBox").css("opacity","0.7");
-        ;}
-
+//function fixBox_slideUp(){
+//    $(".fixBox").slideUp();
+//
+//};
+//function fixBox_slideDown(){
+//    $(".fixBox").slideDown();
+//};
         AOS.init();
 
         let swiper1 = new Swiper('.swiper1', {
@@ -87,4 +85,7 @@ let swiper2 = new Swiper('.swiper2', {
 //        });
 //
 //    };
+
+
+
 

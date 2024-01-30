@@ -22,7 +22,7 @@ public class MyController {
     public String realmain(Model model) {
 //        List<entity> list = Service.findAll();
 //        model.addAttribute("list", list);
-        return "views/main";
+        return "thymeleaf/index";
 //        return "redirect:/admin/views/admin_notice";
     }
     @GetMapping("/{id}")

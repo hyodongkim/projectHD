@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/templateV1 :: layout(~{::title}, ~{::header}, ~{::nav}, ~{::section})}">
+<link th:href="@{/CSS/view.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<!-- 타이틀 -->
-<title>:: 커뮤니티 회원 가입 ::</title>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:include="layout/templateV1.html"></div>
+
 
 <!-- 커뮤니티 소개 -->
 <!--<header></header>-->
@@ -48,7 +49,7 @@
                     <col width="15%">
                     <col width="35%">
                 </colgroup>
-                <tbody>
+                <tbody th:each="member : ${member}">
                 <tr>
                     <th class="text-center">아이디</th>
                     <td class="text-left" th:text="${member.id}">id</td>

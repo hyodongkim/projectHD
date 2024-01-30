@@ -1,31 +1,10 @@
+<script src="JS/list.js" defer></script>
+<link th:href="@{/CSS/list.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
 
-<link rel="stylesheet" href="CSS/list.css">
-<script src="JS/list.js" defer></script>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<div class="fixBox" onmouseover="fadeIn();">
-    <header>
-        <h1 class="logo">Mr.Kim</h1>
-    </header>
-
-    <nav>
-        <a href="">MD & CC</a>
-        <a href="">메인</a>
-        <a href="">인테리어</a>
-        <a href="">주방</a>
-        <a href="">침실</a>
-        <a href="">소개</a>
-        <a href="">문의</a>
-        <i class="fa-solid fa-bag-shopping"></i>
-    </nav>
-
-</div>
-
-
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/templateV1 :: layout(~{::title}, ~{::header}, ~{::nav}, ~{::section})}" lang="">
-
-
+<div th:include="layout/templateV1.html"></div>
 <!-- 타이틀 -->
 <title>:: 커뮤니티 회원 목록 ::</title>
 
@@ -48,8 +27,8 @@
                                 <input type="text" class="form-control" placeholder="아이디 또는 회원명" name="search">
                             </label>
                             <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary">검색</button>
-              </span>
+                                <button type="submit" class="btn btn-primary">검색</button>
+                            </span>
                         </div>
                     </form>
                 </div>

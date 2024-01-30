@@ -14,3 +14,10 @@ nav{
     display: flex;
     justify-content:space-between;
 }
+section.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+}

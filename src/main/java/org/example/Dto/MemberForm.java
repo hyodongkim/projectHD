@@ -16,7 +16,7 @@ public class MemberForm {
     private String id;
 
     @NotBlank(message = "회원 비밀번호는 필수입니다.")
-    @Size(min=4, max=6, message = "비밀번호는 4~6자리 사이로 입력해 주세요.")
+    @Size(min=4, max=12, message = "비밀번호는 4~12자리 사이로 입력해 주세요.")
     private String password;
 
     @NotBlank(message = "회원 이름은 필수입니다.")

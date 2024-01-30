@@ -1,12 +1,9 @@
+<link th:href="@{/CSS/updateForm.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout/templateV1 :: layout(~{::title}, ~{::header}, ~{::nav}, ~{::section})}">
 
-<!-- 타이틀 -->
-<title>:: 커뮤니티 회원 가입 ::</title>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<!-- 커뮤니티 소개 -->
-<header></header>
+<div th:include="layout/templateV1.html"></div>
 
 <!-- 내비게이션 -->
 <nav>
