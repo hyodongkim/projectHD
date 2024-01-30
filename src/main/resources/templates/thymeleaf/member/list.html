@@ -1,17 +1,14 @@
-<script src="JS/list.js" defer></script>
-<link th:href="@{/CSS/list.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+<script th:src="@{/JS/list.js}" defer></script>
+<link th:href="@{/CSS/list.css}" rel="stylesheet">
+
 <div th:include="layout/templateV1.html"></div>
 <!-- 타이틀 -->
-<title>:: 커뮤니티 회원 목록 ::</title>
 
-<!-- 커뮤니티 소개 -->
-<!--<header></header>-->
-
-<!-- 컨텐츠 -->
+<body>
 <section class="row">
     <div class="col-lg-12">
         <div class="page-header">
@@ -79,5 +76,5 @@
     </div>
 </section>
 
-
+</body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, header, navi, contents)">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -7,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>템플릿 타이틀</title>
     <!-- 공통 CSS -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/bootswatch.min.css}" rel="stylesheet">
     <link th:href="@{/CSS/templateV1.css}" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script th:src="@{/JS/templateV1.js}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
     <style>
         .field-error {
           color: #ff0000;
         }
     </style>
 </head>
+
+
 
 <body>
 
@@ -56,28 +56,16 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-<!--            <button type="button" class="navbar-toggle" data-toggle="collapse"-->
-<!--                    data-target=".navbar-responsive-collapse">-->
-<!--                <span class="icon-bar"></span>-->
-<!--                <span class="icon-bar"></span>-->
-<!--                <span class="icon-bar"></span>-->
-<!--            </button>-->
 
             <ul class="nav navbar-nav">
-<!--                <li class="active"><a th:href="@{/}">커뮤니티 홈</a></li>-->
+
             </ul>
 
         </div>
 </div>
-<!-- Top Menu End -->
 
-<!-- Community Intro Start -->
-<!--<header th:replace="${header}">커뮤니티 소개</header>-->
-<!-- Community Intro End -->
 <br>
-<!-- Navigation Start -->
-<!--<nav th:replace="${navi}">내비게이션</nav>-->
-<!-- Navigation Intro End -->
+
 
 <div class="container" >
 
