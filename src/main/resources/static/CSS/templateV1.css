@@ -1,10 +1,10 @@
-/*
+
 *{
   margin: 0%;
   padding: 0%;
 }
 :root{
-  background-color: #d8f1f4;
+  background-color: white;
 }
 .fixBox{
   position: fixed;
@@ -35,8 +35,9 @@ a{
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: transparent;
+    background-color: white;
     border:1px dashed black;
+    z-index:2;
 
 }
 header > div:nth-of-type(1){
@@ -55,4 +56,12 @@ header > div:nth-of-type(2){
     justify-content: center;
     align-items: center;
     padding-top: 5%;
-}*/
+}
+header >.logo{
+  font-size: 2rem;
+  font-family: 'DM Serif Display', serif;
+}
+div.logo{
+  font-family: 'DM Serif Display', serif;
+  font-weight: bold;
+}

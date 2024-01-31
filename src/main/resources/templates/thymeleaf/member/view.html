@@ -11,21 +11,11 @@
 
 <!-- 내비게이션 -->
 <nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-lg-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">홈</a></li>
-                    <li class="active">커뮤니티 회원가입</li>
-                </ol>
-            </div>
-        </div>
-    </div>
 </nav>
 
 <!-- 컨텐츠 -->
-<section class="row">
-    <div class="col-lg-12">
+<section>
+
 
         <div class="page-header">
             <h2 id="container">커뮤니티 회원상세</h2>
@@ -33,35 +23,34 @@
 
         <div class="alert alert-dismissable alert-success"
              th:if="${#strings.equals(param.status, 'new')}">
-            <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>커뮤니티 회원 가입을 축하합니다.</strong>
         </div>
 
         <div class="alert alert-dismissable alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
 
         <div class="table-responsive">
             <table class="table table-bordered">
-                <colgroup>
-                    <col width="15%">
-                    <col width="35%">
-                    <col width="15%">
-                    <col width="35%">
-                </colgroup>
                 <tbody th:each="member : ${member}">
                 <tr>
-                    <th class="text-center">아이디</th>
-                    <td class="text-left" th:text="${member.id}">id</td>
-                    <th class="text-center">회원명</th>
-                    <td class="text-left" th:text="${member.name}">name</td>
+                    <th>아이디</th>
+                    <td th:text="${member.id}">id</td>
                 </tr>
                 <tr>
-                    <th class="text-center">나이</th>
-                    <td class="text-left" th:text="${member.age}">age</td>
-                    <th class="text-center">가입일자</th>
-                    <td class="text-left"
-                        th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">regdate</td>
+                    <th>회원명</th>
+                    <td th:text="${member.name}">name</td>
+                </tr>
+                <tr>
+                    <th>나이</th>
+                    <td th:text="${member.age}">age</td>
+                </tr>
+                <tr>
+                    <th>자기소개</th>
+                    <td th:text="${member.introduction}">introduction</td>
+                </tr>
+                <tr>
+                    <th>가입일자</th>
+                    <td th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">regdate</td>
                 </tr>
                 </tbody>
             </table>
@@ -73,7 +62,6 @@
             <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
         </div>
 
-    </div>
 </section>
 
 

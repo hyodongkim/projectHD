@@ -9,16 +9,7 @@
 
 <!-- 내비게이션 -->
 <nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-lg-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">홈</a></li>
-                    <li class="active">커뮤니티 회원가입</li>
-                </ol>
-            </div>
-        </div>
-    </div>
+
 </nav>
 
 <!-- 컨텐츠 -->
@@ -72,6 +63,16 @@
                                    placeholder="테스트용 항목입니다." th:field="*{age}"
                                    th:errorclass="field-error">
                             <div class="field-error" th:errors="*{age}">나이 입력 오류</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-1 control-label">자기소개</label>
+                        <div class="col-lg-11">
+                            <input type="text" class="form-control"
+                                   placeholder="자기소개 항목입니다." th:field="*{introduction}"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{introduction}">자기소개 오류</div>
                         </div>
                     </div>
 

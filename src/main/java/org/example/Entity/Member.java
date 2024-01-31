@@ -19,6 +19,8 @@ public class Member{
     private String name;
     @Column(name="age")
     private Integer age;
+    @Column(name="introduction")
+    private String introduction;
     @Column(name="regdate")
     private LocalDateTime regdate;
 
@@ -38,11 +40,13 @@ public class Member{
         this.age = age;
     }
 
+    public void setIntroduction(String introduction) {this.introduction = introduction;}
+
     public void setRegdate(LocalDateTime regdate) {
         this.regdate = regdate;
     }
 
-    public Member(String id, String password, String name, Integer age, LocalDateTime regdate) {
+    public Member(String id, String password, String name, Integer age, String introduction, LocalDateTime regdate) {
         this.id = id;
         this.password = password;
         this.name = name;

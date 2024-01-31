@@ -58,6 +58,7 @@ public class MemberController {
         registerMember.setPassword(member.getPassword());
         registerMember.setName(member.getName());
         registerMember.setAge(member.getAge());
+        registerMember.setIntroduction(member.getIntroduction());
         registerMember.setRegdate(member.getRegdate());
 
         // 회원 등록
@@ -182,6 +183,7 @@ public class MemberController {
         form.setPassword(member.get().getPassword());
         form.setName(member.get().getName());
         form.setAge(member.get().getAge());
+        form.setIntroduction(member.get().getIntroduction());
         form.setRegdate(member.get().getRegdate());
 
         model.addAttribute("member",form);
@@ -198,6 +200,7 @@ public class MemberController {
         member.setPassword(form.getPassword());
         member.setName(form.getName());
         member.setAge(form.getAge());
+        member.setIntroduction(form.getIntroduction());
         member.setRegdate(form.getRegdate());
 
         memberService.updateMember(member);

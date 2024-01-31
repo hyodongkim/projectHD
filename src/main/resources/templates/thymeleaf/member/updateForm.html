@@ -35,7 +35,6 @@
 
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>우리 커뮤니티는 한번 가입하면 절대 탈퇴 불가능합니다.^^</strong>
         </div>
         <form th:action="@{/Members/updateMember/{id}(id=${id})}"  th:object="${member}" method="post" >
         <div class="table-responsive">
@@ -66,8 +65,14 @@
 
                     <th class="text-center">나이</th>
                     <label>
-                        <input type="text" th:field="*{age}" />
+                        <input type="number" th:field="*{age}" />
                     </label>
+
+                    <th class="text-center">자기소개</th>
+                    <label>
+                        <input type="text" th:field="*{introduction}" />
+                    </label>
+
                     <th class="text-center">가입일자</th>
                     <label>
                         <input type="text" th:field="*{regdate}"/>

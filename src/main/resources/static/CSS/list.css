@@ -21,3 +21,15 @@ section.row{
     align-items: center;
     padding-top: 5%;
 }
+header >.logo{
+  font-size: 2rem;
+  font-family: 'DM Serif Display', serif;
+}
+div.logo{
+  font-family: 'DM Serif Display', serif;
+  font-weight: bold;
+}
+.pagination-align{
+    display:flex;
+    flex-direction: row;
+}
