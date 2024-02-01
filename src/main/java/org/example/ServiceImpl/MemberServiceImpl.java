@@ -23,18 +23,18 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String register(Member member) {
         Member saveMember = memberRepository.save(member);
-        return saveMember.getId();
+        return saveMember.getUserid();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Member isMember(String id, String password) {
-        return memberRepository.findByIdAndPassword(id, password);
+    public Member isMember(String userid, String password) {
+        return memberRepository.findByIdAndPassword(userid, password);
     }
 
     @Override
-    public Optional<Member> findMember(String id) {
-        return memberRepository.findById(id);
+    public Optional<Member> findMember(String userid) {
+        return memberRepository.findById(userid);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Page<Member> findMembers(String searchValue, Pageable pageable) {
-        return memberRepository.findAllByIdOrNameContaining(searchValue, searchValue, pageable);
+        return memberRepository.findAllByUseridOrNameContaining(searchValue, searchValue, pageable);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
     @Override
-    public void deleteMember(String id) {
-         memberRepository.deleteById(id);
+    public void deleteMember(String userid) {
+         memberRepository.deleteById(userid);
     }
 }

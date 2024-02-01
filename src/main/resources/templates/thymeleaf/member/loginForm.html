@@ -81,8 +81,8 @@
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
         </div>
-        <input type="text" class="form-control"  placeholder="아이디" th:field="*{id}" th:errorclass="field-error">
-        <div class="field-error" th:errors="*{id}">아이디 입력 오류</div>
+        <input type="text" class="form-control"  placeholder="아이디" th:field="*{userid}" th:errorclass="field-error">
+        <div class="field-error" th:errors="*{userid}">아이디 입력 오류</div>
         <input type="password" class="form-control" placeholder="비밀번호" th:field="*{password}" th:errorclass="field-error">
         <input type="hidden" th:field="*{redirect}">
         <div class="field-error" th:errors="*{password}">비밀번호 입력 오류</div>

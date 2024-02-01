@@ -46,7 +46,7 @@
                     <tr th:if="${totalElements == 0}"><td colspan="5" class="text-center">검색된 회원이 없습니다.</td></tr>
                     <tr class="text-center" th:each="member, memberStat : ${list}">
                         <td th:text="${memberStat.count}">1</td>
-                        <td th:text="${member.id}">tester</td>
+                        <td th:text="${member.userid}">tester</td>
                         <td><a th:href="@{Members/{memberId}(memberId=${member.id})}">[[${member.name}]]</a></td>
                         <td th:text="${member.age}">10</td>
                         <td th:text="${member.introduction}">자기소개</td>

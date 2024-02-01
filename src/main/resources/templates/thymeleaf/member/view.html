@@ -34,24 +34,41 @@
                 <tbody th:each="member : ${member}">
                 <tr>
                     <th>아이디</th>
-                    <td th:text="${member.id}">id</td>
+                    <td th:text="${member.userid}">id</td>
+                </tr>
+                <tr>
+                    <th>E-Mail</th>
+                    <td th:text="${member.email}">email</td>
                 </tr>
                 <tr>
                     <th>회원명</th>
                     <td th:text="${member.name}">name</td>
                 </tr>
                 <tr>
+                    <th>성별</th>
+                    <td th:text="${member.sex}">sex</td>
+                </tr>
+                <tr>
                     <th>나이</th>
                     <td th:text="${member.age}">age</td>
+                </tr>
+                <tr>
+                    <th>생년월일</th>
+                    <td th:text="${member.birth}">birth</td>
+                </tr>
+                <tr>
+                    <th>가입일자</th>
+                    <td th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">regdate</td>
                 </tr>
                 <tr>
                     <th>자기소개</th>
                     <td th:text="${member.introduction}">introduction</td>
                 </tr>
                 <tr>
-                    <th>가입일자</th>
-                    <td th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">regdate</td>
+                    <th>프로필사진</th>
+                    <td th:text="${member.photo}">photo</td>
                 </tr>
+
                 </tbody>
             </table>
         </div>

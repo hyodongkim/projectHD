@@ -55,11 +55,16 @@ public class MemberController {
         // 검증 성공
         Member registerMember = new Member();
         registerMember.setId(member.getId());
+        registerMember.setUserid(member.getUserid());
         registerMember.setPassword(member.getPassword());
+        registerMember.setEmail(member.getEmail());
         registerMember.setName(member.getName());
+        registerMember.setSex(member.getSex());
         registerMember.setAge(member.getAge());
-        registerMember.setIntroduction(member.getIntroduction());
+        registerMember.setBirth(member.getBirth());
         registerMember.setRegdate(member.getRegdate());
+        registerMember.setIntroduction(member.getIntroduction());
+        registerMember.setPhoto(member.getPhoto());
 
         // 회원 등록
         String userId = memberService.register(registerMember);
@@ -118,7 +123,7 @@ public class MemberController {
     @GetMapping("/signup")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm, @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
         if(rememberId != null) {
-            loginForm.setId(rememberId);
+            loginForm.setUserid(rememberId);
             loginForm.setRemember(true);
         }
         return "thymeleaf/member/loginForm";
@@ -134,7 +139,7 @@ public class MemberController {
             return "thymeleaf/member/loginForm";
         }
 
-        Member loginMember = memberService.isMember(loginForm.getId(), loginForm.getPassword());
+        Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
         if (loginMember == null) {
             // 글로벌 오류 생성 및 로그인화면으로 포워드
             bindingResult.reject("loginFail", "아이디 또는 비밀번호를 확인하여 주세요.");
@@ -146,18 +151,18 @@ public class MemberController {
 
         // 로그인 저장 체크시
         if (loginForm.getRemember()) {
-            Cookie cookie = new Cookie("rememberId", loginMember.getId());
+            Cookie cookie = new Cookie("rememberId", loginMember.getUserid());
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getId());
+            Optional<Member> optional = memberService.findMember(loginMember.getUserid());
             model.addAttribute("member", optional.get());
         } else {
             Cookie cookie = new Cookie("rememberId", "");
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getId());
+            Optional<Member> optional = memberService.findMember(loginMember.getUserid());
             model.addAttribute("member", optional.get());
         }
 ///        return "redirect:"+redirect;
@@ -180,11 +185,16 @@ public class MemberController {
         Member form = new Member();
 
         form.setId(member.get().getId());
+        form.setUserid(member.get().getUserid());
         form.setPassword(member.get().getPassword());
+        form.setEmail(member.get().getEmail());
         form.setName(member.get().getName());
+        form.setSex(member.get().getSex());
         form.setAge(member.get().getAge());
-        form.setIntroduction(member.get().getIntroduction());
+        form.setBirth(member.get().getBirth());
         form.setRegdate(member.get().getRegdate());
+        form.setIntroduction(member.get().getIntroduction());
+        form.setPhoto(member.get().getPhoto());
 
         model.addAttribute("member",form);
 
@@ -197,11 +207,16 @@ public class MemberController {
 
         Member member = new Member();
         member.setId(form.getId());
+        member.setUserid(form.getUserid());
         member.setPassword(form.getPassword());
+        member.setEmail(form.getEmail());
         member.setName(form.getName());
+        member.setSex(form.getSex());
         member.setAge(form.getAge());
-        member.setIntroduction(form.getIntroduction());
+        member.setBirth(form.getBirth());
         member.setRegdate(form.getRegdate());
+        member.setIntroduction(form.getIntroduction());
+        member.setPhoto(form.getPhoto());
 
         memberService.updateMember(member);
 

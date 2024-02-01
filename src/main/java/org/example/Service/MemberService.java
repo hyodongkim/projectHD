@@ -13,10 +13,10 @@ public interface MemberService {
     public String register(Member member);
 
     /** 회원 인증 */
-    public Member isMember(String id, String password);
+    public Member isMember(String userid, String password);
 
     /** 회원 상세 */
-    public Optional<Member> findMember(String id);
+    public Optional<Member> findMember(String userid);
 
     /** 전체 회원 조회 */
     public List<Member> findMembers();
@@ -26,5 +26,5 @@ public interface MemberService {
 
     public void updateMember(Member member);
 
-    public void deleteMember(String id);
+    public void deleteMember(String userid);
 }

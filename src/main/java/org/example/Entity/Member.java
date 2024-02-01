@@ -1,6 +1,7 @@
 package org.example.Entity;
 
 import lombok.*;
+import org.example.Dto.Gender;
 import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,48 +10,44 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @ToString
 @Getter
+@Setter
 public class Member{
-    @Id
+    @Id @GeneratedValue
     @Column(name="member_id")
-    private String id;
-    @Column(name="password")
+    private long id;
+    @Column(name="member_userid",unique = true)
+    private String userid;
+    @Column(name="member_password")
     private String password;
-    @Column(name="name")
+    @Column(name="member_email")
+    private String email;
+    @Column(name="member_name")
     private String name;
-    @Column(name="age")
+    @Column(name="member_sex")
+    private Gender sex;
+    @Column(name="member_age")
     private Integer age;
-    @Column(name="introduction")
-    private String introduction;
-    @Column(name="regdate")
+    @Column(name="member_birth")
+    private String birth;
+    @Column(name="member_regdate")
     private LocalDateTime regdate;
+    @Column(name="member_introduction")
+    private String introduction;
+    @Column(name="member_photo")
+    private String photo;
 
-    public void setId(String id) {
+    public Member(long id, String userid, String password, String email, String name, Gender sex, Integer age, String birth, LocalDateTime regdate, String introduction, String photo) {
         this.id = id;
-    }
-
-    public void setPassword(String password) {
+        this.userid = userid;
         this.password = password;
-    }
-
-    public void setName(String name) {
+        this.email = email;
         this.name = name;
-    }
-
-    public void setAge(Integer age) {
+        this.sex = sex;
         this.age = age;
-    }
-
-    public void setIntroduction(String introduction) {this.introduction = introduction;}
-
-    public void setRegdate(LocalDateTime regdate) {
+        this.birth = birth;
         this.regdate = regdate;
+        this.introduction = introduction;
+        this.photo = photo;
     }
 
-    public Member(String id, String password, String name, Integer age, String introduction, LocalDateTime regdate) {
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.age = age;
-        this.regdate = regdate;
-    }
 }
