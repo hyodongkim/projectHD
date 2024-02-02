@@ -14,7 +14,9 @@ public interface MemberService {
      */
     public Long register(Member member);
 
-    /** 회원 인증 */
+    /**
+     * 회원 인증
+     */
     public Member isMember(String userid, String password);
 
     /** 회원 상세 */
@@ -29,4 +31,5 @@ public interface MemberService {
     public void updateMember(Member member);
 
     public void deleteMember(Long id);
+
 }

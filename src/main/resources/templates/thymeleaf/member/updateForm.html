@@ -16,7 +16,7 @@
             <strong>커뮤니티 회원 가입을 축하합니다.</strong>
         </div>
 
-        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" >
+        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >
         <div class="table-responsive">
             <table class="table table-bordered">
                     <tbody th:each="member: ${member}">
@@ -90,7 +90,8 @@
                 <tr>
                     <th class="text-center">자기소개
                         <label>
-                            <input type="file" th:field="*{photo}" />
+                            <input type="file" class="form-control"
+                                   placeholder="자기소개 항목입니다." th:field="*{photo}">
                         </label>
                     </th>
                 </tr>

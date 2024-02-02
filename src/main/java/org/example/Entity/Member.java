@@ -4,10 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.example.Dto.Gender;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 @Entity
 @DynamicInsert
 @RequiredArgsConstructor
@@ -18,6 +24,8 @@ import java.time.LocalDateTime;
         sequenceName = "member_seq",
         initialValue = 1,
         allocationSize = 1)
+@Table(name = "member")
+@EntityListeners(AuditingEntityListener.class)
 public class Member{
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq_gen")
     @Column(name="member_id")
@@ -37,8 +45,7 @@ public class Member{
     @Column(name="member_birth")
     private String birth;
     @Column(name="member_first")
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @CreatedDate
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;

@@ -8,6 +8,7 @@ import org.example.Entity.Member;
 import org.example.Repository.MemberRepository;
 import org.example.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,19 +18,27 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/Members")
 @Slf4j
 public class MemberController {
+
+    @Value("${file.dir}")
+    private String fileDir;
 
     @Autowired
     private MemberService memberService;
@@ -43,14 +52,22 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("member") MemberForm member, BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes, Model model) {
+    public String register(@Validated @ModelAttribute("member") MemberForm member,BindingResult bindingResult, @RequestParam("photo") MultipartFile imageFile, @RequestParam String userid,
+                           RedirectAttributes redirectAttributes,HttpServletRequest req, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
             // BindingResult는 모델에 자동 저장된다.
             return "thymeleaf/member/registerForm";
         }
+
+        String fullPath = null;
+        if (!imageFile.isEmpty()) {
+            fullPath = fileDir + imageFile.getOriginalFilename();
+            log.info("파일 저장 fullPath={}", fullPath);
+            imageFile.transferTo(new File(fullPath));
+        }
+
 
         // 검증 성공
         Member registerMember = new Member();
@@ -64,10 +81,12 @@ public class MemberController {
         registerMember.setBirth(member.getBirth());
         registerMember.setDay(member.getDay());
         registerMember.setIntroduction(member.getIntroduction());
-        registerMember.setPhoto(member.getPhoto());
+        registerMember.setPhoto(fullPath);
+
 
         // 회원 등록
         Long userId = memberService.register(registerMember);
+
 
         redirectAttributes.addAttribute("memberId", userId);
         redirectAttributes.addAttribute("status", "new");
@@ -195,14 +214,22 @@ public class MemberController {
         form.setIntroduction(member.get().getIntroduction());
         form.setPhoto(member.get().getPhoto());
 
+        memberService.updateMember(form);
+
         model.addAttribute("member",form);
 
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{userid}")
-    public String updates(@ModelAttribute("form") MemberForm form,@PathVariable String userid, Model model){
+    public String updates(@RequestParam("photo") MultipartFile imageFile, @ModelAttribute("form") MemberForm form,@PathVariable String userid, Model model) throws IOException {
 
 //        Optional<Member> member = memberService.findMember(id);
+        String fullPath = null;
+        if (!imageFile.isEmpty()) {
+            fullPath = fileDir + imageFile.getOriginalFilename();
+            log.info("파일 저장 fullPath={}", fullPath);
+            imageFile.transferTo(new File(fullPath));
+        }
 
         Member member = new Member();
         member.setId(form.getId());
@@ -215,7 +242,7 @@ public class MemberController {
         member.setBirth(form.getBirth());
         member.setDay(form.getDay());
         member.setIntroduction(form.getIntroduction());
-        member.setPhoto(form.getPhoto());
+        member.setPhoto(fullPath);
 
         memberService.updateMember(member);
 

@@ -58,7 +58,8 @@
                 </tr>
                 <tr>
                     <th>가입일자</th>
-                    <td th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm:ss')}">day</td>
+                    <td class="text-left"
+                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm:ss')}">day</td>
                 </tr>
                 <tr>
                     <th>자기소개</th>

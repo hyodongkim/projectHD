@@ -22,7 +22,7 @@
 
         <div class="well">
             <p>아래 항목들을 정성껏 작성해 주세요^^.</p>
-            <form th:action="@{/Members/register}" method="post" th:object="${member}">
+            <form th:action="@{/Members/register}" method="post" th:object="${member}" enctype="multipart/form-data">
                 <fieldset>
 
                     <div class="form-group">

@@ -2,20 +2,23 @@ package org.example.Dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 @RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class MemberForm {
 
     private Long id;
@@ -43,12 +46,10 @@ public class MemberForm {
 
     private String birth;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime day;
 
     private String introduction;
 
-    private String photo;
+    private MultipartFile photo;
 
 }
