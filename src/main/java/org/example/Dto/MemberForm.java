@@ -1,7 +1,10 @@
 package org.example.Dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -40,7 +43,9 @@ public class MemberForm {
 
     private String birth;
 
-    private LocalDateTime regdate;
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime day;
 
     private String introduction;
 

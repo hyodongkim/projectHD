@@ -9,8 +9,10 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    /** 회원가입 */
-    public String register(Member member);
+    /**
+     * 회원가입
+     */
+    public Long register(Member member);
 
     /** 회원 인증 */
     public Member isMember(String userid, String password);
@@ -26,5 +28,5 @@ public interface MemberService {
 
     public void updateMember(Member member);
 
-    public void deleteMember(String userid);
+    public void deleteMember(Long id);
 }

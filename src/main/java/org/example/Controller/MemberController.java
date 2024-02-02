@@ -62,12 +62,12 @@ public class MemberController {
         registerMember.setSex(member.getSex());
         registerMember.setAge(member.getAge());
         registerMember.setBirth(member.getBirth());
-        registerMember.setRegdate(member.getRegdate());
+        registerMember.setDay(member.getDay());
         registerMember.setIntroduction(member.getIntroduction());
         registerMember.setPhoto(member.getPhoto());
 
         // 회원 등록
-        String userId = memberService.register(registerMember);
+        Long userId = memberService.register(registerMember);
 
         redirectAttributes.addAttribute("memberId", userId);
         redirectAttributes.addAttribute("status", "new");
@@ -75,17 +75,16 @@ public class MemberController {
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
     }
-    @GetMapping("/{memberId}")
-    public String view(@PathVariable String memberId, Model model) {
-        Optional<Member> optional = memberService.findMember(memberId);
+    @GetMapping("/{userid}")
+    public String view(@PathVariable String userid, Model model) {
+        Optional<Member> optional = memberService.findMember(userid);
         model.addAttribute("member", optional.get());
         return "thymeleaf/member/view";
     }
 
-    @GetMapping("/delete/{memberId}")
-    public String delete(@PathVariable String memberId, Model model) {
-        System.out.println(memberId);
-        memberService.deleteMember(memberId);
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        memberService.deleteMember(id);
         System.out.println("삭제");
         return "redirect:/Members";
     }
@@ -177,10 +176,10 @@ public class MemberController {
         return "redirect:/Members";
     }
 
-    @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable String id,Model model){
+    @GetMapping("/updateMember/{userid}")
+    public String updateMember(@PathVariable String userid,Model model){
 
-        Optional<Member> member = memberService.findMember(id);
+        Optional<Member> member = memberService.findMember(userid);
 //        model.addAttribute("member",optional.get());
         Member form = new Member();
 
@@ -192,7 +191,7 @@ public class MemberController {
         form.setSex(member.get().getSex());
         form.setAge(member.get().getAge());
         form.setBirth(member.get().getBirth());
-        form.setRegdate(member.get().getRegdate());
+        form.setDay(member.get().getDay());
         form.setIntroduction(member.get().getIntroduction());
         form.setPhoto(member.get().getPhoto());
 
@@ -200,8 +199,8 @@ public class MemberController {
 
         return "thymeleaf/member/updateForm";
     }
-    @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute("form") MemberForm form, Model model){
+    @PostMapping("/updateMember/{userid}")
+    public String updates(@ModelAttribute("form") MemberForm form,@PathVariable String userid, Model model){
 
 //        Optional<Member> member = memberService.findMember(id);
 
@@ -214,7 +213,7 @@ public class MemberController {
         member.setSex(form.getSex());
         member.setAge(form.getAge());
         member.setBirth(form.getBirth());
-        member.setRegdate(form.getRegdate());
+        member.setDay(form.getDay());
         member.setIntroduction(form.getIntroduction());
         member.setPhoto(form.getPhoto());
 

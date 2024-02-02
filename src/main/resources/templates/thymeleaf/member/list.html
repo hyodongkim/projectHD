@@ -47,10 +47,10 @@
                     <tr class="text-center" th:each="member, memberStat : ${list}">
                         <td th:text="${memberStat.count}">1</td>
                         <td th:text="${member.userid}">tester</td>
-                        <td><a th:href="@{Members/{memberId}(memberId=${member.id})}">[[${member.name}]]</a></td>
+                        <td><a th:href="@{Members/{userid}(userid=${member.userid})}">[[${member.name}]]</a></td>
                         <td th:text="${member.age}">10</td>
                         <td th:text="${member.introduction}">자기소개</td>
-                        <td th:text="${#temporals.format(member.regdate, 'yyyy-MM-dd HH:mm:ss')}">2022-10-10</td>
+                        <td th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm:ss')}">2022-10-10</td>
                     </tr>
                     </tbody>
                 </table>
