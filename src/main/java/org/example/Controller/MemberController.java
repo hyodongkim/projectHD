@@ -1,7 +1,6 @@
 package org.example.Controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.Dto.HdMemberForm;
 import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
 import org.example.Entity.Member;
@@ -19,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -27,9 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+
 import java.util.UUID;
 
 @Controller
@@ -52,8 +52,8 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("member") MemberForm member,BindingResult bindingResult, @RequestParam("photo") MultipartFile imageFile, @RequestParam String userid,
-                           RedirectAttributes redirectAttributes,HttpServletRequest req, Model model) throws IOException {
+    public String register(@Validated @ModelAttribute("member") MemberForm member, BindingResult bindingResult, @RequestParam("photo") MultipartFile imageFile, @RequestParam String userid, ResourceHandlerRegistry registry,
+                           RedirectAttributes redirectAttributes, HttpServletRequest req, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
@@ -61,11 +61,36 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
-        String fullPath = null;
-        if (!imageFile.isEmpty()) {
-            fullPath = fileDir + imageFile.getOriginalFilename();
-            log.info("파일 저장 fullPath={}", fullPath);
-            imageFile.transferTo(new File(fullPath));
+//        String realPath = "C:/Lecture/teamProject2/projectHD/src/main/resources/static/";
+//        File folder = new File(realPath);
+//        if (!folder.exists()) {
+//            try {
+//                folder.mkdirs(); //경로가 존재하지 않을 경우 상위폴더까지 모두 생성
+//                System.out.println("상위폴더까지 생성완료");
+//            } catch (Exception e) {
+//            }
+//        }
+
+//        String fullPath = null;
+//        if (!imageFile.isEmpty()) {
+//            fullPath = fileDir + imageFile.getOriginalFilename();
+//            log.info("파일 저장 fullPath={}", fullPath);
+//            imageFile.transferTo(new File(fullPath));
+//        }
+
+        String ranName = UUID.randomUUID().toString();	// 랜덤한 문자열을 생성해 붙여줘야 같은 이름으로 파일의 중복을 방지한다. (덮어쓰기 방지)
+        String storedFileName = ranName + "_" + imageFile.getOriginalFilename();
+        log.info("{}",imageFile.getOriginalFilename());
+        try {
+            imageFile.transferTo(new File(storedFileName));
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+
+        if (imageFile.isEmpty()) {
+            return null;
+        }else {
+            imageFile.transferTo(new File(storedFileName));
         }
 
 
@@ -81,8 +106,8 @@ public class MemberController {
         registerMember.setBirth(member.getBirth());
         registerMember.setDay(member.getDay());
         registerMember.setIntroduction(member.getIntroduction());
-        registerMember.setPhoto(fullPath);
-
+//        registerMember.setPhoto(fullPath);
+        registerMember.setPhoto(storedFileName);
 
         // 회원 등록
         Long userId = memberService.register(registerMember);

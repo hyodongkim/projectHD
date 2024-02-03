@@ -59,7 +59,7 @@
                 <tr>
                     <th>가입일자</th>
                     <td class="text-left"
-                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm:ss')}">day</td>
+                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
                 </tr>
                 <tr>
                     <th>자기소개</th>
@@ -69,7 +69,9 @@
                     <th>프로필사진</th>
                     <td th:text="${member.photo}">photo</td>
                 </tr>
-
+                <tr>
+                    <img th:src="@{|${member.photo}/|}" alt="사진 미리보기">
+                </tr>
                 </tbody>
             </table>
         </div>
