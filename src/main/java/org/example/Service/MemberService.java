@@ -12,15 +12,17 @@ public interface MemberService {
     /**
      * 회원가입
      */
-    public Long register(Member member);
+    public void register(Member member);
 
     /**
      * 회원 인증
      */
     public Member isMember(String userid, String password);
 
-    /** 회원 상세 */
-    public Optional<Member> findMember(String userid);
+    /**
+     * 회원 상세
+     */
+    public Optional<Member> findMember(Long id);
 
     /** 전체 회원 조회 */
     public List<Member> findMembers();

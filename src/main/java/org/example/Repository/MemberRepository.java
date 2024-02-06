@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // 아이디 또는 이름에 의한 검색 - 목록 페이징 처리
     public Page<Member> findAllByUseridOrNameContaining(String userid, String name, Pageable pageable);
 
-    public Optional<Member> findByUserid(String userid);
+    public Member findByUserid(String userid);
 
     public Member findByUseridAndPassword(String userid, String password);
 }

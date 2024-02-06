@@ -25,9 +25,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import java.util.UUID;
@@ -40,6 +45,9 @@ public class MemberController {
     @Value("${file.dir}")
     private String fileDir;
 
+    @Value("${spring.servlet.multipart.location}")
+    private String location;
+
     @Autowired
     private MemberService memberService;
 
@@ -47,13 +55,16 @@ public class MemberController {
     private MemberRepository memberRepository;
 
     @GetMapping("/register")
-    public String registerForm(@ModelAttribute("member") Member member) {
+    public String registerForm(Model model) {
+
+        model.addAttribute("member", new Member());
+
         return "thymeleaf/member/registerForm";
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute("member") MemberForm member, BindingResult bindingResult, @RequestParam("photo") MultipartFile imageFile, @RequestParam String userid, ResourceHandlerRegistry registry,
-                           RedirectAttributes redirectAttributes, HttpServletRequest req, Model model) throws IOException {
+    public String register(@Valid @ModelAttribute MemberForm form, @RequestParam(required = false) MultipartFile imageFile,
+                           RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
@@ -61,68 +72,35 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
-//        String realPath = "C:/Lecture/teamProject2/projectHD/src/main/resources/static/";
-//        File folder = new File(realPath);
-//        if (!folder.exists()) {
-//            try {
-//                folder.mkdirs(); //경로가 존재하지 않을 경우 상위폴더까지 모두 생성
-//                System.out.println("상위폴더까지 생성완료");
-//            } catch (Exception e) {
-//            }
-//        }
-
-//        String fullPath = null;
-//        if (!imageFile.isEmpty()) {
-//            fullPath = fileDir + imageFile.getOriginalFilename();
-//            log.info("파일 저장 fullPath={}", fullPath);
-//            imageFile.transferTo(new File(fullPath));
-//        }
-
-        String ranName = UUID.randomUUID().toString();	// 랜덤한 문자열을 생성해 붙여줘야 같은 이름으로 파일의 중복을 방지한다. (덮어쓰기 방지)
-        String storedFileName = ranName + "_" + imageFile.getOriginalFilename();
-        log.info("{}",imageFile.getOriginalFilename());
-        try {
-            imageFile.transferTo(new File(storedFileName));
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
-        }
-
-        if (imageFile.isEmpty()) {
-            return null;
-        }else {
-            imageFile.transferTo(new File(storedFileName));
-        }
-
-
         // 검증 성공
         Member registerMember = new Member();
-        registerMember.setId(member.getId());
-        registerMember.setUserid(member.getUserid());
-        registerMember.setPassword(member.getPassword());
-        registerMember.setEmail(member.getEmail());
-        registerMember.setName(member.getName());
-        registerMember.setSex(member.getSex());
-        registerMember.setAge(member.getAge());
-        registerMember.setBirth(member.getBirth());
-        registerMember.setDay(member.getDay());
-        registerMember.setIntroduction(member.getIntroduction());
-//        registerMember.setPhoto(fullPath);
-        registerMember.setPhoto(storedFileName);
+//        registerMember.setId(form.getId());
+        registerMember.setUserid(form.getUserid());
+        registerMember.setPassword(form.getPassword());
+        registerMember.setEmail(form.getEmail());
+        registerMember.setName(form.getName());
+        registerMember.setSex(form.getSex());
+        registerMember.setAge(form.getAge());
+        registerMember.setBirth(form.getBirth());
+        registerMember.setDay(form.getDay());
+        registerMember.setIntroduction(form.getIntroduction());
+        registerMember.setPhoto(String.valueOf(imageFile));
+
 
         // 회원 등록
-        Long userId = memberService.register(registerMember);
 
-
-        redirectAttributes.addAttribute("memberId", userId);
+        memberService.register(registerMember);
+//        redirectAttributes.addAttribute("memberId", userId);
+        model.addAttribute("member",form);
         redirectAttributes.addAttribute("status", "new");
         // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
     }
-    @GetMapping("/{userid}")
-    public String view(@PathVariable String userid, Model model) {
-        Optional<Member> optional = memberService.findMember(userid);
-        model.addAttribute("member", optional.get());
+    @GetMapping("/{id}")
+    public String view(@PathVariable Long id, Model model) {
+        Optional<Member> member= memberService.findMember(id);
+        model.addAttribute("member",member);
         return "thymeleaf/member/view";
     }
 
@@ -198,15 +176,15 @@ public class MemberController {
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getUserid());
-            model.addAttribute("member", optional.get());
+            Optional<Member> optional = memberService.findMember(loginMember.getId());
+            model.addAttribute("member", optional);
         } else {
             Cookie cookie = new Cookie("rememberId", "");
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getUserid());
-            model.addAttribute("member", optional.get());
+            Optional<Member> optional = memberService.findMember(loginMember.getId());
+            model.addAttribute("member", optional);
         }
 ///        return "redirect:"+redirect;
         return "thymeleaf/member/view";
@@ -220,56 +198,55 @@ public class MemberController {
         return "redirect:/Members";
     }
 
-    @GetMapping("/updateMember/{userid}")
-    public String updateMember(@PathVariable String userid,Model model){
+    @GetMapping("/updateMember/{id}")
+    public String updateMember(@PathVariable Long id,Model model, @ModelAttribute("form") Member form){
 
-        Optional<Member> member = memberService.findMember(userid);
-//        model.addAttribute("member",optional.get());
-        Member form = new Member();
+        Member member = new Member();
 
-        form.setId(member.get().getId());
-        form.setUserid(member.get().getUserid());
-        form.setPassword(member.get().getPassword());
-        form.setEmail(member.get().getEmail());
-        form.setName(member.get().getName());
-        form.setSex(member.get().getSex());
-        form.setAge(member.get().getAge());
-        form.setBirth(member.get().getBirth());
-        form.setDay(member.get().getDay());
-        form.setIntroduction(member.get().getIntroduction());
-        form.setPhoto(member.get().getPhoto());
+        form.setId(member.getId());
+        form.setUserid(member.getUserid());
+        form.setPassword(member.getPassword());
+        form.setEmail(member.getEmail());
+        form.setName(member.getName());
+        form.setSex(member.getSex());
+        form.setAge(member.getAge());
+        form.setBirth(member.getBirth());
+        form.setDay(member.getDay());
+        form.setIntroduction(member.getIntroduction());
+        form.setPhoto(member.getPhoto());
 
-        memberService.updateMember(form);
+        Optional<Member> member1 = memberService.findMember(id);
 
-        model.addAttribute("member",form);
+        model.addAttribute("member1",member1);
+
 
         return "thymeleaf/member/updateForm";
     }
-    @PostMapping("/updateMember/{userid}")
-    public String updates(@RequestParam("photo") MultipartFile imageFile, @ModelAttribute("form") MemberForm form,@PathVariable String userid, Model model) throws IOException {
+    @PostMapping("/updateMember/{id}")
+    public String updates(@RequestParam(required = false) MultipartFile imageFile, @ModelAttribute("form") MemberForm form,@PathVariable Long id, Model model) throws IOException {
 
-//        Optional<Member> member = memberService.findMember(id);
-        String fullPath = null;
-        if (!imageFile.isEmpty()) {
-            fullPath = fileDir + imageFile.getOriginalFilename();
-            log.info("파일 저장 fullPath={}", fullPath);
-            imageFile.transferTo(new File(fullPath));
-        }
 
-        Member member = new Member();
-        member.setId(form.getId());
-        member.setUserid(form.getUserid());
-        member.setPassword(form.getPassword());
-        member.setEmail(form.getEmail());
-        member.setName(form.getName());
-        member.setSex(form.getSex());
-        member.setAge(form.getAge());
-        member.setBirth(form.getBirth());
-        member.setDay(form.getDay());
-        member.setIntroduction(form.getIntroduction());
-        member.setPhoto(fullPath);
+        Optional<Member> member2 = memberService.findMember(id);
 
-        memberService.updateMember(member);
+        // 검증 성공
+        Member registerMember = new Member();
+        registerMember.setId(form.getId());
+        registerMember.setUserid(form.getUserid());
+        registerMember.setPassword(form.getPassword());
+        registerMember.setEmail(form.getEmail());
+        registerMember.setName(form.getName());
+        registerMember.setSex(form.getSex());
+        registerMember.setAge(form.getAge());
+        registerMember.setBirth(form.getBirth());
+        registerMember.setDay(form.getDay());
+        registerMember.setIntroduction(form.getIntroduction());
+        registerMember.setPhoto(String.valueOf(imageFile));
+
+        memberService.updateMember(registerMember);
+
+
+        model.addAttribute("member2",member2);
+
 
         return "redirect:/Members";
     }

@@ -16,7 +16,8 @@
             <strong>커뮤니티 회원 가입을 축하합니다.</strong>
         </div>
 
-        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >
+<!--        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >-->
+    <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post">
         <div class="table-responsive">
             <table class="table table-bordered">
                     <tbody th:each="member: ${member}">
@@ -96,7 +97,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <img th:src="@{|${member.photo}/|}" alt="사진 미리보기">
+                    <img th:src="@{|${photo}/|}" alt="사진 미리보기">
                 </tr>
 
             </table>

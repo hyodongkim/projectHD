@@ -16,13 +16,11 @@ import java.util.Date;
 
 @Entity
 @DynamicInsert
-@RequiredArgsConstructor
 @ToString
 @Getter
 @Setter
 @SequenceGenerator( name= "member_id_seq_gen",
         sequenceName = "member_seq",
-        initialValue = 1,
         allocationSize = 1)
 @Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
@@ -52,17 +50,5 @@ public class Member{
     @Column(name="member_photo")
     private String photo;
 
-    public Member(Long id, String userid, String password, String email, String name, Gender sex, Integer age, String birth, LocalDateTime day, String introduction, String photo) {
-        this.id = id;
-        this.userid = userid;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
-        this.birth = birth;
-        this.day = day;
-        this.introduction = introduction;
-        this.photo = photo;
-    }
+    public Member(){}
 }

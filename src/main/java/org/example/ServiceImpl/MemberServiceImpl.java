@@ -21,9 +21,8 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository memberRepository;
 
     @Override
-    public Long register(Member member) {
-        Member saveMember = memberRepository.save(member);
-        return saveMember.getId();
+    public void register(Member member) {
+        memberRepository.save(member);
     }
 
     @Override
@@ -32,8 +31,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Optional<Member> findMember(String userid) {
-        return memberRepository.findByUserid(userid);
+    public Optional<Member> findMember(Long id) {
+        return memberRepository.findById(id);
     }
 
     @Override
