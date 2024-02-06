@@ -39,52 +39,52 @@
 
                 <tr>
                     <th>아이디</th>
-                    <td th:text="${userid}">id</td>
+                    <td th:text="${member.userid}">id</td>
                 </tr>
                 <tr>
                     <th>E-Mail</th>
-                    <td th:text="${email}">email</td>
+                    <td th:text="${member.email}">email</td>
                 </tr>
                 <tr>
                     <th>회원명</th>
-                    <td th:text="${name}">name</td>
+                    <td th:text="${member.name}">name</td>
                 </tr>
                 <tr>
                     <th>성별</th>
-                    <td th:text="${sex}">sex</td>
+                    <td th:text="${member.sex}">sex</td>
                 </tr>
                 <tr>
                     <th>나이</th>
-                    <td th:text="${age}">age</td>
+                    <td th:text="${member.age}">age</td>
                 </tr>
                 <tr>
                     <th>생년월일</th>
-                    <td th:text="${birth}">birth</td>
+                    <td th:text="${member.birth}">birth</td>
                 </tr>
                 <tr>
                     <th>가입일자</th>
                     <td class="text-left"
-                        th:text="${#temporals.format(day, 'yyyy-MM-dd HH:mm')}">day</td>
+                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
                 </tr>
                 <tr>
                     <th>자기소개</th>
-                    <td th:text="${introduction}">introduction</td>
+                    <td th:text="${member.introduction}">introduction</td>
                 </tr>
                 <tr>
                     <th>프로필사진</th>
-                    <td th:text="${photo}">photo</td>
+                    <td th:text="${member.photo}">photo</td>
                 </tr>
                 <tr>
-                    <img th:src="@{|${photo}/|}" alt="사진 미리보기">
+                    <img th:src="@{|${member.photo}/|}" alt="사진 미리보기">
                 </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="pull-right" th:each="member : ${member}">
-            <a th:href="@{/Members/updateMember/{id}(id=${id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+            <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
-            <a th:href="@{/Members/delete/{id}(id=${id})}"><button class="btn btn-warning">회원탈퇴</button></a>
+            <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
         </div>
 
 </section>

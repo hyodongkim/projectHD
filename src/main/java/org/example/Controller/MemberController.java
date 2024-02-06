@@ -98,9 +98,9 @@ public class MemberController {
         return "redirect:/Members";
     }
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@ModelAttribute Member member1, @PathVariable Long id, Model model) {
         Optional<Member> member= memberService.findMember(id);
-        model.addAttribute("member",member);
+        model.addAttribute("member",member.get());
         return "thymeleaf/member/view";
     }
 
