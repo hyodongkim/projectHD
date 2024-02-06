@@ -17,14 +17,14 @@
         </div>
 
 <!--        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >-->
-    <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post">
+    <form th:action="@{/Members/updateMember/{id}(id=${id})}"  th:object="${member}" method="post">
         <div class="table-responsive">
             <table class="table table-bordered">
                     <tbody th:each="member: ${member}">
 <!--                    <tbody th:each="member: ${member}">-->
                 <tr>
                     <label>
-                        <input type="hidden" th:field="*{id}"/>
+                        <input type="text" th:field="*{id}"/>
                     </label>
                 </tr>
                 <tr>

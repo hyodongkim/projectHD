@@ -98,7 +98,7 @@ public class MemberController {
         return "redirect:/Members";
     }
     @GetMapping("/{id}")
-    public String view(@ModelAttribute Member member1, @PathVariable Long id, Model model) {
+    public String view(@PathVariable Long id, Model model) {
         Optional<Member> member= memberService.findMember(id);
         model.addAttribute("member",member.get());
         return "thymeleaf/member/view";
@@ -199,54 +199,22 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,Model model, @ModelAttribute("form") Member form){
+    public String updateMember(@PathVariable Long id,Model model){
 
-        Member member = new Member();
-
-        form.setId(member.getId());
-        form.setUserid(member.getUserid());
-        form.setPassword(member.getPassword());
-        form.setEmail(member.getEmail());
-        form.setName(member.getName());
-        form.setSex(member.getSex());
-        form.setAge(member.getAge());
-        form.setBirth(member.getBirth());
-        form.setDay(member.getDay());
-        form.setIntroduction(member.getIntroduction());
-        form.setPhoto(member.getPhoto());
-
-        Optional<Member> member1 = memberService.findMember(id);
-
-        model.addAttribute("member1",member1);
+        Optional<Member> member= memberService.findMember(id);
+        model.addAttribute("member",member.get());
 
 
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@RequestParam(required = false) MultipartFile imageFile, @ModelAttribute("form") MemberForm form,@PathVariable Long id, Model model) throws IOException {
+    public String updates(@RequestParam(required = false) MultipartFile imageFile, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
 
 
-        Optional<Member> member2 = memberService.findMember(id);
+        Optional<Member> member1 = memberService.findMember(id);
+        model.addAttribute("member",member1);
 
-        // 검증 성공
-        Member registerMember = new Member();
-        registerMember.setId(form.getId());
-        registerMember.setUserid(form.getUserid());
-        registerMember.setPassword(form.getPassword());
-        registerMember.setEmail(form.getEmail());
-        registerMember.setName(form.getName());
-        registerMember.setSex(form.getSex());
-        registerMember.setAge(form.getAge());
-        registerMember.setBirth(form.getBirth());
-        registerMember.setDay(form.getDay());
-        registerMember.setIntroduction(form.getIntroduction());
-        registerMember.setPhoto(String.valueOf(imageFile));
-
-        memberService.updateMember(registerMember);
-
-
-        model.addAttribute("member2",member2);
-
+        memberService.updateMember(member);
 
         return "redirect:/Members";
     }
