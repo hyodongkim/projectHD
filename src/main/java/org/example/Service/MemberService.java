@@ -24,6 +24,8 @@ public interface MemberService {
      */
     public Optional<Member> findMember(Long id);
 
+    public Optional<Member> intoLogin(String userid);
+
     /** 전체 회원 조회 */
     public List<Member> findMembers();
 

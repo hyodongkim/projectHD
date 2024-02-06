@@ -31,6 +31,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Optional<Member> intoLogin(String userid){return memberRepository.findByUserid(userid);}
+
+    @Override
     public Optional<Member> findMember(Long id) {
         return memberRepository.findById(id);
     }

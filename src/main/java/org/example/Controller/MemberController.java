@@ -176,15 +176,15 @@ public class MemberController {
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getId());
-            model.addAttribute("member", optional);
+            Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
+            model.addAttribute("member", optional.get());
         } else {
             Cookie cookie = new Cookie("rememberId", "");
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
-            Optional<Member> optional = memberService.findMember(loginMember.getId());
-            model.addAttribute("member", optional);
+            Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
+            model.addAttribute("member", optional.get());
         }
 ///        return "redirect:"+redirect;
         return "thymeleaf/member/view";
