@@ -1,5 +1,7 @@
 package org.example.ServiceImpl;
 
+import org.example.Dto.MemberForm;
+import org.example.Entity.Image;
 import org.example.Entity.Member;
 import org.example.Repository.MemberRepository;
 import org.example.Service.MemberService;
@@ -55,5 +57,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteMember(Long id) {
          memberRepository.deleteById(id);
+    }
+    @Override
+    public Member RegArticleNextPk(Member member){
+//        memberRepository.registMember(member);
+        return memberRepository.findByUserid(member.getUserid()).orElseGet(Member :: new);
+    }
+    @Override
+    public void RegImage(Member member){
+        memberRepository.save(member);
     }
 }

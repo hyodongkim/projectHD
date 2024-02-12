@@ -3,8 +3,10 @@ package org.example.Controller;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
+import org.example.Entity.Image;
 import org.example.Entity.Member;
 import org.example.Repository.MemberRepository;
+import org.example.Service.ImageService;
 import org.example.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,11 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/Members")
@@ -54,8 +52,11 @@ public class MemberController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private ImageService imageService;
+
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm(@RequestParam(value="photo",required = false) MultipartFile imageFile,Model model) {
 
         model.addAttribute("member", new Member());
 
@@ -63,7 +64,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute MemberForm form, @RequestParam(required = false) MultipartFile imageFile,
+    public String register(@Valid @ModelAttribute MemberForm form,@ModelAttribute Member member ,@RequestParam(value="photo",required = false) MultipartFile file,
                            RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
@@ -72,24 +73,63 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
+        if (file == null) {
+
+        }
+        else {
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
+
+            System.out.println("파일명 : " + fileRealName);
+            System.out.println("용량크기(byte) : " + size);
+            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+
+
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString());
+            String[] uuids = uuid.toString().split("-");
+
+
+            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+
+            File saveFile = new File(uploadFolder + member.getPhoto());  // 적용 후
+            try {
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         // 검증 성공
-        Member registerMember = new Member();
-//        registerMember.setId(form.getId());
-        registerMember.setUserid(form.getUserid());
-        registerMember.setPassword(form.getPassword());
-        registerMember.setEmail(form.getEmail());
-        registerMember.setName(form.getName());
-        registerMember.setSex(form.getSex());
-        registerMember.setAge(form.getAge());
-        registerMember.setBirth(form.getBirth());
-        registerMember.setDay(form.getDay());
-        registerMember.setIntroduction(form.getIntroduction());
-        registerMember.setPhoto(String.valueOf(imageFile));
+//        Member registerMember = new Member();
+////        registerMember.setId(form.getId());
+//        registerMember.setUserid(form.getUserid());
+//        registerMember.setPassword(form.getPassword());
+//        registerMember.setEmail(form.getEmail());
+//        registerMember.setName(form.getName());
+//        registerMember.setSex(form.getSex());
+//        registerMember.setAge(form.getAge());
+//        registerMember.setBirth(form.getBirth());
+//        registerMember.setDay(form.getDay());
+//        registerMember.setIntroduction(form.getIntroduction());
+        member.setPhoto(form.getPhoto());
 
 
         // 회원 등록
+        memberService.RegImage(member);
 
-        memberService.register(registerMember);
+//        memberService.register(registerMember);
 //        redirectAttributes.addAttribute("memberId", userId);
         model.addAttribute("member",form);
         redirectAttributes.addAttribute("status", "new");
@@ -98,9 +138,98 @@ public class MemberController {
         return "redirect:/Members";
     }
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id, Model model) {
-        Optional<Member> member= memberService.findMember(id);
-        model.addAttribute("member",member.get());
+    public String view(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id, Model model) {
+
+        if (file == null) {
+
+        }
+        else {
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
+
+            System.out.println("파일명 : " + fileRealName);
+            System.out.println("용량크기(byte) : " + size);
+            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+
+
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString());
+            String[] uuids = uuid.toString().split("-");
+
+
+            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+
+            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            try {
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        Optional<Member> member1= memberService.findMember(id);
+        model.addAttribute("member",member1.get());
+        member.setPhoto(form.getPhoto());
+
+
+        return "thymeleaf/member/view";
+    }
+    @PostMapping("/{id}")
+    public String viewPost(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id, Model model) {
+
+        if (file == null) {
+
+        }
+        else {
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
+
+            System.out.println("파일명 : " + fileRealName);
+            System.out.println("용량크기(byte) : " + size);
+            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";;
+
+
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString());
+            String[] uuids = uuid.toString().split("-");
+
+
+            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+
+            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            try {
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Optional<Member> member1= memberService.findMember(id);
+        model.addAttribute("member",member1.get());
+        member.setPhoto(form.getPhoto());
+
         return "thymeleaf/member/view";
     }
 
@@ -199,22 +328,110 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,Model model){
+    public String updateMember(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id,Model model){
 
-        Optional<Member> member= memberService.findMember(id);
-        model.addAttribute("member",member.get());
+        if (file == null) {
+
+        }
+        else {
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
+
+            System.out.println("파일명 : " + fileRealName);
+            System.out.println("용량크기(byte) : " + size);
+            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+
+
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString());
+            String[] uuids = uuid.toString().split("-");
+
+            String uniqueName = uuids[0];
+            System.out.println("생성된 고유문자열" + uniqueName);
+            System.out.println("확장자명" + fileExtension);
+
+
+            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+
+            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            try {
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Optional<Member> member1= memberService.findMember(id);
+        model.addAttribute("member",member1.get());
+        member.setPhoto(form.getPhoto());
+
+
 
 
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@RequestParam(required = false) MultipartFile imageFile, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
+    public String updates(@ModelAttribute MemberForm form,@RequestParam(value="photo",required = false) MultipartFile file, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
 
+        if (file == null) {
+
+        }
+        else {
+            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+            long size = file.getSize(); //파일 사이즈
+
+            System.out.println("파일명 : " + fileRealName);
+            System.out.println("용량크기(byte) : " + size);
+            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+
+
+		/*
+		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
+		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
+		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
+		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
+		 */
+
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString());
+            String[] uuids = uuid.toString().split("-");
+
+            String uniqueName = uuids[0];
+            System.out.println("생성된 고유문자열" + uniqueName);
+            System.out.println("확장자명" + fileExtension);
+
+
+            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+
+            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            try {
+                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member",member1);
+        member.setPhoto(form.getPhoto());
 
         memberService.updateMember(member);
+
 
         return "redirect:/Members";
     }

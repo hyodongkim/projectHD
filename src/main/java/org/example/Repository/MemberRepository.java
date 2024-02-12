@@ -4,6 +4,9 @@ import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -19,5 +22,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     public Member findByUseridAndPassword(String userid, String password);
 
-    Optional<Member> findByUserid(String userid);
+    public Optional<Member> findByUserid(String userid);
+
+    @Modifying
+    @Query(value="INSERT INTO member(id,userid,password,email,name,sex,age,birth,day,introduction)"
+            + "VALUES(:#{#mem.id},:#{#mem.userid},:#{#mem.password},:#{#mem.email},:#{#mem.name},:#{#mem.sex},:#{#mem.age},:#{#mem.birth},:#{#mem.day},:#{#mem.introduction})",nativeQuery = true)
+    public void registMember(@Param("mem") Member member);
 }

@@ -31,7 +31,10 @@
 
         <div class="table-responsive">
             <table class="table table-bordered">
+                <form th:action="@{/Members/updateMember/{id}(id=${member.id})}" method="post">
                 <tbody th:each="member : ${member}">
+
+
                 <tr>
                     <th>키값(확인용)</th>
                     <td th:text="${member.id}">id</td>
@@ -75,14 +78,18 @@
                     <td th:text="${member.photo}">photo</td>
                 </tr>
                 <tr>
-                    <img th:src="@{|${member.photo}/|}" alt="사진 미리보기">
+                    <img th:src="@{|/PROFILE/${member.photo}|}" alt="사진 미리보기">
                 </tr>
                 </tbody>
+                </form>
             </table>
         </div>
 
-        <div class="pull-right" th:each="member : ${member}">
+<!--            <button type="submit">수정하러가기</button>-->
+
+            <div class="pull-right" th:each="member : ${member}">
             <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
             <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
         </div>

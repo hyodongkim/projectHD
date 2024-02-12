@@ -45,6 +45,6 @@ public class MemberForm {
 
     private String introduction;
 
-    private MultipartFile photo;
+    private String photo;
 
 }
