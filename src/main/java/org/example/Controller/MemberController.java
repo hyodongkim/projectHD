@@ -80,11 +80,11 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : " + fileRealName);
+            System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
             String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
 
 
 		/*
@@ -98,10 +98,15 @@ public class MemberController {
             System.out.println(uuid.toString());
             String[] uuids = uuid.toString().split("-");
 
+            String uniqueName = uuids[0];
+            System.out.println("생성된 고유문자열" + uniqueName);
+            System.out.println("확장자명" + fileExtension);
+
+
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder + member.getPhoto());  // 적용 후
+            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
@@ -147,10 +152,11 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : " + fileRealName);
+            System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
+            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
 
 
 		/*
@@ -164,10 +170,15 @@ public class MemberController {
             System.out.println(uuid.toString());
             String[] uuids = uuid.toString().split("-");
 
+            String uniqueName = uuids[0];
+            System.out.println("생성된 고유문자열" + uniqueName);
+            System.out.println("확장자명" + fileExtension);
+
+
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
@@ -195,11 +206,11 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : " + fileRealName);
+            System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
             String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";;
+            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
 
 
 		/*
@@ -213,10 +224,15 @@ public class MemberController {
             System.out.println(uuid.toString());
             String[] uuids = uuid.toString().split("-");
 
+            String uniqueName = uuids[0];
+            System.out.println("생성된 고유문자열" + uniqueName);
+            System.out.println("확장자명" + fileExtension);
+
+
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
@@ -337,11 +353,11 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : " + fileRealName);
+            System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
             String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
 
 
 		/*
@@ -360,9 +376,10 @@ public class MemberController {
             System.out.println("확장자명" + fileExtension);
 
 
+
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
@@ -391,11 +408,11 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : " + fileRealName);
+            System.out.println("파일명 : "  + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
             String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE/";
+            String uploadFolder = "C:\\test\\upload";
 
 
 		/*
@@ -414,9 +431,10 @@ public class MemberController {
             System.out.println("확장자명" + fileExtension);
 
 
+
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder + "/" + member.getPhoto());  // 적용 후
+            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
