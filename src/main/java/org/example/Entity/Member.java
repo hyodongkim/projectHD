@@ -1,6 +1,7 @@
 package org.example.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.Dto.Gender;
 import org.hibernate.annotations.DynamicInsert;
@@ -9,7 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +25,8 @@ import java.util.Date;
 @Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
 public class Member{
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq_gen")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq_gen")
     @Column(name="member_id")
     private Long id;
     @Column(name="member_userid",unique = true)

@@ -1,39 +1,48 @@
 package org.example.Controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
-import org.example.Entity.Image;
+
 import org.example.Entity.Member;
 import org.example.Repository.MemberRepository;
-import org.example.Service.ImageService;
+
 import org.example.Service.MemberService;
+import org.example.uploadingfiles.FileUploadController;
+import org.example.uploadingfiles.storage.StorageFileNotFoundException;
+import org.example.uploadingfiles.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/Members")
@@ -51,21 +60,39 @@ public class MemberController {
 
     @Autowired
     private MemberRepository memberRepository;
-
     @Autowired
-    private ImageService imageService;
+    private StorageService storageService;
+
 
     @GetMapping("/register")
-    public String registerForm(@RequestParam(value="photo",required = false) MultipartFile imageFile,Model model) {
+    public String registerForm(@RequestPart MultipartFile file,Model model) {
 
-        model.addAttribute("member", new Member());
+        model.addAttribute("files", storageService.loadAll().map(
+                        path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
+                                "serveFile", path.getFileName().toString()).build().toUri().toString())
+                .collect(Collectors.toList()));
+
+//        model.addAttribute("member", new Member());
 
         return "thymeleaf/member/registerForm";
     }
 
+    @GetMapping("/files/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+        Resource file = storageService.loadAsResource(filename);
+
+        if (file == null)
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    }
+
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute MemberForm form,@ModelAttribute Member member ,@RequestParam(value="photo",required = false) MultipartFile file,
-                           RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) throws IOException {
+    public String register(@Validated @ModelAttribute MemberForm form,BindingResult bindingResult,@RequestParam("file") MultipartFile file, @ModelAttribute Member member,
+                           RedirectAttributes redirectAttributes, Model model){
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
@@ -73,18 +100,18 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
-        if (file == null) {
 
-        }
-        else {
-            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = file.getSize(); //파일 사이즈
-
-            System.out.println("파일명 : "  + fileRealName);
-            System.out.println("용량크기(byte) : " + size);
-            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
+//        if (file == null) {
+//
+//        }
+//        else {
+//            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
+//            long size = file.getSize(); //파일 사이즈
+//
+//            System.out.println("파일명 : " + fileRealName);
+//            System.out.println("용량크기(byte) : " + size);
+//            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
+//            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE";
 
 
 		/*
@@ -94,56 +121,60 @@ public class MemberController {
 		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
 		 */
 
-            UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString());
-            String[] uuids = uuid.toString().split("-");
+//            UUID uuid = UUID.randomUUID();
+//            System.out.println(uuid.toString());
+//            String[] uuids = uuid.toString().split("-");
+//
+//
+//            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
+//
+//            File saveFile = new File(uploadFolder + "/" + fileRealName);  // 적용 후
+//            try {
+//                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-            String uniqueName = uuids[0];
-            System.out.println("생성된 고유문자열" + uniqueName);
-            System.out.println("확장자명" + fileExtension);
 
 
-
-            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
-            try {
-                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
         // 검증 성공
-//        Member registerMember = new Member();
-////        registerMember.setId(form.getId());
-//        registerMember.setUserid(form.getUserid());
-//        registerMember.setPassword(form.getPassword());
-//        registerMember.setEmail(form.getEmail());
-//        registerMember.setName(form.getName());
-//        registerMember.setSex(form.getSex());
-//        registerMember.setAge(form.getAge());
-//        registerMember.setBirth(form.getBirth());
-//        registerMember.setDay(form.getDay());
-//        registerMember.setIntroduction(form.getIntroduction());
-        member.setPhoto(form.getPhoto());
 
+//        member.setId(form.getId());
+//        member.setUserid(form.getUserid());
+//        member.setPassword(form.getPassword());
+//        member.setEmail(form.getEmail());
+//        member.setName(form.getName());
+//        member.setSex(form.getSex());
+//        member.setAge(form.getAge());
+//        member.setBirth(form.getBirth());
+//        member.setDay(form.getDay());
+//        member.setIntroduction(form.getIntroduction());
+//        member.setPhoto(form.getPhoto());
+        storageService.store(file);
 
-        // 회원 등록
-        memberService.RegImage(member);
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-//        memberService.register(registerMember);
-//        redirectAttributes.addAttribute("memberId", userId);
-        model.addAttribute("member",form);
+//        memberService.register(member);
+
+//        model.addAttribute("member",member);
+
         redirectAttributes.addAttribute("status", "new");
         // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
     }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/{id}")
-    public String view(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id, Model model) {
+    public String view(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id, Model model) {
 
         if (file == null) {
 
@@ -152,11 +183,10 @@ public class MemberController {
             String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
             long size = file.getSize(); //파일 사이즈
 
-            System.out.println("파일명 : "  + fileRealName);
+            System.out.println("파일명 : " + fileRealName);
             System.out.println("용량크기(byte) : " + size);
             //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
+            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE";
 
 
 		/*
@@ -170,15 +200,10 @@ public class MemberController {
             System.out.println(uuid.toString());
             String[] uuids = uuid.toString().split("-");
 
-            String uniqueName = uuids[0];
-            System.out.println("생성된 고유문자열" + uniqueName);
-            System.out.println("확장자명" + fileExtension);
-
-
 
             // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
 
-            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
+            File saveFile = new File(uploadFolder + "/" + fileRealName);  // 적용 후
             try {
                 file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
             } catch (IllegalStateException e) {
@@ -191,60 +216,19 @@ public class MemberController {
 
         Optional<Member> member1= memberService.findMember(id);
         model.addAttribute("member",member1.get());
-        member.setPhoto(form.getPhoto());
+
 
 
         return "thymeleaf/member/view";
     }
     @PostMapping("/{id}")
-    public String viewPost(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id, Model model) {
-
-        if (file == null) {
-
-        }
-        else {
-            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = file.getSize(); //파일 사이즈
-
-            System.out.println("파일명 : "  + fileRealName);
-            System.out.println("용량크기(byte) : " + size);
-            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
+    public String viewPost(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id, Model model) {
 
 
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-
-            UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString());
-            String[] uuids = uuid.toString().split("-");
-
-            String uniqueName = uuids[0];
-            System.out.println("생성된 고유문자열" + uniqueName);
-            System.out.println("확장자명" + fileExtension);
-
-
-
-            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
-            try {
-                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         Optional<Member> member1= memberService.findMember(id);
         model.addAttribute("member",member1.get());
-        member.setPhoto(form.getPhoto());
+
 
         return "thymeleaf/member/view";
     }
@@ -344,54 +328,12 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestParam(value="photo",required = false) MultipartFile file,@PathVariable Long id,Model model){
+    public String updateMember(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id,Model model){
 
-        if (file == null) {
-
-        }
-        else {
-            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = file.getSize(); //파일 사이즈
-
-            System.out.println("파일명 : "  + fileRealName);
-            System.out.println("용량크기(byte) : " + size);
-            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:\\projectHD\\src\\main\\resources\\static\\PROFILE";
-
-
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-
-            UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString());
-            String[] uuids = uuid.toString().split("-");
-
-            String uniqueName = uuids[0];
-            System.out.println("생성된 고유문자열" + uniqueName);
-            System.out.println("확장자명" + fileExtension);
-
-
-
-            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
-            try {
-                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         Optional<Member> member1= memberService.findMember(id);
         model.addAttribute("member",member1.get());
-        member.setPhoto(form.getPhoto());
+
 
 
 
@@ -399,54 +341,13 @@ public class MemberController {
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute MemberForm form,@RequestParam(value="photo",required = false) MultipartFile file, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
-
-        if (file == null) {
-
-        }
-        else {
-            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = file.getSize(); //파일 사이즈
-
-            System.out.println("파일명 : "  + fileRealName);
-            System.out.println("용량크기(byte) : " + size);
-            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."));
-            String uploadFolder = "C:\\test\\upload";
+    public String updates(@ModelAttribute MemberForm form,@RequestParam MultipartFile file, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
 
 
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-
-            UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString());
-            String[] uuids = uuid.toString().split("-");
-
-            String uniqueName = uuids[0];
-            System.out.println("생성된 고유문자열" + uniqueName);
-            System.out.println("확장자명" + fileExtension);
-
-
-
-            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-            File saveFile = new File(uploadFolder+"\\"+uniqueName);  // 적용 후
-            try {
-                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member",member1);
-        member.setPhoto(form.getPhoto());
+
 
         memberService.updateMember(member);
 

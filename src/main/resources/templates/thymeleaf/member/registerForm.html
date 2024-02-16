@@ -125,17 +125,18 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">프로필사진</label>
                         <div class="col-lg-11">
-                            <input type="file" class="form-control" th:field="*{photo}"
-                                   placeholder="자기소개 항목입니다.">
+                            <input type="file" class="form-control"
+                                   placeholder="자기소개 항목입니다." th:field="*{file}"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{file}">프로필사진 오류</div>
                         </div>
                     </div>
 
-                    <img th:src="@{|/PROFILE/${member.photo}|}" alt="사진 미리보기">
+                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">
 
                     <div class="form-group">
                         <div class="col-lg-11 col-lg-offset-5">
-<!--                            <a th:href="@{/Members/{userid}(userid=${userid})}" class="btn btn-success"><button type="submit" class="btn btn-success">확 인</button></a>-->
-                            <button type="submit">등 록</button>
+                            <a th:href="@{/Members/{id}(id=${id})}" class="btn btn-success"><button type="submit" class="btn btn-success">확 인</button></a>
                             <button class="btn btn-default">취 소</button>
                         </div>
                     </div>

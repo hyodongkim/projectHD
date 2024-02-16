@@ -92,12 +92,12 @@
                     <th class="text-center">자기소개
                         <label>
                             <input type="file" class="form-control"
-                                   placeholder="자기소개 항목입니다." th:field="*{photo}">
+                                   placeholder="자기소개 항목입니다." th:field="*{file}">
                         </label>
                     </th>
                 </tr>
                 <tr>
-                    <img th:src="@{|/PROFILE/${member.photo}|}" alt="사진 미리보기">
+                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">
                 </tr>
 
             </table>

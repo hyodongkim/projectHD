@@ -1,8 +1,8 @@
 package org.example.Dto;
 
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 

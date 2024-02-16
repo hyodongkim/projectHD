@@ -18,13 +18,13 @@ public class MyController {
     @Autowired
     private MyServiceImpl Service;
 
-    @GetMapping("/")
-    public String realmain(Model model) {
-//        List<entity> list = Service.findAll();
-//        model.addAttribute("list", list);
-        return "thymeleaf/index";
-//        return "redirect:/admin/views/admin_notice";
-    }
+//    @GetMapping("/")
+//    public String realmain(Model model) {
+////        List<entity> list = Service.findAll();
+////        model.addAttribute("list", list);
+//        return "thymeleaf/index";
+////        return "redirect:/admin/views/admin_notice";
+//    }
     @GetMapping("/{id}")
     public String main(@PathVariable("id") String id, Model model) {
 //        List<entity> list = Service.findAll();

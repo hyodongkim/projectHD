@@ -1,7 +1,5 @@
 package org.example.Service;
 
-import org.example.Dto.MemberForm;
-import org.example.Entity.Image;
 import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +11,10 @@ public interface MemberService {
 
     /**
      * 회원가입
+     *
+     * @return
      */
-    public void register(Member member);
+    public String register(Member member);
 
     /**
      * 회원 인증
@@ -37,9 +37,5 @@ public interface MemberService {
     public void updateMember(Member member);
 
     public void deleteMember(Long id);
-
-    public Member RegArticleNextPk(Member member);
-
-    public void RegImage(Member member);
 
 }
