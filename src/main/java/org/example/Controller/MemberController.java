@@ -19,6 +19,7 @@ import org.example.uploadingfiles.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,10 +34,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriUtils;
 
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,9 +48,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/Members")
 @Slf4j
 public class MemberController {
-
-    @Value("${file.dir}")
-    private String fileDir;
 
     @Value("${spring.servlet.multipart.location}")
     private String location;
@@ -61,6 +62,10 @@ public class MemberController {
 
     @Autowired
     private FileStore fileStore;
+
+    private final String rootPath = System.getProperty("user.dir");
+    // 프로젝트 루트 경로에 있는 files 디렉토리
+    private final String fileDir = rootPath + "/src/main/resource/static/PROFILE/";
 
 
     @GetMapping("/register")
@@ -106,45 +111,35 @@ public class MemberController {
         return "redirect:/Members";
     }
 
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+    @ResponseBody
+    @GetMapping("/attach/{id}")
+    public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException {
+        Member member = memberService.findMember1(id);
+
+        System.out.println(member.getAttachFile());
+        String storeFilename = member.getAttachFile().getStoreFilename();
+        String uploadFilename = member.getAttachFile().getUploadFilename();
+        System.out.println(fileStore.getFullPath(storeFilename));
+
+        UrlResource urlResource = new UrlResource("file:" + fileStore.getFullPath(storeFilename));
+
+        // 업로드 한 파일명이 한글인 경우 아래 작업을 안해주면 한글이 깨질 수 있음
+        String encodedUploadFileName = UriUtils.encode(uploadFilename, StandardCharsets.UTF_8);
+        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
+
+        // header에 CONTENT_DISPOSITION 설정을 통해 클릭 시 다운로드 진행
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(urlResource);
+    }
+
     @GetMapping("/{id}")
-    public String view(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id, Model model) {
-
-        if (file == null) {
-
-        }
-        else {
-            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-            long size = file.getSize(); //파일 사이즈
-
-            System.out.println("파일명 : " + fileRealName);
-            System.out.println("용량크기(byte) : " + size);
-            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE";
-
-
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-
-            UUID uuid = UUID.randomUUID();
-            System.out.println(uuid.toString());
-            String[] uuids = uuid.toString().split("-");
-
-
-            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-
-            File saveFile = new File(uploadFolder + "/" + fileRealName);  // 적용 후
-            try {
-                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public String view(@PathVariable Long id, Model model) {
 
 
         Optional<Member> member1= memberService.findMember(id);
@@ -155,7 +150,7 @@ public class MemberController {
         return "thymeleaf/member/view";
     }
     @PostMapping("/{id}")
-    public String viewPost(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id, Model model) {
+    public String viewPost(@PathVariable Long id, Model model) {
 
 
 
@@ -261,7 +256,7 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@ModelAttribute MemberForm form,@ModelAttribute Member member,@RequestPart MultipartFile file,@PathVariable Long id,Model model){
+    public String updateMember(@PathVariable Long id,Model model){
 
 
         Optional<Member> member1= memberService.findMember(id);
@@ -274,7 +269,7 @@ public class MemberController {
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute MemberForm form,@RequestParam MultipartFile file, @ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
+    public String updates(@ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
 
 
 

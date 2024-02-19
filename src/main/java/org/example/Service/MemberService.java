@@ -38,4 +38,5 @@ public interface MemberService {
 
     public void deleteMember(Long id);
 
+    Member findMember1(Long id);
 }

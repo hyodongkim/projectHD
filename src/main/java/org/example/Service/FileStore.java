@@ -16,7 +16,7 @@ public class FileStore {
     // 루트 경로 불러오기
     private final String rootPath = System.getProperty("user.dir");
     // 프로젝트 루트 경로에 있는 files 디렉토리
-    private final String fileDir = rootPath + "/src/main/resource/static/PROFILE/";
+    private final String fileDir = rootPath + "/src/main/resources/static/PROFILE/";
 
     public String getFullPath(String filename) { return fileDir + filename; }
 
@@ -30,6 +30,7 @@ public class FileStore {
         // 작성자가 업로드한 파일명 -> 서버 내부에서 관리하는 파일명
         // 파일명을 중복되지 않게끔 UUID로 정하고 ".확장자"는 그대로
         String storeFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
+
 
         // 파일을 저장하는 부분 -> 파일경로 + storeFilename 에 저장
         multipartFile.transferTo(new File(getFullPath(storeFilename)));

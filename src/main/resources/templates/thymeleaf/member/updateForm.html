@@ -88,16 +88,12 @@
                     </label>
                     </th>
                 </tr>
+
                 <tr>
-                    <th class="text-center">자기소개
-                        <label>
-                            <input type="file" class="form-control"
-                                   placeholder="자기소개 항목입니다." th:field="*{file}">
-                        </label>
-                    </th>
-                </tr>
-                <tr>
-                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">
+                    <label for="attachFile">첨부파일 : </label>
+                    <input type="file" id="attachFile" name="attachFile"/>
+                    <label for="imageFiles">이미지 파일들 : </label>
+                    <input type="file" id="imageFiles" name="imageFiles" multiple="multiple"/>
                 </tr>
 
             </table>
