@@ -70,13 +70,18 @@
                     <th>자기소개</th>
                     <td th:text="${member.introduction}">introduction</td>
                 </tr>
-                <tr>
-                    <th>프로필사진</th>
-                    <td th:text="${member.file}">photo</td>
-                </tr>
-                <tr>
-                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">
-                </tr>
+<!--                <tr>-->
+<!--                    <th>프로필사진</th>-->
+<!--                    <td th:text="${member.file}">photo</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
+<!--                </tr>-->
+                <a th:if="${member.attachFile}" th:href="|/basic-board/attach/${member.id}|" th:text="${member.attachFile.uploadFilename}">이미지</a>
+
+
+                <img th:each="imageFile : ${content.imageFiles}" th:src="|/basic-board/images/${imageFile.storeFilename}|" width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;" />
+
                 </tbody>
             </table>
         </div>

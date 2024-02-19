@@ -122,17 +122,22 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-lg-1 control-label">프로필사진</label>
-                        <div class="col-lg-11">
-                            <input type="file" class="form-control"
-                                   placeholder="자기소개 항목입니다." th:field="*{file}"
-                                   th:errorclass="field-error">
-                            <div class="field-error" th:errors="*{file}">프로필사진 오류</div>
-                        </div>
-                    </div>
+                    <label for="attachFile">첨부파일 : </label>
+                    <input type="file" id="attachFile" name="attachFile"/>
+                    <label for="imageFiles">이미지 파일들 : </label>
+                    <input type="file" id="imageFiles" name="imageFiles" multiple="multiple"/>
 
-                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">
+<!--                    <div class="form-group">-->
+<!--                        <label class="col-lg-1 control-label">프로필사진</label>-->
+<!--                        <div class="col-lg-11">-->
+<!--                            <input type="file" class="form-control"-->
+<!--                                   placeholder="자기소개 항목입니다." th:field="*{file}"-->
+<!--                                   th:errorclass="field-error">-->
+<!--                            <div class="field-error" th:errors="*{file}">프로필사진 오류</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">-->
 
                     <div class="form-group">
                         <div class="col-lg-11 col-lg-offset-5">

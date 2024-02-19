@@ -9,10 +9,11 @@ import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
 
 import org.example.Entity.Member;
+import org.example.Entity.UploadFile;
 import org.example.Repository.MemberRepository;
 
+import org.example.Service.FileStore;
 import org.example.Service.MemberService;
-import org.example.uploadingfiles.FileUploadController;
 import org.example.uploadingfiles.storage.StorageFileNotFoundException;
 import org.example.uploadingfiles.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,36 +59,22 @@ public class MemberController {
     @Autowired
     private StorageService storageService;
 
+    @Autowired
+    private FileStore fileStore;
+
 
     @GetMapping("/register")
-    public String registerForm(@RequestPart MultipartFile file,Model model) {
+    public String registerForm(Model model) {
 
-        model.addAttribute("files", storageService.loadAll().map(
-                        path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                                "serveFile", path.getFileName().toString()).build().toUri().toString())
-                .collect(Collectors.toList()));
 
-//        model.addAttribute("member", new Member());
+       model.addAttribute("member", new Member());
 
         return "thymeleaf/member/registerForm";
     }
 
-    @GetMapping("/files/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
-        Resource file = storageService.loadAsResource(filename);
-
-        if (file == null)
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-    }
-
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute MemberForm form,BindingResult bindingResult,@RequestParam("file") MultipartFile file, @ModelAttribute Member member,
-                           RedirectAttributes redirectAttributes, Model model){
+    public String register(@Validated @ModelAttribute MemberForm form,BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
@@ -100,77 +82,28 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
+        Member member = new Member();
+        member.setUserid(form.getUserid());
+        member.setPassword(form.getPassword());
+        member.setEmail(form.getEmail());
+        member.setName(form.getName());
+        member.setSex(form.getSex());
+        member.setAge(form.getAge());
+        member.setBirth(form.getBirth());
+        member.setDay(form.getDay());
+        member.setIntroduction(form.getIntroduction());
 
-//        if (file == null) {
-//
-//        }
-//        else {
-//            String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-//            long size = file.getSize(); //파일 사이즈
-//
-//            System.out.println("파일명 : " + fileRealName);
-//            System.out.println("용량크기(byte) : " + size);
-//            //서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-//            String uploadFolder = "C:/projectHD/src/main/resources/static/PROFILE";
+        // 첨부파일, 이미지들 처리하는 부분
+        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
+        List<UploadFile> imageFiles = fileStore.storeFiles(form.getImageFiles());
+        member.setAttachFile(attachFile);
+        member.setImageFiles(imageFiles);
 
+        memberService.register(member);
 
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다.
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-
-//            UUID uuid = UUID.randomUUID();
-//            System.out.println(uuid.toString());
-//            String[] uuids = uuid.toString().split("-");
-//
-//
-//            // File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-//
-//            File saveFile = new File(uploadFolder + "/" + fileRealName);  // 적용 후
-//            try {
-//                file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-
-
-        // 검증 성공
-
-//        member.setId(form.getId());
-//        member.setUserid(form.getUserid());
-//        member.setPassword(form.getPassword());
-//        member.setEmail(form.getEmail());
-//        member.setName(form.getName());
-//        member.setSex(form.getSex());
-//        member.setAge(form.getAge());
-//        member.setBirth(form.getBirth());
-//        member.setDay(form.getDay());
-//        member.setIntroduction(form.getIntroduction());
-//        member.setPhoto(form.getPhoto());
-        storageService.store(file);
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-//        memberService.register(member);
-
-//        model.addAttribute("member",member);
-
-        redirectAttributes.addAttribute("status", "new");
         // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
-    }
-
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{id}")

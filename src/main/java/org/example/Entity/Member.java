@@ -1,18 +1,13 @@
 package org.example.Entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.Dto.Gender;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @DynamicInsert
@@ -48,8 +43,11 @@ public class Member{
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;
-    @Column(name="member_photo")
-    private String photo;
+
+    @Embedded
+    private UploadFile attachFile;          // 첨부 파일
+    @Embedded
+    private List<UploadFile> imageFiles;    // 첨부 이미지
 
     public Member(){}
 }
