@@ -21,10 +21,14 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository memberRepository;
 
     @Override
-    public String register(Member member) {
+    public void register(Member member) {
         memberRepository.save(member);
-        return null;
     }
+    @Override
+    public void edit(List<Member> member) {
+        memberRepository.saveAll(member);
+    }
+
 
     @Override
     public Member isMember(String userid, String password) {
@@ -57,9 +61,9 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(Long id) {
          memberRepository.deleteById(id);
     }
-    @Override
-    public Member findMember1(Long id) {
-        return memberRepository.findById1(id);
 
+    @Override
+    public Optional<Member> findMemberss(Long id){
+        return memberRepository.findById(id);
     }
 }

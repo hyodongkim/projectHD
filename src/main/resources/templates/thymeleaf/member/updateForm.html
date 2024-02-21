@@ -17,7 +17,7 @@
         </div>
 
 <!--        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >-->
-    <form th:action="@{/Members/updateMember/{id}(id=${id})}"  th:object="${member}" method="post">
+    <form th:action="@{/Members/updateMember/{id}(id=${id})}"  th:object="${member}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
             <table class="table table-bordered">
                     <tbody th:each="member: ${member}">
@@ -36,13 +36,13 @@
                 </tr>
                 <tr>
                     <label>
-                        <input type="hidden"th:field="*{password}"/>
+                        <input type="hidden" th:field="*{password}"/>
                     </label>
                 </tr>
                 <tr>
                     <th class="text-center">E-Mail
                     <label>
-                        <input type="text"th:field="*{email}"/>
+                        <input type="text" th:field="*{email}"/>
                     </label>
                     </th>
                 </tr>

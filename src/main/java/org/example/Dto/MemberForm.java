@@ -1,10 +1,12 @@
 package org.example.Dto;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.example.Entity.UploadFile;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +51,7 @@ public class MemberForm {
     private String introduction;
 
     private MultipartFile attachFile;          // 첨부 파일
+
     private List<MultipartFile> imageFiles;    // 첨부 이미지
 
 }

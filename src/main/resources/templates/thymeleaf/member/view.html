@@ -78,12 +78,9 @@
 <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
 
                 <text>첨부파일(클릭시 다운) : </text>
-                <a th:if="${member.attachFile}" th:href="|/Members/attach/${member.id}|" th:text="${member.attachFile.uploadFilename}"></a>
-
+                <a th:if="${member.attachFile}" th:href="@{/Members/attach/{id}(id=${member.id})}" th:text="${member.attachFile.uploadFilename}"></a>
                 <text>첨부된 이미지 파일들</text>
-
-                <img th:each="imageFile : ${member.imageFiles}" th:src="|/Members/images/${imageFile.storeFilename}|" width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;"/>
-
+                <img th:each="member : ${member.imageFiles}" th:src="@{/Members/images/{storeFilename}(storeFilename=${member.storeFilename})}" width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;" alt=""  src=""/>
                 </tbody>
             </table>
         </div>

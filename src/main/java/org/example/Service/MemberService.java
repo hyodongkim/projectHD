@@ -14,8 +14,8 @@ public interface MemberService {
      *
      * @return
      */
-    public String register(Member member);
-
+    public void register(Member member);
+    public void edit(List<Member> member);
     /**
      * 회원 인증
      */
@@ -38,5 +38,5 @@ public interface MemberService {
 
     public void deleteMember(Long id);
 
-    Member findMember1(Long id);
+    Optional<Member> findMemberss(Long id);
 }

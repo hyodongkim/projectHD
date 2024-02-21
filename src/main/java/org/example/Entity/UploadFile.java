@@ -3,9 +3,11 @@ package org.example.Entity;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Embeddable
+@Getter
 @AllArgsConstructor
 public class UploadFile {
     private String uploadFilename;  // 작성자가 업로드한 파일명

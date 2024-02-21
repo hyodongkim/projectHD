@@ -105,7 +105,6 @@ public class MemberController {
         member.setImageFiles(imageFiles);
 
         memberService.register(member);
-
         // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
@@ -116,12 +115,11 @@ public class MemberController {
     public Resource showImage(@PathVariable String filename) throws MalformedURLException {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
-    @ResponseBody
+
     @GetMapping("/attach/{id}")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException {
-        Member member = memberService.findMember1(id);
+        Member member = new Member();
 
-        System.out.println(member.getAttachFile());
         String storeFilename = member.getAttachFile().getStoreFilename();
         String uploadFilename = member.getAttachFile().getUploadFilename();
         System.out.println(fileStore.getFullPath(storeFilename));
@@ -269,16 +267,26 @@ public class MemberController {
         return "thymeleaf/member/updateForm";
     }
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute("member") Member member,@PathVariable Long id, Model model) throws IOException {
+    public String updates(@ModelAttribute MemberForm form, @PathVariable Long id,@ModelAttribute Member member ,Model model) throws IOException {
 
+          member.setId(id);
+          member.setUserid(form.getUserid());
+          member.setPassword(form.getPassword());
+          member.setEmail(form.getEmail());
+          member.setName(form.getName());
+          member.setSex(form.getSex());
+          member.setAge(form.getAge());
+          member.setBirth(form.getBirth());
+          member.setDay(form.getDay());
+          member.setIntroduction(form.getIntroduction());
 
+        // 첨부파일, 이미지들 처리하는 부분
+        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
+        List<UploadFile> imageFiles = fileStore.storeFiles(form.getImageFiles());
+        member.setAttachFile(attachFile);
+        member.setImageFiles(imageFiles);
 
-        Optional<Member> member1 = memberService.findMember(id);
-        model.addAttribute("member",member1);
-
-
-        memberService.updateMember(member);
-
+        memberService.register(member);
 
         return "redirect:/Members";
     }

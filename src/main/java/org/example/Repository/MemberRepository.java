@@ -13,7 +13,8 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    static Map<Integer, Member> members = new HashMap<>();
+    public static final Map<Long, Member> members = new HashMap<>();
+
     public Member findByIdAndPassword(String userid, String password);
 
     // 아이디 또는 이름에 의한 검색 - 목록 페이징 처리
@@ -24,8 +25,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     public Member findByUseridAndPassword(String userid, String password);
 
     public Optional<Member> findByUserid(String userid);
-
-    public default Member findById1(Long id) {
-        return members.get(id);
-    }
 }
