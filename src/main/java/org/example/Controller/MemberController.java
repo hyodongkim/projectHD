@@ -5,16 +5,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.example.Dto.AttachmentType;
 import org.example.Dto.LoginForm;
 import org.example.Dto.MemberForm;
 
 import org.example.Entity.Member;
 import org.example.Entity.UploadFile;
+import org.example.Repository.FileStore;
 import org.example.Repository.MemberRepository;
 
-import org.example.Service.FileStore;
 import org.example.Service.MemberService;
-import org.example.uploadingfiles.storage.StorageFileNotFoundException;
 import org.example.uploadingfiles.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,18 +31,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/Members")
@@ -98,12 +94,6 @@ public class MemberController {
         member.setDay(form.getDay());
         member.setIntroduction(form.getIntroduction());
 
-        // 첨부파일, 이미지들 처리하는 부분
-        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
-        List<UploadFile> imageFiles = fileStore.storeFiles(form.getImageFiles());
-        member.setAttachFile(attachFile);
-        member.setImageFiles(imageFiles);
-
         memberService.register(member);
         // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
@@ -112,25 +102,17 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/images/{filename}")
-    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    public Resource processImg(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.createPath(filename, AttachmentType.IMAGE));
     }
 
-    @GetMapping("/attach/{id}")
-    public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException {
-        Member member = new Member();
+    @GetMapping("/attaches/{filename}")
+    public ResponseEntity<Resource> processAttaches(@PathVariable String filename, @RequestParam String originName) throws MalformedURLException {
+        UrlResource urlResource = new UrlResource("file:" + fileStore.createPath(filename, AttachmentType.GENERAL));
 
-        String storeFilename = member.getAttachFile().getStoreFilename();
-        String uploadFilename = member.getAttachFile().getUploadFilename();
-        System.out.println(fileStore.getFullPath(storeFilename));
-
-        UrlResource urlResource = new UrlResource("file:" + fileStore.getFullPath(storeFilename));
-
-        // 업로드 한 파일명이 한글인 경우 아래 작업을 안해주면 한글이 깨질 수 있음
-        String encodedUploadFileName = UriUtils.encode(uploadFilename, StandardCharsets.UTF_8);
+        String encodedUploadFileName = UriUtils.encode(originName, StandardCharsets.UTF_8);
         String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
 
-        // header에 CONTENT_DISPOSITION 설정을 통해 클릭 시 다운로드 진행
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
                 .body(urlResource);
@@ -280,11 +262,6 @@ public class MemberController {
           member.setDay(form.getDay());
           member.setIntroduction(form.getIntroduction());
 
-        // 첨부파일, 이미지들 처리하는 부분
-        UploadFile attachFile = fileStore.storeFile(form.getAttachFile());
-        List<UploadFile> imageFiles = fileStore.storeFiles(form.getImageFiles());
-        member.setAttachFile(attachFile);
-        member.setImageFiles(imageFiles);
 
         memberService.register(member);
 

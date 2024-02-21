@@ -44,10 +44,5 @@ public class Member{
     @Column(name="member_introduction")
     private String introduction;
 
-    @Embedded
-    private UploadFile attachFile;          // 첨부 파일
-    @Embedded
-    private List<UploadFile> imageFiles;    // 첨부 이미지
-
     public Member(){}
 }

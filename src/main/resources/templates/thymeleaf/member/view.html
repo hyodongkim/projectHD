@@ -77,10 +77,15 @@
 <!--                <tr>-->
 <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
 
-                <text>첨부파일(클릭시 다운) : </text>
-                <a th:if="${member.attachFile}" th:href="@{/Members/attach/{id}(id=${member.id})}" th:text="${member.attachFile.uploadFilename}"></a>
-                <text>첨부된 이미지 파일들</text>
-                <img th:each="member : ${member.imageFiles}" th:src="@{/Members/images/{storeFilename}(storeFilename=${member.storeFilename})}" width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;" alt=""  src=""/>
+                    <img th:each="imageFile : ${imageFiles}"
+                         th:if="${imageFile.attachmentType == T(register.demo.domain.file.AttachmentType).IMAGE}"
+                         th:src="@{/Members/images/{imageFile}(imageFile=${imageFile.storeFilename})}" width="300" height="300" style="margin-right: 5px" alt=""/>
+
+                    <a th:each="generalFile : ${generalFiles}"
+                       th:if="${generalFile.attachmentType == T(register.demo.domain.file.AttachmentType).GENERAL}"
+                       th:href="@{/Members/attaches/{generalFile}(generalFile=${generalFile.storeFilename}, originName=${generalFile.originFilename})}"
+                       th:text="${generalFile.originFilename}" style="margin-right: 5px"></a>
+
                 </tbody>
             </table>
         </div>
