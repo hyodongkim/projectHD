@@ -250,6 +250,10 @@ public class MemberController {
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
+        File dir = new File(path);
+        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+        model.addAttribute("imgs", files);
+
 
         return "thymeleaf/member/updateForm";
     }
@@ -270,6 +274,8 @@ public class MemberController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
 
         storeService.save(dto);
 
