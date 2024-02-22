@@ -89,12 +89,12 @@
                     </th>
                 </tr>
 
-                <tr>
-                    <label for="attachFile">첨부파일 : </label>
-                    <input type="file" id="attachFile" name="attachFile"/>
-                    <label for="imageFiles">이미지 파일들 : </label>
-                    <input type="file" id="imageFiles" name="imageFiles" multiple="multiple"/>
-                </tr>
+                file:<input name="file" type="file">
+
+                <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
+                    <!-- 컨트롤러로 요청 보냄. -->
+                    <img th:src="@{/Members/read_img/}+${img}" style="width:200px;height:200px"  alt=""/>
+                </div>
 
             </table>
         </div>

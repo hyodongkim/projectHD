@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,9 @@ public class Member{
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;
+
+    @OneToMany(mappedBy = "member")
+    private List<Store> articles = new ArrayList<Store>();
 
     public Member(){}
 }

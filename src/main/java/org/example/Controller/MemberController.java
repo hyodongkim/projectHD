@@ -5,17 +5,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.example.Dto.AttachmentType;
-import org.example.Dto.LoginForm;
-import org.example.Dto.MemberForm;
+import org.example.Dto.*;
 
 import org.example.Entity.Member;
-import org.example.Entity.UploadFile;
-import org.example.Repository.FileStore;
+import org.example.Entity.Store;
 import org.example.Repository.MemberRepository;
 
 import org.example.Service.MemberService;
-import org.example.uploadingfiles.storage.StorageService;
+import org.example.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -25,20 +22,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
+
+import static org.apache.commons.io.FilenameUtils.getFullPath;
 
 @Controller
 @RequestMapping("/Members")
@@ -46,18 +50,16 @@ import java.util.*;
 public class MemberController {
 
     @Value("${spring.servlet.multipart.location}")
-    private String location;
+    private String path;
 
     @Autowired
     private MemberService memberService;
 
     @Autowired
     private MemberRepository memberRepository;
-    @Autowired
-    private StorageService storageService;
 
     @Autowired
-    private FileStore fileStore;
+    private StoreService storeService;
 
     private final String rootPath = System.getProperty("user.dir");
     // 프로젝트 루트 경로에 있는 files 디렉토리
@@ -68,13 +70,13 @@ public class MemberController {
     public String registerForm(Model model) {
 
 
-       model.addAttribute("member", new Member());
+        model.addAttribute("member", new Member());
 
         return "thymeleaf/member/registerForm";
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute MemberForm form,BindingResult bindingResult,
+    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
                            RedirectAttributes redirectAttributes, Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
@@ -83,59 +85,65 @@ public class MemberController {
             return "thymeleaf/member/registerForm";
         }
 
-        Member member = new Member();
-        member.setUserid(form.getUserid());
-        member.setPassword(form.getPassword());
-        member.setEmail(form.getEmail());
-        member.setName(form.getName());
-        member.setSex(form.getSex());
-        member.setAge(form.getAge());
-        member.setBirth(form.getBirth());
-        member.setDay(form.getDay());
-        member.setIntroduction(form.getIntroduction());
+
+        MultipartFile f = dto.getFile();
+        String fname = f.getOriginalFilename(); // 원본 파일명
+        File f2 = new File(path + fname); // 업로드된 파일을 저장할 새 파일 생성
+        try {
+            f.transferTo(f2); // 파일 복사
+            System.out.println(f2.getAbsolutePath());
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         memberService.register(member);
-        // 회원 상세로 리다이렉트
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
     }
 
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource processImg(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.createPath(filename, AttachmentType.IMAGE));
-    }
-
-    @GetMapping("/attaches/{filename}")
-    public ResponseEntity<Resource> processAttaches(@PathVariable String filename, @RequestParam String originName) throws MalformedURLException {
-        UrlResource urlResource = new UrlResource("file:" + fileStore.createPath(filename, AttachmentType.GENERAL));
-
-        String encodedUploadFileName = UriUtils.encode(originName, StandardCharsets.UTF_8);
-        String contentDisposition = "attachment; filename=\"" + encodedUploadFileName + "\"";
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-                .body(urlResource);
+    @GetMapping("/read_img/{img}")
+    // 이미지는 바이너리값 -> byte[]
+    public ResponseEntity<byte[]> read_img(@PathVariable String img){
+        File f = new File(path+img);
+        HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.
+        ResponseEntity<byte[]> result = null; // ResponseEntity 응답 객체 선언.
+        try { // 여러 설정값 중 Content-Type라는 값이 있음.
+            header.add("Content-Type", Files.probeContentType(f.toPath())); // 응답 데이터의 종류를 설정
+            // 응답 객체 생성
+            result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(f),
+                    header, HttpStatus.OK);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
 
 
-        Optional<Member> member1= memberService.findMember(id);
-        model.addAttribute("member",member1.get());
+        Optional<Member> member1 = memberService.findMember(id);
+        model.addAttribute("member", member1.get());
 
+        File dir = new File(path);
+        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+        model.addAttribute("imgs", files);
 
 
         return "thymeleaf/member/view";
     }
+
     @PostMapping("/{id}")
     public String viewPost(@PathVariable Long id, Model model) {
 
 
-
-        Optional<Member> member1= memberService.findMember(id);
-        model.addAttribute("member",member1.get());
+        Optional<Member> member1 = memberService.findMember(id);
+        model.addAttribute("member", member1.get());
 
 
         return "thymeleaf/member/view";
@@ -149,7 +157,6 @@ public class MemberController {
     }
 
 
-
     @GetMapping
     /* default page = 0, default size = 10 */
     public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search, Model model) {
@@ -161,7 +168,7 @@ public class MemberController {
         int requestPage = page.getPageable().getPageNumber() + 1;
         int totalPage = page.getTotalPages();
         int startPage = Math.max(1, requestPage - 4);
-        int endPage   = Math.min(page.getTotalPages(), requestPage + 4);
+        int endPage = Math.min(page.getTotalPages(), requestPage + 4);
         boolean hasPrevious = page.hasPrevious();
         boolean hasNext = page.hasNext();
 
@@ -180,7 +187,7 @@ public class MemberController {
 
     @GetMapping("/signup")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm, @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
-        if(rememberId != null) {
+        if (rememberId != null) {
             loginForm.setUserid(rememberId);
             loginForm.setRemember(true);
         }
@@ -226,45 +233,48 @@ public class MemberController {
 ///        return "redirect:"+redirect;
         return "thymeleaf/member/view";
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
-        HttpSession session  = request.getSession(false);
-        if(session != null) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/Members";
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,Model model){
+    public String updateMember(@PathVariable Long id, Model model) {
 
 
-        Optional<Member> member1= memberService.findMember(id);
-        model.addAttribute("member",member1.get());
-
-
-
+        Optional<Member> member1 = memberService.findMember(id);
+        model.addAttribute("member", member1.get());
 
 
         return "thymeleaf/member/updateForm";
     }
+
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute MemberForm form, @PathVariable Long id,@ModelAttribute Member member ,Model model) throws IOException {
+    public String updates(@ModelAttribute MemberForm form, StoreDto dto, @PathVariable Long id, Model model) throws IOException {
 
-          member.setId(id);
-          member.setUserid(form.getUserid());
-          member.setPassword(form.getPassword());
-          member.setEmail(form.getEmail());
-          member.setName(form.getName());
-          member.setSex(form.getSex());
-          member.setAge(form.getAge());
-          member.setBirth(form.getBirth());
-          member.setDay(form.getDay());
-          member.setIntroduction(form.getIntroduction());
+        MultipartFile f = dto.getFile();
+        String fname = f.getOriginalFilename(); // 원본 파일명
+        File f2 = new File(path + fname); // 업로드된 파일을 저장할 새 파일 생성
+        try {
+            f.transferTo(f2); // 파일 복사
+            System.out.println(f2.getAbsolutePath());
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        storeService.save(dto);
 
-        memberService.register(member);
+            return "redirect:/Members";
 
-        return "redirect:/Members";
     }
 }
+
