@@ -269,11 +269,14 @@ public class MemberController {
     @PostMapping("/updateMember/{id}")
     public String updates(@ModelAttribute Store store, @ModelAttribute Member member , StoreDto dto, @PathVariable Long id, Model model) throws IOException {
 
+        UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
-        String fname = f.getOriginalFilename(); // 원본 파일명
-        File f2 = new File(path + fname); // 업로드된 파일을 저장할 새 파일 생성
+        String fname1 = f.getOriginalFilename(); // 원본 파일명
+        String fname =  "/" + uuid +"_"+ fname1;
+        File f2 = new File(path+fname); // 업로드된 파일을 저장할 새 파일 생성
         try {
-            f.transferTo(f2); // 파일 복사
+//            Files.createDirectories(f2.toPath());
+            f.transferTo(f2);
             System.out.println(f2.getAbsolutePath());
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
