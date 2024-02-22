@@ -15,8 +15,8 @@ public class StoreService {
     @Autowired
     private StoreDao dao;
 
-    public void save(StoreDto dto) {
-        dao.save(new Store(dto.getNum(), dto.getMember()));
+    public void save(Store store) {
+        dao.save(new Store(store.getNum(), store.getMember()));
     }
 
     // 상품 전체 검색
@@ -55,7 +55,7 @@ public class StoreService {
     }
 
     // 삭제
-    public void delShop(Long num) {
+    public void delMember(Long num) {
         dao.deleteByNum(num);
     }
 

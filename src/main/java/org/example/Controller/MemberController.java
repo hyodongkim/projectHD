@@ -123,6 +123,14 @@ public class MemberController {
         return result;
     }
 
+    @GetMapping("/deletePhoto")
+    public String deletePhoto(@RequestParam Long num){
+
+        storeService.delMember(num);
+
+        return "thymeleaf/member/view";
+    }
+
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
 
@@ -259,7 +267,7 @@ public class MemberController {
     }
 
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute MemberForm form, StoreDto dto, @PathVariable Long id, Model model) throws IOException {
+    public String updates(@ModelAttribute Store store, @ModelAttribute Member member , StoreDto dto, @PathVariable Long id, Model model) throws IOException {
 
         MultipartFile f = dto.getFile();
         String fname = f.getOriginalFilename(); // 원본 파일명
@@ -276,8 +284,7 @@ public class MemberController {
         }
 
 
-
-        storeService.save(dto);
+        memberService.register(member);
 
             return "redirect:/Members";
 
