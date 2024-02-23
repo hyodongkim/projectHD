@@ -100,15 +100,18 @@ public class MemberController {
 
     @GetMapping("/read_img/{img}")
     // 이미지는 바이너리값 -> byte[]
-    public ResponseEntity<byte[]> read_img(@PathVariable Long id, @PathVariable String img,  StoreDto dto, Model model)throws IOException{
+    public ResponseEntity<byte[]> read_img(@RequestParam Long id,@PathVariable String img,StoreDto dto, Model model)throws IOException{
 
-        File f = new File(path+img);
+        File f = new File(path+id);
+        String fname = f+"/";
+        File f1 = new File(fname + img);
+        System.out.println(f1.getAbsolutePath());
         HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.
         ResponseEntity<byte[]> result = null; // ResponseEntity 응답 객체 선언.
         try { // 여러 설정값 중 Content-Type라는 값이 있음.
-            header.add("Content-Type", Files.probeContentType(f.toPath())); // 응답 데이터의 종류를 설정
+            header.add("Content-Type", Files.probeContentType(f1.toPath())); // 응답 데이터의 종류를 설정
             // 응답 객체 생성
-            result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(f),
+            result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(f1),
                     header, HttpStatus.OK);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -126,19 +129,13 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@PathVariable Long id,StoreDto storeDto, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
-        StoreDto storeDto = new StoreDto();
-        Member member = new Member();
-
-        String fname = path + member.getId();
-        String path1 = fname + storeDto.getFile();
-
-        File dir = new File(path1);
+        File dir = new File(path);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
 

@@ -80,8 +80,8 @@
                 <h3>업로드 목록</h3>
                 <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
-                    <img th:src="@{/Members/read_img/}+${img}" style="width:200px;height:200px"  alt=""/>
-
+                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>
+<!--                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>-->
 
                     <a th:href="@{/Members/deletePhoto/}+${num}"><button class="btn btn-warning">이미지 삭제하기</button></a>
                 </div>
