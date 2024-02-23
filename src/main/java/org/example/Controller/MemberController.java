@@ -129,16 +129,22 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id,StoreDto storeDto, Model model) {
+    public String view(@PathVariable Long id,@ModelAttribute StoreDto storeDto, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
-        File dir = new File(path);
+        String path1 = path + id;
+        File dir = new File(path1);
+        System.out.println("update:"+path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
-        model.addAttribute("imgs", files);
 
+        for (int i = 0; i < files.length; i++) {
+
+            model.addAttribute("imgs", files[i]);
+        }
+//            model.addAttribute("imgs", files);
 
         return "thymeleaf/member/view";
     }
@@ -249,16 +255,22 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id, Model model) {
+    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
-        File dir = new File(path);
+        String path1 = path + id;
+        File dir = new File(path1);
+        System.out.println("update:"+path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
-        model.addAttribute("imgs", files);
 
+        for (int i = 0; i < files.length; i++) {
+
+            model.addAttribute("imgs", files[i]);
+        }
+//            model.addAttribute("imgs", files);
 
         return "thymeleaf/member/updateForm";
     }
