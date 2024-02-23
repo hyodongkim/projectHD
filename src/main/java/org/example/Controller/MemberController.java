@@ -15,8 +15,6 @@ import org.example.Service.MemberService;
 import org.example.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,17 +30,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriUtils;
 
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
-
-import static org.apache.commons.io.FilenameUtils.getFullPath;
 
 @Controller
 @RequestMapping("/Members")
@@ -107,7 +100,8 @@ public class MemberController {
 
     @GetMapping("/read_img/{img}")
     // 이미지는 바이너리값 -> byte[]
-    public ResponseEntity<byte[]> read_img(@PathVariable String img){
+    public ResponseEntity<byte[]> read_img(@PathVariable Long id, @PathVariable String img,  StoreDto dto, Model model)throws IOException{
+
         File f = new File(path+img);
         HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.
         ResponseEntity<byte[]> result = null; // ResponseEntity 응답 객체 선언.
@@ -138,7 +132,13 @@ public class MemberController {
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
-        File dir = new File(path);
+        StoreDto storeDto = new StoreDto();
+        Member member = new Member();
+
+        String fname = path + member.getId();
+        String path1 = fname + storeDto.getFile();
+
+        File dir = new File(path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
 
@@ -272,12 +272,17 @@ public class MemberController {
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
-        String fname =  "/" + uuid +"_"+ fname1;
-        File f2 = new File(path+fname); // 업로드된 파일을 저장할 새 파일 생성
+        String fname = "/"+ uuid +"_"+ fname1;
+        File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+        f2.mkdirs();
+        File f3 = new File(f2+fname);
+
+
         try {
-//            Files.createDirectories(f2.toPath());
-            f.transferTo(f2);
-            System.out.println(f2.getAbsolutePath());
+            System.out.println(f3.getAbsolutePath());
+            f.transferTo(f3);
+
+
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
