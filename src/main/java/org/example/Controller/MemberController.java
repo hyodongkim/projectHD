@@ -70,7 +70,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
-                           RedirectAttributes redirectAttributes, Model model) throws IOException {
+                           RedirectAttributes redirectAttributes,@ModelAttribute Store store,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
@@ -79,12 +79,18 @@ public class MemberController {
         }
 
 
+        UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
-        String fname = f.getOriginalFilename(); // 원본 파일명
-        File f2 = new File(path + fname); // 업로드된 파일을 저장할 새 파일 생성
+        String fname1 = f.getOriginalFilename(); // 원본 파일명
+        String fname = "/"+ uuid +"_"+ fname1;
+        File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+        f2.mkdirs();
+        File f3 = new File(f2+fname);
+
         try {
-            f.transferTo(f2); // 파일 복사
-            System.out.println(f2.getAbsolutePath());
+            f.transferTo(f3); // 파일 복사
+            System.out.println("registerPost:"+f3.getAbsolutePath());
+            storeService.save(store);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -93,7 +99,13 @@ public class MemberController {
             e.printStackTrace();
         }
 
+        store.getOriginFilename(fname1);
+        store.getStoreFilename(f3.getAbsolutePath());
+
         memberService.register(member);
+        storeService.save(store);
+
+
 //        return "thymeleaf/member/view";
         return "redirect:/Members";
     }
@@ -105,7 +117,7 @@ public class MemberController {
         File f = new File(path+id);
         String fname = f+"/";
         File f1 = new File(fname + img);
-        System.out.println(f1.getAbsolutePath());
+        System.out.println("read_img:"+f1.getAbsolutePath());
         HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.
         ResponseEntity<byte[]> result = null; // ResponseEntity 응답 객체 선언.
         try { // 여러 설정값 중 Content-Type라는 값이 있음.
@@ -129,7 +141,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id,@ModelAttribute StoreDto storeDto, Model model) {
+    public String view(@PathVariable Long id,@ModelAttribute StoreDto Dto, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
@@ -137,25 +149,52 @@ public class MemberController {
 
         String path1 = path + id;
         File dir = new File(path1);
-        System.out.println("update:"+path1);
+        System.out.println("view:"+path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
-
-        for (int i = 0; i < files.length; i++) {
-
-            model.addAttribute("imgs", files[i]);
-        }
+        model.addAttribute("imgs", files);
 //            model.addAttribute("imgs", files);
 
         return "thymeleaf/member/view";
     }
 
     @PostMapping("/{id}")
-    public String viewPost(@PathVariable Long id, Model model) {
+    public String viewPost(@PathVariable Long id,@ModelAttribute StoreDto dto,@ModelAttribute Member member,Model model,
+                            Store store) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
 
+        UUID uuid = UUID.randomUUID();
+        MultipartFile f = dto.getFile();
+        String fname1 = f.getOriginalFilename(); // 원본 파일명
+        String fname = "/"+ uuid +"_"+ fname1;
+        File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+        f2.mkdirs();
+        File f3 = new File(f2+fname);
+
+
+        try {
+            System.out.println("ViewPost:"+f3.getAbsolutePath());
+            f.transferTo(f3);
+
+
+
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        store.getOriginFilename(fname1);
+        store.getStoreFilename(f3.getAbsolutePath());
+
+
+
+        memberService.register(member);
+        storeService.save(store);
 
         return "thymeleaf/member/view";
     }
@@ -255,7 +294,7 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto, Model model) {
+    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto,@ModelAttribute Store store, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
@@ -263,13 +302,10 @@ public class MemberController {
 
         String path1 = path + id;
         File dir = new File(path1);
-        System.out.println("update:"+path1);
+        System.out.println("view:"+path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+        model.addAttribute("imgs", files);
 
-        for (int i = 0; i < files.length; i++) {
-
-            model.addAttribute("imgs", files[i]);
-        }
 //            model.addAttribute("imgs", files);
 
         return "thymeleaf/member/updateForm";
@@ -288,8 +324,9 @@ public class MemberController {
 
 
         try {
-            System.out.println(f3.getAbsolutePath());
+            System.out.println("updatePost:"+f3.getAbsolutePath());
             f.transferTo(f3);
+
 
 
         } catch (IllegalStateException e) {
@@ -300,8 +337,13 @@ public class MemberController {
             e.printStackTrace();
         }
 
+        store.getOriginFilename(fname1);
+        store.getStoreFilename(f3.getAbsolutePath());
+
+
 
         memberService.register(member);
+        storeService.save(store);
 
             return "redirect:/Members";
 

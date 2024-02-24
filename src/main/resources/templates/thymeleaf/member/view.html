@@ -28,7 +28,7 @@
 
         <div class="alert alert-dismissable alert-danger">
         </div>
-
+    <form th:action="@{/Members/{id}(id=${id})}"  th:object="${member}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tbody th:each="member : ${member}">
@@ -80,8 +80,8 @@
                 <h3>업로드 목록</h3>
                 <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
-                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>
-<!--                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>-->
+
+                        <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>
 
                     <a th:href="@{/Members/deletePhoto/}+${num}"><button class="btn btn-warning">이미지 삭제하기</button></a>
                 </div>
@@ -89,7 +89,7 @@
                 </tbody>
             </table>
         </div>
-
+    </form>
         <div class="pull-right" th:each="member : ${member}">
             <a th:href="@{/Members/updateMember/{id}(id=${id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.example.Dto.StoreDto;
 import org.example.Entity.Member;
 import org.example.Entity.Store;
+import org.example.Repository.MemberRepository;
 import org.example.Repository.StoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,12 @@ public class StoreService {
     @Autowired
     private StoreDao dao;
 
-    public void save(Store store) {
-        dao.save(new Store(store.getNum(), store.getMember()));
-    }
+    @Autowired
+    private MemberRepository memdao;
+
+//    public void save(Store store) {
+//        dao.save(new Store(store.getNum(), store.getOriginFilename(), store.getStoreFilename(), store.getMember()));
+//    }
 
     // 상품 전체 검색
     public ArrayList<StoreDto> getAll(){
@@ -59,4 +63,7 @@ public class StoreService {
         dao.deleteByNum(num);
     }
 
+    public void save(Store store) {
+        dao.save(store);
+    }
 }

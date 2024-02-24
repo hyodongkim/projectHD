@@ -94,8 +94,7 @@
                 <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
-                    <img th:src="@{/Members/read_img/}+${img}" style="width:200px;height:200px"  alt=""/>
-<!--                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>-->
+                    <img th:src="@{/Members/read_img/{img}(img=${img})}" style="width:200px;height:200px"  alt=""/>
                 </div>
 
             </table>
@@ -103,12 +102,11 @@
 
         <div class="pull-right">
             <button type="submit" class="btn btn-warning">정보저장(form)</button>
-            <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
+
         </div>
 
-        </form>
-
-    </div>
+    </form>
+    <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
 </section>
 
 
