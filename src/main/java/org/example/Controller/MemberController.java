@@ -82,8 +82,9 @@ public class MemberController {
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
-        String fname = "/"+ uuid +"_"+ fname1;
-        File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+        String fname2 = uuid +"_"+ fname1;
+        String fname="/"+fname2;
+                File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
         File f3 = new File(f2+fname);
 
@@ -100,7 +101,7 @@ public class MemberController {
         }
 
         store.getOriginFilename(fname1);
-        store.getStoreFilename(f3.getAbsolutePath());
+        store.getStoreFilename(fname2);
 
         memberService.register(member);
         storeService.save(store);
@@ -110,9 +111,9 @@ public class MemberController {
         return "redirect:/Members";
     }
 
-    @GetMapping("/read_img/{img}")
+    @GetMapping("/read_img/{id}/{img}")
     // 이미지는 바이너리값 -> byte[]
-    public ResponseEntity<byte[]> read_img(@RequestParam Long id,@PathVariable String img,StoreDto dto, Model model)throws IOException{
+    public ResponseEntity<byte[]> read_img(@PathVariable String id,@PathVariable String img,StoreDto dto, Model model)throws IOException{
 
         File f = new File(path+id);
         String fname = f+"/";
@@ -141,7 +142,7 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id,@ModelAttribute StoreDto Dto, Model model) {
+    public String view(@PathVariable Long id,@ModelAttribute StoreDto Dto,@ModelAttribute Store store, Model model) {
 
 
         Optional<Member> member1 = memberService.findMember(id);
