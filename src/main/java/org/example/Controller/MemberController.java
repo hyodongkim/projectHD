@@ -60,16 +60,18 @@ public class MemberController {
 
 
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm(@ModelAttribute Member member, Model model) {
 
 
-        model.addAttribute("member", new Member());
+        model.addAttribute("member", member);
+
+        memberService.register(member);
 
         return "thymeleaf/member/registerForm";
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
+    public String register(@Validated @ModelAttribute MemberForm form, @RequestParam("id") Long id, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
                            RedirectAttributes redirectAttributes,@ModelAttribute Store store,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
         if (bindingResult.hasErrors()) {
@@ -84,7 +86,7 @@ public class MemberController {
         String fname1 = f.getOriginalFilename(); // 원본 파일명
         String fname2 = uuid +"_"+ fname1;
         String fname="/"+fname2;
-                File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+                File f2 = new File(path+id); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
         File f3 = new File(f2+fname);
 
