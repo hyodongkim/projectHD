@@ -22,8 +22,8 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Member{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq_gen")
     @Column(name="member_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_id_seq_gen")
     private Long id;
     @Column(name="member_userid",unique = true)
     private String userid;
@@ -45,8 +45,8 @@ public class Member{
     @Column(name="member_introduction")
     private String introduction;
 
-    @OneToMany(mappedBy = "member")
-    private List<Store> articles = new ArrayList<Store>();
+//    @OneToMany(mappedBy = "member")
+//    private List<Store> stores = new ArrayList<>();
 
     public Member(){}
 }

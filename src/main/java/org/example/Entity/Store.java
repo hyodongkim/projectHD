@@ -1,16 +1,10 @@
 package org.example.Entity;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,16 +13,20 @@ import lombok.ToString;
 
 import java.io.File;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity // 테이블 정의
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@SequenceGenerator(name="num_store_gen", sequenceName="store_seq", allocationSize=1)
+@Table(name = "store")
+@DynamicUpdate
 public class Store {
     @Id
-    @SequenceGenerator(name="seq_gen", sequenceName="seq_shopping", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_shopping")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="num_store_gen")
     @Column(name="num")
     private Long num;
 
@@ -37,10 +35,9 @@ public class Store {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne // 여러 상품을 한 판매자가 등록할 수 있음
-    @JoinColumn(name="member_id", nullable=true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Member member; // 판매자
+    @ManyToOne(optional = false,fetch= LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     public void getOriginFilename(String fname1) {
         originFilename = fname1;
@@ -49,4 +46,9 @@ public class Store {
     public void getStoreFilename(String absolutePath) {
         storeFilename = absolutePath;
     }
+
+
+
+
+
 }

@@ -63,7 +63,7 @@ public class StoreService {
         dao.deleteByNum(num);
     }
 
-    public void save(Store store) {
+    public void save(Store store){
         dao.save(store);
     }
 }

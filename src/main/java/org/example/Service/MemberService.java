@@ -1,6 +1,7 @@
 package org.example.Service;
 
 import org.example.Entity.Member;
+import org.example.Entity.Store;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -39,4 +40,6 @@ public interface MemberService {
     public void deleteMember(Long id);
 
     Optional<Member> findMemberss(Long id);
+
+
 }

@@ -60,12 +60,12 @@ public class MemberController {
 
 
     @GetMapping("/register")
-    public String registerForm(@ModelAttribute Member member, Model model) {
+    public String registerForm(@ModelAttribute Member member,@ModelAttribute Store store, Model model) {
 
-
-        model.addAttribute("member", member);
 
         memberService.register(member);
+
+        model.addAttribute("member", member);
 
         return "thymeleaf/member/registerForm";
     }
@@ -104,9 +104,11 @@ public class MemberController {
 
         store.getOriginFilename(fname1);
         store.getStoreFilename(fname2);
+        store.setMember(member);
 
         memberService.register(member);
         storeService.save(store);
+
 
 
 //        return "thymeleaf/member/view";
@@ -193,6 +195,7 @@ public class MemberController {
 
         store.getOriginFilename(fname1);
         store.getStoreFilename(f3.getAbsolutePath());
+        store.setMember(member);
 
 
 
@@ -342,6 +345,7 @@ public class MemberController {
 
         store.getOriginFilename(fname1);
         store.getStoreFilename(f3.getAbsolutePath());
+        store.setMember(member);
 
 
 

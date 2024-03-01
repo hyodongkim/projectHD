@@ -1,6 +1,7 @@
 package org.example.ServiceImpl;
 
 import org.example.Entity.Member;
+import org.example.Entity.Store;
 import org.example.Repository.MemberRepository;
 import org.example.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +67,6 @@ public class MemberServiceImpl implements MemberService {
     public Optional<Member> findMemberss(Long id){
         return memberRepository.findById(id);
     }
+
+
 }
