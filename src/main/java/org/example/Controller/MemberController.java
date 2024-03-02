@@ -252,7 +252,8 @@ public class MemberController {
 
     @PostMapping("/signin")
     public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult,
-                        @RequestParam(name = "redirect", defaultValue = "thymeleaf/member/view") String redirect, HttpServletRequest request, HttpServletResponse response, Model model) {
+                        @RequestParam(name = "redirect", defaultValue = "thymeleaf/member/view") String redirect, HttpServletRequest request, HttpServletResponse response, @ModelAttribute Member member,
+                        Model model) {
         log.info("로그인저장 체크 : {}", loginForm.getRemember());
         log.info("리다이렉트 : {}", redirect);
         if (bindingResult.hasErrors()) {
@@ -286,8 +287,8 @@ public class MemberController {
             Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
             model.addAttribute("member", optional.get());
         }
-///        return "redirect:"+redirect;
-        return "thymeleaf/member/view";
+//          return "redirect:"+redirect;
+            return "thymeleaf/member/view";
     }
 
     @GetMapping("/logout")
@@ -300,8 +301,9 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto,@ModelAttribute Store store, Model model) {
+    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto,@ModelAttribute Member member, Model model) {
 
+        member.setId(id);
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
