@@ -41,5 +41,7 @@ public interface MemberService {
 
     Optional<Member> findMemberss(Long id);
 
+    public List<Long> findStore(Long num);
+
 
 }

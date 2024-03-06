@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,5 +30,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     public Optional<Member> findByUserid(String userid);
 
-
+    @Query(value="SELECT s.num"
+            + "		FROM member m"
+            + "   			 INNER JOIN store s"
+            + "   							 ON m.member_id = s.member_id"
+            + "		WHERE s.num = :num",nativeQuery = true)
+    List<Long> findStore(@Param("num") Long num);
 }

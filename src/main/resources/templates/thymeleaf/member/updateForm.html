@@ -93,9 +93,17 @@
 
                 <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
-
                     <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
+
+
+                    <div th:each="mem : ${mem}">
+                        <a th:href="@{/Members/deletePhoto/{num}(num=${mem.num})}"><button>이미지 삭제하기</button></a>
+                    </div>
                 </div>
+
+
+
+
 
             </table>
         </div>

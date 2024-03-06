@@ -45,8 +45,9 @@ public class Member{
     @Column(name="member_introduction")
     private String introduction;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<Store> stores = new ArrayList<>();
+    @OneToMany(mappedBy = "member",
+            cascade = CascadeType.ALL)
+    private List<Store> stores = new ArrayList<>();
 
     public Member(){}
 }

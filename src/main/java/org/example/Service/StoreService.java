@@ -1,6 +1,8 @@
 package org.example.Service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.example.Dto.StoreDto;
 import org.example.Entity.Member;
@@ -63,7 +65,11 @@ public class StoreService {
         dao.deleteByNum(num);
     }
 
+
     public void save(Store store){
         dao.save(store);
     }
+
+
+
 }

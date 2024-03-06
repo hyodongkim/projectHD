@@ -137,8 +137,8 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/deletePhoto")
-    public String deletePhoto(@RequestParam Long num){
+    @GetMapping("/deletePhoto/{num}")
+    public String deletePhoto(@PathVariable Long num){
 
         storeService.delMember(num);
 
@@ -301,12 +301,20 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,@ModelAttribute StoreDto storeDto,@ModelAttribute Member member, Model model) {
+    public String updateMember(@PathVariable Long id,@ModelAttribute Store store,Long num,
+                               @ModelAttribute Member member, Model model) {
 
-        member.setId(id);
+        store.setNum(num);
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
+
+
+
+        List<Long> member2 = memberService.findStore(num);
+        model.addAttribute("mem",member2);
+
+
 
         String path1 = path + id;
         File dir = new File(path1);

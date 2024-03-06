@@ -13,6 +13,7 @@ import lombok.ToString;
 
 import java.io.File;
 
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity // 테이블 정의
@@ -35,7 +36,7 @@ public class Store {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne(optional = false,fetch= LAZY)
+    @ManyToOne(fetch= LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
