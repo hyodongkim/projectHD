@@ -137,7 +137,7 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/deletePhoto/{num}")
+    @GetMapping("/deletePhoto")
     public String deletePhoto(@PathVariable Long num){
 
         storeService.delMember(num);
@@ -207,7 +207,7 @@ public class MemberController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
-        memberService.deleteMember(id);
+//        memberService.deleteMember(id);
         System.out.println("삭제");
         return "redirect:/Members";
     }
@@ -311,8 +311,8 @@ public class MemberController {
 
 
 
-        List<Long> member2 = memberService.findStore(num);
-        model.addAttribute("mem",member2);
+//        List<Store> member2 = storeService.findStore(num);
+//        model.addAttribute("mem",member2);
 
 
 

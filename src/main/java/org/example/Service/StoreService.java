@@ -10,7 +10,11 @@ import org.example.Entity.Store;
 import org.example.Repository.MemberRepository;
 import org.example.Repository.StoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import static org.apache.commons.io.FileUtils.delete;
 
 
 @Service
@@ -60,7 +64,6 @@ public class StoreService {
                 null);
     }
 
-    // 삭제
     public void delMember(Long num) {
         dao.deleteByNum(num);
     }
@@ -70,6 +73,8 @@ public class StoreService {
         dao.save(store);
     }
 
-
+    public List<Store> findStore(Long num) {
+        return dao.findStore(num);
+    }
 
 }

@@ -68,8 +68,5 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(id);
     }
 
-    @Override
-    public List<Long> findStore(Long num) {
-        return memberRepository.findStore(num);
-    }
+
 }
