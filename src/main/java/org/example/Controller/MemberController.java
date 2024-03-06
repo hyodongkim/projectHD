@@ -137,11 +137,11 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/deletePhoto")
-    public String deletePhoto(@PathVariable Long num){
+    @PostMapping("/deletePhoto/{storeFilename}")
+    public String deletePhoto(@PathVariable String storeFilename,Model model){
 
-        storeService.delMember(num);
-
+        storeService.delMember(storeFilename);
+        model.addAttribute("mem",storeService.delMember(storeFilename));
         return "thymeleaf/member/view";
     }
 
@@ -207,7 +207,7 @@ public class MemberController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
-//        memberService.deleteMember(id);
+        memberService.deleteMember(id);
         System.out.println("삭제");
         return "redirect:/Members";
     }
@@ -301,13 +301,14 @@ public class MemberController {
     }
 
     @GetMapping("/updateMember/{id}")
-    public String updateMember(@PathVariable Long id,@ModelAttribute Store store,Long num,
+    public String updateMember(@PathVariable Long id,@ModelAttribute Store store,@RequestParam(required=false) String storeFilename,
                                @ModelAttribute Member member, Model model) {
 
-        store.setNum(num);
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());
+
+
 
 
 

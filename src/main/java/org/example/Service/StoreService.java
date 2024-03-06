@@ -64,8 +64,8 @@ public class StoreService {
                 null);
     }
 
-    public void delMember(Long num) {
-        dao.deleteByNum(num);
+    public List<Store> delMember(String storeFilename) {
+        return dao.deleteByStoreFilename(storeFilename);
     }
 
 
