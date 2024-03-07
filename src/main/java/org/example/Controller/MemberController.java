@@ -137,12 +137,18 @@ public class MemberController {
         return result;
     }
 
-    @PostMapping("/deletePhoto/{storeFilename}")
-    public String deletePhoto(@PathVariable String storeFilename,Model model){
+    @GetMapping("/deletePhoto/{storeFilename}")
+    public String deletePhoto(@PathVariable String storeFilename,@RequestParam(required = false) Long id,@ModelAttribute Member member,
+                              RedirectAttributes redirectAttributes,Model model){
+        member.setId(id);
 
         storeService.delMember(storeFilename);
-        model.addAttribute("mem",storeService.delMember(storeFilename));
-        return "thymeleaf/member/view";
+        Optional<Member> mem = memberService.findMember(id);
+
+        model.addAttribute("mem",mem);
+//        redirectAttributes.addAttribute("id",id);
+
+        return "redirect:thymeleaf/member/updateForm";
     }
 
     @GetMapping("/{id}")

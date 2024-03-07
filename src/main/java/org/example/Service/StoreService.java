@@ -2,7 +2,6 @@ package org.example.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.example.Dto.StoreDto;
 import org.example.Entity.Member;
@@ -10,11 +9,7 @@ import org.example.Entity.Store;
 import org.example.Repository.MemberRepository;
 import org.example.Repository.StoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import static org.apache.commons.io.FileUtils.delete;
 
 
 @Service
@@ -64,8 +59,8 @@ public class StoreService {
                 null);
     }
 
-    public List<Store> delMember(String storeFilename) {
-        return dao.deleteByStoreFilename(storeFilename);
+    public void delMember(String storeFilename) {
+        dao.deleteByStoreFilename(storeFilename);
     }
 
 
