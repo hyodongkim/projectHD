@@ -137,18 +137,22 @@ public class MemberController {
         return result;
     }
 
-    @GetMapping("/deletePhoto/{storeFilename}")
-    public String deletePhoto(@PathVariable String storeFilename,@RequestParam(required = false) Long id,@ModelAttribute Member member,
+    @GetMapping("/deletePhoto/{id}/{storeFilename}")
+    public String deletePhoto(@PathVariable String storeFilename,@PathVariable Long id,@ModelAttribute Member member,@ModelAttribute Store store,
                               RedirectAttributes redirectAttributes,Model model){
         member.setId(id);
+        store.getStoreFilename(storeFilename);
+
 
         storeService.delMember(storeFilename);
         Optional<Member> mem = memberService.findMember(id);
 
         model.addAttribute("mem",mem);
-//        redirectAttributes.addAttribute("id",id);
+        redirectAttributes.addAttribute("id",id);
+        
+        System.out.println("삭제됨");
 
-        return "redirect:thymeleaf/member/updateForm";
+        return "redirect:/Members/updateMember/{id}";
     }
 
     @GetMapping("/{id}")
@@ -310,6 +314,8 @@ public class MemberController {
     public String updateMember(@PathVariable Long id,@ModelAttribute Store store,@RequestParam(required=false) String storeFilename,
                                @ModelAttribute Member member, Model model) {
 
+        member.setId(id);
+        store.getStoreFilename(storeFilename);
 
         Optional<Member> member1 = memberService.findMember(id);
         model.addAttribute("member", member1.get());

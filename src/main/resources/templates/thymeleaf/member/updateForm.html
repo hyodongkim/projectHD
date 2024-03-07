@@ -106,17 +106,17 @@
         </div>
 
     </form>
+    <div th:each="img : ${imgs}">
+        <form th:action="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}" method="get" enctype="multipart/form-data">
+             <!-- 파일 이름이 들어가있음. -->
+                <!-- 컨트롤러로 요청 보냄. -->
+                <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
 
-    <form th:action="@{/Members/deletePhoto/{img}(img=${img})}" method="get" enctype="multipart/form-data">
-        <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
-            <!-- 컨트롤러로 요청 보냄. -->
-            <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
+                <a th:href="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}"><button>이미지 삭제하기</button></a>
 
-            <a th:href="@{/Members/deletePhoto/{img}(img=${img})}"><button>이미지 삭제하기</button></a>
 
-        </div>
-    </form>
-
+        </form>
+    </div>
     <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
 </section>
 
