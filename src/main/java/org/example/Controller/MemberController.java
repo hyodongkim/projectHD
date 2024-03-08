@@ -35,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 @Controller
@@ -122,7 +123,7 @@ public class MemberController {
         File f = new File(path+id);
         String fname = f+"/";
         File f1 = new File(fname + img);
-        System.out.println("read_img:"+f1.getAbsolutePath());
+        System.out.println("read_img:"+f1);
         HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.
         ResponseEntity<byte[]> result = null; // ResponseEntity 응답 객체 선언.
         try { // 여러 설정값 중 Content-Type라는 값이 있음.
@@ -139,10 +140,22 @@ public class MemberController {
 
     @GetMapping("/deletePhoto/{id}/{storeFilename}")
     public String deletePhoto(@PathVariable String storeFilename,@PathVariable Long id,@ModelAttribute Member member,@ModelAttribute Store store,
-                              RedirectAttributes redirectAttributes,Model model){
+                              RedirectAttributes redirectAttributes,Model model) throws IOException {
         member.setId(id);
         store.getStoreFilename(storeFilename);
 
+        String path1 = path + id;
+        File dir = new File(path1, storeFilename);
+        System.out.println("view:"+dir);
+        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+
+        if(dir.delete()){
+            System.out.println("파일 삭제 성공!");
+        }
+        else{
+            System.out.println("파일 삭제 실패.");
+        }
+        model.addAttribute("imgs", files);
 
         storeService.delMember(storeFilename);
         Optional<Member> mem = memberService.findMember(id);
@@ -150,7 +163,8 @@ public class MemberController {
         model.addAttribute("mem",mem);
         redirectAttributes.addAttribute("id",id);
         
-        System.out.println("삭제됨");
+        System.out.println("삭제됨Id:"+id);
+        System.out.println("삭제됨storeFilename:"+storeFilename);
 
         return "redirect:/Members/updateMember/{id}";
     }
