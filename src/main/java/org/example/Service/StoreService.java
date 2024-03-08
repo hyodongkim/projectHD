@@ -63,6 +63,10 @@ public class StoreService {
         dao.deleteByStoreFilename(storeFilename);
     }
 
+    public void deleteEmptyName(){
+        dao.deleteEmptyName();
+    }
+
 
     public void save(Store store){
         dao.save(store);

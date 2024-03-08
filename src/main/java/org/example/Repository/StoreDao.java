@@ -23,6 +23,12 @@ public interface StoreDao extends JpaRepository<Store, Integer> {
     @Query(value="DELETE FROM Store s WHERE s.storeFilename=:storeFilename")
     public void deleteByStoreFilename(@Param("storeFilename") String storeFilename);
 
+
+    @Modifying
+    @Transactional
+    @Query(value="Delete From Store s Where s.originFilename Is Null")
+    public void deleteEmptyName();
+
     Optional<Store> findByNum(Long num);
 
 

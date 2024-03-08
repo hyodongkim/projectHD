@@ -113,8 +113,6 @@
                 <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
 
                 <a th:href="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}"><button>이미지 삭제하기</button></a>
-
-
         </form>
     </div>
     <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
