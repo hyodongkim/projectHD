@@ -1,6 +1,7 @@
 package org.example.ServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.example.Entity.Article;
 import org.example.Repository.ArticleRepository;
@@ -22,5 +23,20 @@ public class ArticleServiceImpl implements ArticleService {
     public Page<Article> findArticles(String searchValue, Pageable pageable){
 
         return articleRepository.findAllByWriterOrContentContaining(searchValue,searchValue,pageable);
+    }
+
+    @Override
+    public Optional<Article> findArticle(Long articleId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void deleteArticle(Long articleId) {
+
+    }
+
+    @Override
+    public void registerArticle(Article article) {
+
     }
 }

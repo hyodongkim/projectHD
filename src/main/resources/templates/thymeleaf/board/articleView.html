@@ -1,0 +1,101 @@
+<link th:href="@{/CSS/view.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:include="layout/templateV1.html"></div>
+
+
+<!-- 커뮤니티 소개 -->
+<!--<header></header>-->
+
+<!-- 내비게이션 -->
+<nav>
+</nav>
+
+<!-- 컨텐츠 -->
+<section>
+
+
+    <div class="page-header">
+        <h2 id="container">커뮤니티 회원상세</h2>
+    </div>
+
+    <div class="alert alert-dismissable alert-success"
+         th:if="${#strings.equals(param.status, 'new')}">
+        <strong>커뮤니티 회원 가입을 축하합니다.</strong>
+    </div>
+
+    <div class="alert alert-dismissable alert-danger">
+    </div>
+    <form th:action="@{/Members/{id}(id=${id})}"  th:object="${member}" method="post" enctype="multipart/form-data">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody th:each="member : ${member}">
+                <tr>
+                    <th>키값(확인용)</th>
+                    <td th:text="${member.id}">id</td>
+                </tr>
+
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="${member.userid}">id</td>
+                </tr>
+                <tr>
+                    <th>E-Mail</th>
+                    <td th:text="${member.email}">email</td>
+                </tr>
+                <tr>
+                    <th>회원명</th>
+                    <td th:text="${member.name}">name</td>
+                </tr>
+                <tr>
+                    <th>성별</th>
+                    <td th:text="${member.sex}">sex</td>
+                </tr>
+                <tr>
+                    <th>나이</th>
+                    <td th:text="${member.age}">age</td>
+                </tr>
+                <tr>
+                    <th>생년월일</th>
+                    <td th:text="${member.birth}">birth</td>
+                </tr>
+                <tr>
+                    <th>가입일자</th>
+                    <td class="text-left"
+                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
+                </tr>
+                <tr>
+                    <th>자기소개</th>
+                    <td th:text="${member.introduction}">introduction</td>
+                </tr>
+                <!--                <tr>-->
+                <!--                    <th>프로필사진</th>-->
+                <!--                    <td th:text="${member.file}">photo</td>-->
+                <!--                </tr>-->
+                <!--                <tr>-->
+                <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
+
+                <h3>업로드 목록</h3>
+                <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
+                    <!-- 컨트롤러로 요청 보냄. -->
+
+                    <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
+
+                </div>
+
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="pull-right" th:each="member : ${member}">
+        <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+        <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
+        <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
+    </div>
+
+</section>
+
+
+</html>
