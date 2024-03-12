@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @DynamicInsert
 @ToString
@@ -44,6 +46,9 @@ public class Member{
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;
+    @ManyToOne(fetch= LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     @OneToMany(mappedBy = "member",
             cascade = CascadeType.ALL)
