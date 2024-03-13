@@ -13,6 +13,11 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     private ArticleStoreRepository articleStoreRepository;
 
     @Override
+    public void delArticle(String storeFilename){
+        articleStoreRepository.deleteByStoreFilename(storeFilename);
+    }
+
+    @Override
     public void save(ArticleStore articleStore) {
         articleStoreRepository.save(articleStore);
     }

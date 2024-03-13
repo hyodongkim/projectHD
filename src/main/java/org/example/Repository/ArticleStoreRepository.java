@@ -15,4 +15,9 @@ public interface ArticleStoreRepository extends JpaRepository<ArticleStore, Long
     @Transactional
     @Query(value="Delete From ArticleStore s Where s.originFilename Is Null")
     public void deleteEmptyName();
+
+    @Modifying
+    @Transactional
+    @Query(value="DELETE FROM ArticleStore s WHERE s.storeFilename=:storeFilename")
+    public void deleteByStoreFilename(String storeFilename);
 }

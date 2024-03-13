@@ -15,4 +15,8 @@ import org.springframework.data.repository.query.Param;
 public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     public Page<Article> findAllByWriterOrContentContaining(String writer, String content, Pageable pageable);
+
+    public Optional<Article> findByArticleId(Long articleId);
+
+    public void deleteByArticleId(Long articleId);
 }

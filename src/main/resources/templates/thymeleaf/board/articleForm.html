@@ -68,6 +68,8 @@
 
 
             <div th:if="${hasNext}"><a th:href="@{/Boards(page=${requestPage}, search=${param.search})}" th:text="'Next'">다음페이지</a></div>
+
+            <div><a th:href="@{/Boards/writeArticle}">글쓰기</a></div>
         </div>
 
     </div>

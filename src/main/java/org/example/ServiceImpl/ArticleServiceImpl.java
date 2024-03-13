@@ -20,6 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Override
     public Page<Article> findArticles(String searchValue, Pageable pageable){
 
         return articleRepository.findAllByWriterOrContentContaining(searchValue,searchValue,pageable);
@@ -27,16 +28,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Optional<Article> findArticle(Long articleId) {
-        return Optional.empty();
+        return articleRepository.findByArticleId(articleId);
     }
 
     @Override
     public void deleteArticle(Long articleId) {
-
+        articleRepository.deleteByArticleId(articleId);
     }
 
     @Override
     public void registerArticle(Article article) {
-
+        articleRepository.save(article);
     }
+
 }
