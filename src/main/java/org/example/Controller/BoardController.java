@@ -162,8 +162,9 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute Article article, @ModelAttribute("loginForm") LoginForm loginForm,BindingResult bindingResult,
-                               HttpServletRequest request, HttpServletResponse response, WriteBoardForm WriteBoardForm,
+                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute WriteBoardForm WriteBoardForm,
                                @CookieValue(value = "rememberId", required = false) String rememberId,RedirectAttributes redirectAttributes,Model model) {
+
 
 //        if (rememberId != null) {
 //            loginForm.setUserid(rememberId);
@@ -193,8 +194,8 @@ public class BoardController {
 //        HttpSession session = request.getSession();
 //        session.setAttribute("loginMember", loginMember);
 //
-        articleService.registerArticle(article);
 
+//
         model.addAttribute("WriteBoardForm", WriteBoardForm);
 
         return "thymeleaf/board/writeArticle";
