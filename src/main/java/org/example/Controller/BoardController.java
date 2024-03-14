@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.example.Dto.ArticleStoreDto;
-import org.example.Dto.LoginForm;
-import org.example.Dto.MemberForm;
-import org.example.Dto.StoreDto;
+import org.example.Dto.*;
 import org.example.Entity.*;
 import org.example.Service.ArticleService;
 import org.example.Service.ArticleStoreService;
@@ -165,10 +162,19 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute Article article, @ModelAttribute("loginForm") LoginForm loginForm,BindingResult bindingResult,
-                               HttpServletRequest request, HttpServletResponse response,
+                               HttpServletRequest request, HttpServletResponse response, WriteBoardForm WriteBoardForm,
                                @CookieValue(value = "rememberId", required = false) String rememberId,RedirectAttributes redirectAttributes,Model model) {
 
 //        if (rememberId != null) {
+//            loginForm.setUserid(rememberId);
+//            loginForm.setRemember(true);
+//
+//            redirectAttributes.addAttribute("rememberId",rememberId);
+//
+//            return "redirect:/Boards/{rememberId}";
+//        }
+//
+//        if (rememberId == null) {
 //            loginForm.setUserid(rememberId);
 //            loginForm.setRemember(true);
 //
@@ -186,10 +192,10 @@ public class BoardController {
 //
 //        HttpSession session = request.getSession();
 //        session.setAttribute("loginMember", loginMember);
-
+//
         articleService.registerArticle(article);
 
-        model.addAttribute("article", article);
+        model.addAttribute("WriteBoardForm", WriteBoardForm);
 
         return "thymeleaf/board/writeArticle";
     }
