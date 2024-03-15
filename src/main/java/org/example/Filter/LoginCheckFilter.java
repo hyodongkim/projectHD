@@ -31,9 +31,9 @@ public class LoginCheckFilter implements Filter {
                     log.info("미인증 사용자 요청 {}", requestURI);
                     // 로그인으로 redirect
 //                    httpResponse.sendRedirect("/login?redirectURL="+ requestURI);
-                    httpResponse.sendRedirect("Members/signup");
                     return;
                 }
+
             }
             chain.doFilter(request, response);
         } catch (Exception e) {
