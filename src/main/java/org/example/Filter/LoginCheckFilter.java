@@ -27,10 +27,11 @@ public class LoginCheckFilter implements Filter {
             if (isLoginCheckPath(requestURI)) {
                 log.info("인증 체크 로직 실행{}", requestURI);
                 HttpSession session = httpRequest.getSession(false);
-                if (session == null || session.getAttribute("memberId") == null) {
+                if (session == null) {
                     log.info("미인증 사용자 요청 {}", requestURI);
                     // 로그인으로 redirect
-                    httpResponse.sendRedirect("/login?redirectURL="+ requestURI);
+//                    httpResponse.sendRedirect("/login?redirectURL="+ requestURI);
+                    httpResponse.sendRedirect("Members/signup");
                     return;
                 }
             }
