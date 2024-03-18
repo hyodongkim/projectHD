@@ -33,8 +33,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     public Optional<Member> findByUserid(String userid);
     @Modifying
     @Transactional
-    @Query(value="DELETE FROM Member m WHERE m.id=:member_id")
-    public void deleteById(@Param("member_id") Long id);
+    public void deleteById(Long id);
 
 
 }

@@ -66,11 +66,4 @@ public class Article {
             cascade = CascadeType.ALL)
     private List<ArticleStore> articleStores = new ArrayList<>();
 
-//    @ManyToOne(fetch= LAZY)
-//    @JoinColumn(name = "comment_id")
-//    private Comment comment;
-//
-//    @OneToMany(mappedBy = "article",
-//            cascade = CascadeType.ALL)
-//    private List<Board> boards = new ArrayList<>();
 }

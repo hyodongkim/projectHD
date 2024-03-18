@@ -23,6 +23,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     @Modifying
     @Transactional
-    @Query(value="Delete From Article a Where a.articleId=:article_id")
-    public void deleteByArticleId(@Param("article_id") Long articleId);
+    public void deleteByArticleId(Long articleId);
 }
