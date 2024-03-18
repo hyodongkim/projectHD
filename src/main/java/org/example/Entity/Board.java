@@ -35,14 +35,14 @@ public class Board {
     @Column(name="description")
     private String description;
 
-    @ManyToOne(fetch= LAZY)
-    @JoinColumn(name = "article_id")
-    private Article article;
-
-    @OneToMany(mappedBy = "board",
-            cascade = CascadeType.ALL)
-    private List<Member> members = new ArrayList<>();
-
+//    @ManyToOne(fetch= LAZY)
+//    @JoinColumn(name = "article_id")
+//    private Article article;
+//
+//    @OneToMany(mappedBy = "board",
+//            cascade = CascadeType.ALL)
+//    private List<Member> members = new ArrayList<>();
+//
 
 
 }

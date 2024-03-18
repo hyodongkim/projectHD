@@ -61,7 +61,7 @@ public class MemberController {
 
 
     @GetMapping("/register")
-    public String registerForm(@ModelAttribute Member member,@ModelAttribute Store store, Model model) {
+    public String registerForm(@ModelAttribute Member member, Model model) {
 
 
         memberService.register(member);

@@ -23,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<Article> findArticles(String searchValue, Pageable pageable){
 
-        return articleRepository.findAllByWriterOrContentContaining(searchValue,searchValue,pageable);
+        return articleRepository.findAllByNameOrContentContaining(searchValue,searchValue,pageable);
     }
 
     @Override

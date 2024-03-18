@@ -5,8 +5,11 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,21 +30,21 @@ import static jakarta.persistence.FetchType.LAZY;
         initialValue = 1,
         allocationSize = 1)
 //@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_id_seq_gen")
     @Column(name = "article_id")
     private Long articleId;
-    @Column(name = "writer")
-    private String writer;
+    @Column(name = "name")
+    private String name;
     @Column(name = "subject")
     private String subject;
     @Column(name = "content")
     private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date regdate;
+    @CreatedDate
+    private LocalDateTime day;
     @Column(name = "hitcount")
     private Long hitcount;
     @Column(name = "group_no")
@@ -51,11 +54,23 @@ public class Article {
     @Column(name = "order_no")
     private Long orderNo;
 
-    @ManyToOne(fetch= LAZY)
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    @ManyToOne(fetch=LAZY)
+    @JoinColumn(name ="member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "article",
             cascade = CascadeType.ALL)
-    private List<Board> boards = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "article",
+            cascade = CascadeType.ALL)
+    private List<ArticleStore> articleStores = new ArrayList<>();
+
+//    @ManyToOne(fetch= LAZY)
+//    @JoinColumn(name = "comment_id")
+//    private Comment comment;
+//
+//    @OneToMany(mappedBy = "article",
+//            cascade = CascadeType.ALL)
+//    private List<Board> boards = new ArrayList<>();
 }

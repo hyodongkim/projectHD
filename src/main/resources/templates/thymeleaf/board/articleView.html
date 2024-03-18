@@ -23,52 +23,37 @@
 
     <div class="alert alert-dismissable alert-success"
          th:if="${#strings.equals(param.status, 'new')}">
-        <strong>커뮤니티 회원 가입을 축하합니다.</strong>
     </div>
 
     <div class="alert alert-dismissable alert-danger">
     </div>
-    <form th:action="@{/Members/{id}(id=${id})}"  th:object="${member}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/Boards/{articleId}(articleId=${articleId})}"  th:object="${article}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
             <table class="table table-bordered">
-                <tbody th:each="member : ${member}">
+                <tbody th:each="article : ${article}">
                 <tr>
                     <th>키값(확인용)</th>
-                    <td th:text="${member.id}">id</td>
+                    <td th:text="${article.articleId}">id</td>
                 </tr>
 
                 <tr>
                     <th>아이디</th>
-                    <td th:text="${member.userid}">id</td>
+                    <td th:text="${article.name}">id</td>
                 </tr>
                 <tr>
                     <th>E-Mail</th>
-                    <td th:text="${member.email}">email</td>
+                    <td th:text="${article.subject}">email</td>
                 </tr>
                 <tr>
                     <th>회원명</th>
-                    <td th:text="${member.name}">name</td>
+                    <td th:text="${article.content}">name</td>
                 </tr>
                 <tr>
-                    <th>성별</th>
-                    <td th:text="${member.sex}">sex</td>
-                </tr>
-                <tr>
-                    <th>나이</th>
-                    <td th:text="${member.age}">age</td>
-                </tr>
-                <tr>
-                    <th>생년월일</th>
-                    <td th:text="${member.birth}">birth</td>
-                </tr>
+
                 <tr>
                     <th>가입일자</th>
                     <td class="text-left"
-                        th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
-                </tr>
-                <tr>
-                    <th>자기소개</th>
-                    <td th:text="${member.introduction}">introduction</td>
+                        th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
                 </tr>
                 <!--                <tr>-->
                 <!--                    <th>프로필사진</th>-->
@@ -81,7 +66,7 @@
                 <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
-                    <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
+                    <img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px"  alt=""/>
 
                 </div>
 
@@ -89,10 +74,10 @@
             </table>
         </div>
     </form>
-    <div class="pull-right" th:each="member : ${member}">
-        <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
-        <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
-        <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
+    <div class="pull-right" th:each="article : ${article}">
+        <a th:href="@{/Boards/updateMember/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+        <a th:href="@{/Boards}"><button class="btn btn-warning">회원목록</button></a>
+        <a th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">회원탈퇴</button></a>
     </div>
 
 </section>

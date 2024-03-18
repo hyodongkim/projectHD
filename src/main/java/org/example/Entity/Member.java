@@ -46,9 +46,13 @@ public class Member{
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;
-    @ManyToOne(fetch= LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+//    @ManyToOne(fetch= LAZY)
+//    @JoinColumn(name = "board_id")
+//    private Board board;
+
+    @OneToMany(mappedBy = "member",
+            cascade = CascadeType.ALL)
+    private List<Article> articles = new ArrayList<>();
 
     @OneToMany(mappedBy = "member",
             cascade = CascadeType.ALL)

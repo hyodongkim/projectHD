@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @DynamicInsert
 @RequiredArgsConstructor
@@ -39,8 +41,9 @@ public class Comment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date regdate;
+    @ManyToOne(fetch=LAZY)
+    @JoinColumn(name="article_id")
+    private Article article;
 
-    @OneToMany(mappedBy = "comment",
-            cascade = CascadeType.ALL)
-    private List<Article> articles = new ArrayList<>();
+
 }

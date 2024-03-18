@@ -1,9 +1,7 @@
 package org.example.Controller;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.*;
 import org.example.Entity.*;
@@ -23,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -52,7 +49,8 @@ public class BoardController {
     private MemberService memberService;
 
     @GetMapping
-    public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search, Model model) {
+    public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search,
+                                  Model model) {
 
         Page<Article> page = articleService.findArticles(search, pageable);
 
@@ -78,20 +76,24 @@ public class BoardController {
     }
 
     @GetMapping("/{articleId}")
-    public String viewArticle(@PathVariable Long articleId, @ModelAttribute StoreDto Dto, @ModelAttribute Store store, Model model) {
+    public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store, Model model) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
-        model.addAttribute("member", article1.get());
+        model.addAttribute("article", article1.get());
 
-        String path1 = path_article + articleId;
-        File dir = new File(path1);
-        System.out.println("view:"+path1);
-        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+//        String path1 = path_article + articleId;
+        String path1 = path_article + "ARTICLE"+"/";
+        File dir = new File(path1+articleId);
+        String path2 = article.getArticleId() +"/";
+        File dir1 = new File(dir+(path2));
+
+        System.out.println("view:"+dir1);
+        String[] files = dir1.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
 //            model.addAttribute("imgs", files);
 
-        return "thymeleaf/board/view";
+        return "thymeleaf/board/articleView";
     }
 
     @PostMapping("/{articleId}")
@@ -148,7 +150,7 @@ public class BoardController {
             System.out.println("이상무");
         }
 
-        return "thymeleaf/board/view";
+        return "thymeleaf/board/articleView";
     }
 
     @GetMapping("/delete/{articleId}")
@@ -161,61 +163,34 @@ public class BoardController {
 
 
     @GetMapping("/writeArticle")
-    public String writeArticle(@ModelAttribute Article article, @ModelAttribute("loginForm") LoginForm loginForm,BindingResult bindingResult,
-                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute WriteBoardForm WriteBoardForm,
-                               @CookieValue(value = "rememberId", required = false) String rememberId,RedirectAttributes redirectAttributes,Model model) {
+    public String writeArticle(@ModelAttribute("article") Article article,
+                              RedirectAttributes redirectAttributes,Model model) {
 
+        articleService.registerArticle(article);
 
-//        if (rememberId != null) {
-//            loginForm.setUserid(rememberId);
-//            loginForm.setRemember(true);
-//
-//            redirectAttributes.addAttribute("rememberId",rememberId);
-//
-//            return "redirect:/Boards/{rememberId}";
-//        }
-//
-//        if (rememberId == null) {
-//            loginForm.setUserid(rememberId);
-//            loginForm.setRemember(true);
-//
-//            redirectAttributes.addAttribute("rememberId",rememberId);
-//
-//            return "redirect:/Boards/{rememberId}";
-//        }
-//
-//        Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
-//        if (loginMember == null) {
-//            // 글로벌 오류 생성 및 로그인화면으로 포워드
-//            bindingResult.reject("loginFail", "로그인을 해주세요.");
-//            return "thymeleaf/member/loginForm";
-//        }
-//
-//        HttpSession session = request.getSession();
-//        session.setAttribute("loginMember", loginMember);
-//
-
-//
-        model.addAttribute("WriteBoardForm", WriteBoardForm);
+        model.addAttribute("article",article);
 
         return "thymeleaf/board/writeArticle";
     }
 
     @PostMapping("/writeArticle")
-    public String register(@Validated @ModelAttribute MemberForm form,@ModelAttribute("loginForm") LoginForm loginForm, @RequestParam("articleId") Long articleId, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
-                           @CookieValue(value = "rememberId", required = false) String rememberId,RedirectAttributes redirectAttributes, @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
-                           HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+    public String register(ArticleStoreDto dto,BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes, @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
+                           @ModelAttribute WriteBoardForm writeBoardForm, Model model) throws IOException {
 
-
+        articleService.registerArticle(article);
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
-        String fname2 = uuid +"_"+ fname1;
+        String fname2 = uuid +"_"+fname1;
         String fname="/"+fname2;
-        File f2 = new File(path_article+articleId); // 업로드된 파일을 저장할 새 파일 생성
+        File f2 = new File(path_article+"ARTICLE"); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
-        File f3 = new File(f2+fname);
+        String fname3=f2+"/"+article.getArticleId();
+        File f3 = new File(fname3+fname);
+        f3.mkdirs();
+
 
         try {
             f.transferTo(f3); // 파일 복사
@@ -228,12 +203,12 @@ public class BoardController {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+//
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
 
-        memberService.register(member);
+//        articleService.registerArticle(article);
         articleStoreService.save(articleStore);
 
 
@@ -251,17 +226,20 @@ public class BoardController {
         }
 
 //        return "thymeleaf/member/view";
-        redirectAttributes.addAttribute("articleId",articleId);
 
-        return "redirect:/Boards/{articleId}";
+        model.addAttribute("WriteBoardForm", writeBoardForm);
+
+//        redirectAttributes.addAttribute("articleId",articleId);
+
+        return "thymeleaf/board/articleView";
     }
 
     @GetMapping("/read_img/{articleId}/{img}")
     // 이미지는 바이너리값 -> byte[]
     public ResponseEntity<byte[]> read_img(@PathVariable String articleId, @PathVariable String img, StoreDto dto, Model model)throws IOException{
 
-        File f = new File(path_article+articleId);
-        String fname = f+"/";
+        File f = new File(path_article+"ARTICLE");
+        String fname = f+"/"+articleId +"/";
         File f1 = new File(fname + img);
         System.out.println("read_img:"+f1);
         HttpHeaders header = new HttpHeaders(); // HttpHeaders : 여러 설정을 담음.

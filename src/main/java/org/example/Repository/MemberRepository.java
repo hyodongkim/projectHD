@@ -1,10 +1,12 @@
 package org.example.Repository;
 
+import jakarta.transaction.Transactional;
 import org.example.Entity.Member;
 import org.example.Entity.Store;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     public Member findByUseridAndPassword(String userid, String password);
 
     public Optional<Member> findByUserid(String userid);
+    @Modifying
+    @Transactional
+    @Query(value="DELETE FROM Member m WHERE m.id=:member_id")
+    public void deleteById(@Param("member_id") Long id);
 
 
 }
