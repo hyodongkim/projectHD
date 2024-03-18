@@ -84,9 +84,9 @@ public class BoardController {
 
 //        String path1 = path_article + articleId;
         String path1 = path_article + "ARTICLE"+"/";
-        File dir = new File(path1+articleId);
-        String path2 = article.getArticleId() +"/";
-        File dir1 = new File(dir+(path2));
+        File dir = new File(path1);
+        String path2 ="/"+article.getArticleId();
+        File dir1 = new File(dir+path2);
 
         System.out.println("view:"+dir1);
         String[] files = dir1.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
