@@ -49,10 +49,13 @@ public class BoardController {
     private MemberService memberService;
 
     @GetMapping
-    public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search,
+    public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
+                                  @ModelAttribute ArticleStore articleStore, @RequestParam(required = false, defaultValue = "") String search,
                                   Model model) {
 
         Page<Article> page = articleService.findArticles(search, pageable);
+
+        articleStoreService.registerArticleStore(articleStore);
 
         long totalElements = page.getTotalElements();
         List<Article> list = page.getContent();
@@ -71,6 +74,8 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("hasPrevious", hasPrevious);
         model.addAttribute("hasNext", hasNext);
+
+        model.addAttribute("articleStore",articleStore);
 
         return "thymeleaf/board/articleForm";
     }
