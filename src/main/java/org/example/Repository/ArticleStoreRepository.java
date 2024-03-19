@@ -20,4 +20,8 @@ public interface ArticleStoreRepository extends JpaRepository<ArticleStore, Long
     @Transactional
     @Query(value="DELETE FROM ArticleStore s WHERE s.storeFilename=:storeFilename")
     public void deleteByStoreFilename(String storeFilename);
+
+    @Modifying
+    @Transactional
+    public void deleteByArticleNum(Long articleNum);
 }

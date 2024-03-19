@@ -31,7 +31,7 @@ public class ArticleStore {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne(fetch= LAZY)
+    @ManyToOne(fetch= LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "article_id")
     private Article article;
 

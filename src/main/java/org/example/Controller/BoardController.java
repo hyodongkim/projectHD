@@ -98,7 +98,7 @@ public class BoardController {
 
     @PostMapping("/{articleId}")
     public String viewArticlePost(@PathVariable Long articleId, @ModelAttribute ArticleStore articleStore, @ModelAttribute Article article, Model model,
-                                  ArticleStoreDto dto, Store store) {
+                                  ArticleStoreDto dto, Store store, @ModelAttribute Member member) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -130,6 +130,7 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
         articleStore.setArticle(article);
+        article.setMember(member);
 
 
 
@@ -155,6 +156,9 @@ public class BoardController {
 
     @GetMapping("/delete/{articleId}")
     public String delete(@PathVariable Long articleId, Model model) {
+
+//        articleStoreService.deleteArticleStore(articleNum);
+
         articleService.deleteArticle(articleId);
         System.out.println("삭제");
         return "redirect:/Boards";
@@ -164,7 +168,7 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article,
-                              RedirectAttributes redirectAttributes,Model model) {
+                               Model model) {
 
         articleService.registerArticle(article);
 
@@ -176,7 +180,7 @@ public class BoardController {
     @PostMapping("/writeArticle")
     public String register(ArticleStoreDto dto,BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
-                           @ModelAttribute WriteBoardForm writeBoardForm, Model model) throws IOException {
+                           @ModelAttribute WriteBoardForm writeBoardForm,@ModelAttribute Member member, Model model) throws IOException {
 
         articleService.registerArticle(article);
 
@@ -207,10 +211,10 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
+//        article.setMember(member);
 
-//        articleService.registerArticle(article);
+
         articleStoreService.save(articleStore);
-
 
         if(articleStore.getOriginFilename().isEmpty()){
             articleStoreService.deleteEmptyName();

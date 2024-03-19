@@ -41,4 +41,8 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.save(article);
     }
 
+    @Override
+    public void deleteEmptyValue(){
+        articleRepository.deleteEmptyValue();
+    }
 }

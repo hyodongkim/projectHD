@@ -24,4 +24,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Modifying
     @Transactional
     public void deleteByArticleId(Long articleId);
+
+    @Modifying
+    @Transactional
+    @Query(value="Delete From Article a Where a.groupNo Is Null")
+    void deleteEmptyValue();
 }

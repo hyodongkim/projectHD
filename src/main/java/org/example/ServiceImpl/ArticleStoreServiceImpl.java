@@ -26,4 +26,8 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     public void deleteEmptyName() {
         articleStoreRepository.deleteEmptyName();
     }
+    @Override
+    public void deleteArticleStore(Long articleNum){
+        articleStoreRepository.deleteByArticleNum(articleNum);
+    }
 }

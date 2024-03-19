@@ -8,4 +8,6 @@ public interface ArticleStoreService {
     void save(ArticleStore articleStore);
 
     void deleteEmptyName();
+
+    void deleteArticleStore(Long articleNum);
 }

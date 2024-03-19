@@ -41,7 +41,8 @@ public class Comment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date regdate;
-    @ManyToOne(fetch=LAZY)
+
+    @ManyToOne(fetch=LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="article_id")
     private Article article;
 

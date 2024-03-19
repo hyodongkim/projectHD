@@ -54,16 +54,8 @@ public class Article {
     @Column(name = "order_no")
     private Long orderNo;
 
-    @ManyToOne(fetch=LAZY)
-    @JoinColumn(name ="member_id")
+    @ManyToOne(fetch= LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
     private Member member;
-
-    @OneToMany(mappedBy = "article",
-            cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "article",
-            cascade = CascadeType.ALL)
-    private List<ArticleStore> articleStores = new ArrayList<>();
 
 }
