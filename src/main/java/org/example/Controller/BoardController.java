@@ -76,7 +76,8 @@ public class BoardController {
     }
 
     @GetMapping("/{articleId}")
-    public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store, Model model) {
+    public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store,
+                              @ModelAttribute ArticleStore articleStore, Model model) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -97,8 +98,8 @@ public class BoardController {
     }
 
     @PostMapping("/{articleId}")
-    public String viewArticlePost(@PathVariable Long articleId, @ModelAttribute ArticleStore articleStore, @ModelAttribute Article article, Model model,
-                                  ArticleStoreDto dto, Store store, @ModelAttribute Member member) {
+    public String viewArticlePost(@PathVariable Long articleId, @ModelAttribute ArticleStore articleStore, @ModelAttribute Article article,
+                                  ArticleStoreDto dto, Store store, @ModelAttribute Member member, Model model) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -155,11 +156,15 @@ public class BoardController {
     }
 
     @GetMapping("/delete/{articleId}")
-    public String delete(@PathVariable Long articleId, Model model) {
+    public String delete(@PathVariable Long articleId,@RequestParam Long articleNum,
+                         @ModelAttribute ArticleStore articleStore, Model model) {
 
-//        articleStoreService.deleteArticleStore(articleNum);
+        System.out.println("게시글 이미지 PK값 : "+articleNum);
+
+        articleStoreService.deleteArticleStore(articleNum);
 
         articleService.deleteArticle(articleId);
+
         System.out.println("삭제");
         return "redirect:/Boards";
     }
@@ -167,12 +172,14 @@ public class BoardController {
 
 
     @GetMapping("/writeArticle")
-    public String writeArticle(@ModelAttribute("article") Article article,
+    public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
                                Model model) {
 
         articleService.registerArticle(article);
+        articleStoreService.registerArticleStore(articleStore);
 
         model.addAttribute("article",article);
+        model.addAttribute("articleStore",articleStore);
 
         return "thymeleaf/board/writeArticle";
     }
@@ -180,7 +187,7 @@ public class BoardController {
     @PostMapping("/writeArticle")
     public String register(ArticleStoreDto dto,BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
-                           @ModelAttribute WriteBoardForm writeBoardForm,@ModelAttribute Member member, Model model) throws IOException {
+                           @ModelAttribute Member member, Model model) throws IOException {
 
         articleService.registerArticle(article);
 
@@ -211,7 +218,7 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
-//        article.setMember(member);
+        article.setMember(member);
 
 
         articleStoreService.save(articleStore);
@@ -231,9 +238,9 @@ public class BoardController {
 
 //        return "thymeleaf/member/view";
 
-        model.addAttribute("WriteBoardForm", writeBoardForm);
+        model.addAttribute("article", article);
 
-//        redirectAttributes.addAttribute("articleId",articleId);
+        model.addAttribute("articleStore",articleStore);
 
         return "thymeleaf/board/articleView";
     }

@@ -30,4 +30,8 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     public void deleteArticleStore(Long articleNum){
         articleStoreRepository.deleteByArticleNum(articleNum);
     }
+    @Override
+    public void registerArticleStore(ArticleStore articleStore){
+        articleStoreRepository.save(articleStore);
+    }
 }

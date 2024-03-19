@@ -10,4 +10,6 @@ public interface ArticleStoreService {
     void deleteEmptyName();
 
     void deleteArticleStore(Long articleNum);
+
+    void registerArticleStore(ArticleStore articleStore);
 }
