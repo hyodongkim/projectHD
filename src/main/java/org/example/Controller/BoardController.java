@@ -50,12 +50,10 @@ public class BoardController {
 
     @GetMapping
     public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
-                                  @ModelAttribute ArticleStore articleStore, @RequestParam(required = false, defaultValue = "") String search,
+                                  @ModelAttribute Article article,@ModelAttribute ArticleStore articleStore, @RequestParam(required = false, defaultValue = "") String search,
                                   Model model) {
 
         Page<Article> page = articleService.findArticles(search, pageable);
-
-        articleStoreService.registerArticleStore(articleStore);
 
         long totalElements = page.getTotalElements();
         List<Article> list = page.getContent();
@@ -87,6 +85,7 @@ public class BoardController {
 
         Optional<Article> article1 = articleService.findArticle(articleId);
         model.addAttribute("article", article1.get());
+
 
 //        String path1 = path_article + articleId;
         String path1 = path_article + "ARTICLE"+"/";
@@ -138,12 +137,6 @@ public class BoardController {
         articleStore.setArticle(article);
         article.setMember(member);
 
-
-
-        articleService.registerArticle(article);
-        articleStoreService.save(articleStore);
-
-
         if(store.getOriginFilename().isEmpty()){
             articleStoreService.deleteEmptyName();
             if(f3.delete()){
@@ -164,6 +157,7 @@ public class BoardController {
     public String delete(@PathVariable Long articleId,@RequestParam Long articleNum,
                          @ModelAttribute ArticleStore articleStore, Model model) {
 
+
         System.out.println("게시글 이미지 PK값 : "+articleNum);
 
         articleStoreService.deleteArticleStore(articleNum);
@@ -180,8 +174,7 @@ public class BoardController {
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
                                Model model) {
 
-        articleService.registerArticle(article);
-        articleStoreService.registerArticleStore(articleStore);
+
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);
@@ -195,6 +188,7 @@ public class BoardController {
                            @ModelAttribute Member member, Model model) throws IOException {
 
         articleService.registerArticle(article);
+        articleStoreService.registerArticleStore(articleStore);
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
@@ -226,7 +220,6 @@ public class BoardController {
         article.setMember(member);
 
 
-        articleStoreService.save(articleStore);
 
         if(articleStore.getOriginFilename().isEmpty()){
             articleStoreService.deleteEmptyName();
