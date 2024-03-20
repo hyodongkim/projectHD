@@ -1,0 +1,82 @@
+<link th:href="@{/CSS/updateForm.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:include="layout/templateV1.html"></div>
+
+<!-- 내비게이션 -->
+<nav>
+</nav>
+
+<!-- 컨텐츠 -->
+<section>
+        <div class="alert alert-dismissable alert-success"
+             th:if="${#strings.equals(param.status, 'new')}">
+            <strong>커뮤니티 회원 가입을 축하합니다.</strong>
+        </div>
+
+<!--        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >-->
+    <form th:action="@{/Boards/updateArticle/{articleId}(articleId=${articleId})}"  th:object="${article}" method="post" enctype="multipart/form-data">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                    <tbody th:each="article: ${article}">
+<!--                    <tbody th:each="member: ${member}">-->
+                <tr>
+                    <label>
+                        <input type="text" th:field="*{articleId}"/>
+                    </label>
+                </tr>
+                <tr>
+                    <th class="text-center">글쓴이
+                        <label>
+                            <input type="text" th:field="*{name}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">주제
+                        <label>
+                            <input type="text" th:field="*{subject}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">내용
+                        <label>
+                            <input type="text" th:field="*{content}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">생성일자
+                        <label>
+                            <input type="text" th:field="*{day}"/>
+                        </label>
+                    </th>
+                </tr>
+
+                file:<input name="file" type="file">
+
+            </table>
+        </div>
+
+        <div class="pull-right">
+            <button type="submit" class="btn btn-warning">게시글저장(form)</button>
+        </div>
+
+    </form>
+    <div th:each="img : ${imgs}">
+        <form th:action="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}" method="get" enctype="multipart/form-data">
+             <!-- 파일 이름이 들어가있음. -->
+                <!-- 컨트롤러로 요청 보냄. -->
+                <img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px"  alt=""/>
+
+                <a th:href="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}"><button>이미지 삭제하기</button></a>
+        </form>
+    </div>
+    <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
+</section>
+
+
+</html>

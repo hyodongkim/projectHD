@@ -256,9 +256,9 @@ public class MemberController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
+    public String delete(@PathVariable Long id, @RequestParam Long num, Model model) {
 
-//        storeService.deleteMemberImage(id);
+        storeService.deleteMemberImage(num);
 
         memberService.deleteMember(id);
         System.out.println("삭제");

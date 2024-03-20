@@ -45,4 +45,7 @@ public interface StoreDao extends JpaRepository<Store, Integer> {
             + "		WHERE s.num = :num",nativeQuery = true)
     List<Store> findStore(@Param("num") Long num);
 
+    @Modifying
+    @Transactional
+    void deleteByNum(Long Num);
 }

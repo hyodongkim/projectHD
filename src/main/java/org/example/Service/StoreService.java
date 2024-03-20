@@ -76,4 +76,7 @@ public class StoreService {
         return dao.findStore(num);
     }
 
+    public void deleteMemberImage(Long num) {
+        dao.deleteByNum(num);
+    }
 }

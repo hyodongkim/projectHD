@@ -36,7 +36,7 @@ public class Store {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne(fetch= LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch= LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

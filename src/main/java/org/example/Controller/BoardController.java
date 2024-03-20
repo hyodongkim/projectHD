@@ -73,7 +73,7 @@ public class BoardController {
         model.addAttribute("hasPrevious", hasPrevious);
         model.addAttribute("hasNext", hasNext);
 
-        model.addAttribute("articleStore",articleStore);
+//        model.addAttribute("articleStore",articleStore);
 
         return "thymeleaf/board/articleForm";
     }
@@ -271,7 +271,7 @@ public class BoardController {
         article.setArticleId(articleId);
         store.getStoreFilename(storeFilename);
 
-        String path1 = path_article + articleId;
+        String path1 = path_article +"ARTICLE"+"/"+articleId;
         File dir = new File(path1, storeFilename);
         System.out.println("view:"+dir);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
@@ -295,65 +295,98 @@ public class BoardController {
 
         return "redirect:/Boards/updateArticle/{articleId}";
     }
-//    @GetMapping("/signup")
-//    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm, @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
-//        if (rememberId != null) {
-//            loginForm.setUserid(rememberId);
-//            loginForm.setRemember(true);
-//        }
-//        return "thymeleaf/member/loginForm";
-//    }
-//
-//    @PostMapping("/signin")
-//    public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult,
-//                        @RequestParam(name = "redirect", defaultValue = "thymeleaf/member/view") String redirect, HttpServletRequest request, HttpServletResponse response, @ModelAttribute Member member,
-//                        Model model) {
-//        log.info("로그인저장 체크 : {}", loginForm.getRemember());
-//        log.info("리다이렉트 : {}", redirect);
-//        if (bindingResult.hasErrors()) {
-//            // BindingResult는 모델에 자동 저장된다.
-//            return "thymeleaf/member/loginForm";
-//        }
-//
-//        Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
-//        if (loginMember == null) {
-//            // 글로벌 오류 생성 및 로그인화면으로 포워드
-//            bindingResult.reject("loginFail", "아이디 또는 비밀번호를 확인하여 주세요.");
-//            return "thymeleaf/member/loginForm";
-//        }
-//
-//        HttpSession session = request.getSession();
-//        session.setAttribute("loginMember", loginMember);
-//
-//        // 로그인 저장 체크시
-//        if (loginForm.getRemember()) {
-//            Cookie cookie = new Cookie("rememberId", loginMember.getUserid());
-//            cookie.setMaxAge(60 * 60 * 24 * 30);
-//            cookie.setPath("/");
-//            response.addCookie(cookie);
-//            Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
-//            model.addAttribute("member", optional.get());
-//        } else {
-//            Cookie cookie = new Cookie("rememberId", "");
-//            cookie.setMaxAge(0);
-//            cookie.setPath("/");
-//            response.addCookie(cookie);
-//            Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
-//            model.addAttribute("member", optional.get());
-//        }
-////          return "redirect:"+redirect;
-//        return "thymeleaf/member/view";
-//    }
-//
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
-//        return "redirect:/Members";
-//    }
 
+
+
+    @GetMapping("/updateArticle/{articleId}")
+    public String updateArticle(@PathVariable Long articleId,@ModelAttribute ArticleStore articleStore,@RequestParam(required=false) String storeFilename,
+                               @ModelAttribute Article article, Model model) {
+
+        article.setArticleId(articleId);
+        articleStore.getStoreFilename(storeFilename);
+
+        Optional<Article> article1 = articleService.findArticle(articleId);
+        model.addAttribute("article", article1.get());
+
+
+
+
+
+//        List<Store> member2 = storeService.findStore(num);
+//        model.addAttribute("mem",member2);
+
+
+
+        String path1 = path_article + "ARTICLE/"+articleId;
+        File dir = new File(path1);
+        dir.mkdirs();
+
+        System.out.println("view:"+path1);
+        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+        model.addAttribute("imgs", files);
+
+//            model.addAttribute("imgs", files);
+
+        return "thymeleaf/board/updateArticle";
+    }
+
+    @PostMapping("/updateArticle/{articleId}")
+    public String updates(@ModelAttribute ArticleStore articleStore, @ModelAttribute Article article , ArticleStoreDto dto, @PathVariable Long articleId,
+                          RedirectAttributes redirectAttributes, Model model) throws IOException {
+
+        UUID uuid = UUID.randomUUID();
+        MultipartFile f = dto.getFile();
+        String fname1 = f.getOriginalFilename(); // 원본 파일명
+        String fname = "/"+ uuid +"_"+ fname1;
+        File f2 = new File(path_article+"ARTICLE/"+article.getArticleId()); // 업로드된 파일을 저장할 새 파일 생성
+        f2.mkdirs();
+        File f3 = new File(f2+"/"+fname);
+
+
+        System.out.println("updatePost:"+f3.getAbsolutePath());
+        f.transferTo(f3);
+
+//        try {
+//
+//
+//
+//
+//        } catch (IllegalStateException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+
+        articleStore.getOriginFilename(fname1);
+        articleStore.getStoreFilename(f3.getAbsolutePath());
+        articleStore.setArticle(article);
+
+
+
+        articleService.registerArticle(article);
+        articleStoreService.save(articleStore);
+
+
+        if(articleStore.getOriginFilename().isEmpty()){
+            articleStoreService.deleteEmptyName();
+            if(f3.delete()){
+                System.out.println("삭제성공");
+            }
+            else{
+                System.out.println("삭제실패");
+            }
+        }
+        else{
+            System.out.println("이상무");
+        }
+        redirectAttributes.addAttribute("articleId",articleId);
+
+
+        return "redirect:/Boards/{articleId}";
+
+    }
 
 
 }
