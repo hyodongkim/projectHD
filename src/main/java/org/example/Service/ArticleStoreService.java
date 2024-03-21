@@ -1,5 +1,6 @@
 package org.example.Service;
 
+import org.example.Entity.Article;
 import org.example.Entity.ArticleStore;
 
 public interface ArticleStoreService {
@@ -9,7 +10,6 @@ public interface ArticleStoreService {
 
     void deleteEmptyName();
 
-    void deleteArticleStore(Long articleNum);
-
     void registerArticleStore(ArticleStore articleStore);
+
 }

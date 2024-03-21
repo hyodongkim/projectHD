@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.example.Entity.Article;
+import org.example.Entity.ArticleStore;
 import org.example.Repository.ArticleRepository;
 import org.example.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void deleteArticles(Long articleId) {
+        articleRepository.deleteByArticleId(articleId);
+    }
+
+    @Override
     public void registerArticle(Article article) {
         articleRepository.save(article);
     }
@@ -44,5 +50,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void deleteEmptyValue(){
         articleRepository.deleteEmptyValue();
+    }
+
+    @Override
+    public void deleteAllImagesByArticleId(Long articleId){
+        articleRepository.deleteAllImagesByArticleId(articleId);
     }
 }

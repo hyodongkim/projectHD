@@ -154,13 +154,10 @@ public class BoardController {
     }
 
     @GetMapping("/delete/{articleId}")
-    public String delete(@PathVariable Long articleId,@RequestParam Long articleNum,
-                         @ModelAttribute ArticleStore articleStore, Model model) {
+    public String delete(@PathVariable Long articleId,
+                         @ModelAttribute Article article, Model model) {
 
-
-        System.out.println("게시글 이미지 PK값 : "+articleNum);
-
-        articleStoreService.deleteArticleStore(articleNum);
+        articleService.deleteAllImagesByArticleId(articleId);
 
         articleService.deleteArticle(articleId);
 

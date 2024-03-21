@@ -1,5 +1,6 @@
 package org.example.ServiceImpl;
 
+import org.example.Entity.Article;
 import org.example.Entity.ArticleStore;
 import org.example.Repository.ArticleStoreRepository;
 import org.example.Service.ArticleStoreService;
@@ -26,10 +27,7 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     public void deleteEmptyName() {
         articleStoreRepository.deleteEmptyName();
     }
-    @Override
-    public void deleteArticleStore(Long articleNum){
-        articleStoreRepository.deleteByArticleNum(articleNum);
-    }
+
     @Override
     public void registerArticleStore(ArticleStore articleStore){
         articleStoreRepository.save(articleStore);

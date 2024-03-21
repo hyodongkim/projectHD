@@ -19,4 +19,8 @@ public interface ArticleService {
     void registerArticle(Article article);
 
     void deleteEmptyValue();
+
+    void deleteArticles(Long articleId);
+
+    void deleteAllImagesByArticleId(Long articleId);
 }
