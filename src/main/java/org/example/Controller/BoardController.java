@@ -2,6 +2,7 @@ package org.example.Controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.*;
 import org.example.Entity.*;
@@ -169,8 +170,7 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               Model model) {
-
+                               HttpServletRequest request, HttpServletResponse response,Model model) {
 
 
         model.addAttribute("article",article);
@@ -180,12 +180,9 @@ public class BoardController {
     }
 
     @PostMapping("/writeArticle")
-    public String register(ArticleStoreDto dto,BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes, @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
+    public String register(ArticleStoreDto dto,
+                           @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
                            @ModelAttribute Member member, Model model) throws IOException {
-
-        articleService.registerArticle(article);
-        articleStoreService.registerArticleStore(articleStore);
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
@@ -202,7 +199,7 @@ public class BoardController {
         try {
             f.transferTo(f3); // 파일 복사
             System.out.println("registerPost:"+f3.getAbsolutePath());
-            articleStoreService.save(articleStore);
+//            articleStoreService.save(articleStore);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -211,11 +208,14 @@ public class BoardController {
             e.printStackTrace();
         }
 //
+
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
         article.setMember(member);
 
+        articleService.registerArticle(article);
+        articleStoreService.registerArticleStore(articleStore);
 
 
         if(articleStore.getOriginFilename().isEmpty()){

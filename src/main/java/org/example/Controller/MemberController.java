@@ -235,7 +235,7 @@ public class MemberController {
 
 
 
-        memberService.register(member);
+//        memberService.register(member);
         storeService.save(store);
 
 
@@ -256,9 +256,10 @@ public class MemberController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, @RequestParam Long num, Model model) {
+    public String delete(@PathVariable Long id, Model model) {
 
-        storeService.deleteMemberImage(num);
+        System.out.println("회원PK:"+id);
+        storeService.deleteMemberImage(id);
 
         memberService.deleteMember(id);
         System.out.println("삭제");
