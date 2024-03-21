@@ -31,7 +31,7 @@ public class CommentStore {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne(fetch= LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch= LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
 

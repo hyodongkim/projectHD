@@ -63,18 +63,19 @@ public class MemberController {
     @GetMapping("/register")
     public String registerForm(@ModelAttribute Member member, Model model) {
 
-
-        memberService.register(member);
-
         model.addAttribute("member", member);
 
         return "thymeleaf/member/registerForm";
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute MemberForm form, @RequestParam("id") Long id, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
+    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
                            RedirectAttributes redirectAttributes,@ModelAttribute Store store,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
+
+        System.out.println("1:"+member.getId());
+
+
         if (bindingResult.hasErrors()) {
             log.info("bindingResults : {}", bindingResult);
             // BindingResult는 모델에 자동 저장된다.
@@ -82,14 +83,18 @@ public class MemberController {
         }
 
 
+        System.out.println("2:"+member.getId());
+
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
         String fname2 = uuid +"_"+ fname1;
         String fname="/"+fname2;
-                File f2 = new File(path+id); // 업로드된 파일을 저장할 새 파일 생성
+                File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
         File f3 = new File(f2+fname);
+
+        System.out.println("3:"+member.getId());
 
         try {
             f.transferTo(f3); // 파일 복사
@@ -103,6 +108,9 @@ public class MemberController {
             e.printStackTrace();
         }
 
+        System.out.println("4:"+member.getId());
+
+
         store.getOriginFilename(fname1);
         store.getStoreFilename(fname2);
         store.setMember(member);
@@ -111,8 +119,14 @@ public class MemberController {
         storeService.save(store);
 
 
+        System.out.println("5:"+member.getId());
+
+
         if(store.getOriginFilename().isEmpty()){
             storeService.deleteEmptyName();
+
+            System.out.println("6:"+member.getId());
+
             if(f3.delete()){
                 System.out.println("인식함");
             }
@@ -124,8 +138,9 @@ public class MemberController {
             System.out.println("이상무");
         }
 
-//        return "thymeleaf/member/view";
-        return "redirect:/Members";
+        System.out.println("7:"+member.getId());
+
+        return "thymeleaf/member/view";
     }
 
     @GetMapping("/read_img/{id}/{img}")
@@ -178,7 +193,7 @@ public class MemberController {
         System.out.println("삭제됨Id:"+id);
         System.out.println("삭제됨storeFilename:"+storeFilename);
 
-        return "redirect:/Members/updateMember/{id}";
+        return "thymeleaf/member/updateForm";
     }
 
     @GetMapping("/{id}")
@@ -235,7 +250,7 @@ public class MemberController {
 
 
 
-//        memberService.register(member);
+        memberService.register(member);
         storeService.save(store);
 
 
@@ -263,7 +278,7 @@ public class MemberController {
 
         memberService.deleteMember(id);
         System.out.println("삭제");
-        return "redirect:/Members";
+        return "thymeleaf/member/list";
     }
 
 
@@ -433,7 +448,7 @@ public class MemberController {
             System.out.println("이상무");
         }
 
-            return "redirect:/Members";
+        return "thymeleaf/member/list";
 
     }
 }

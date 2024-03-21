@@ -163,7 +163,7 @@ public class BoardController {
         articleService.deleteArticle(articleId);
 
         System.out.println("삭제");
-        return "redirect:/Boards";
+        return "thymeleaf/board/articleForm";
     }
 
 
@@ -184,44 +184,74 @@ public class BoardController {
                            @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
                            @ModelAttribute Member member, Model model) throws IOException {
 
-        articleService.registerArticle(article);
+
+        System.out.println("1:"+member.getId());
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
         String fname2 = uuid +"_"+fname1;
+
+        System.out.println("2:"+member.getId());
+
         String fname="/"+fname2;
         File f2 = new File(path_article+"ARTICLE"); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
         String fname3=f2+"/"+article.getArticleId();
+
+        System.out.println("3:"+member.getId());
+
         File f3 = new File(fname3+fname);
         f3.mkdirs();
 
 
-        try {
-            f.transferTo(f3); // 파일 복사
-            System.out.println("registerPost:"+f3.getAbsolutePath());
-//            articleStoreService.save(articleStore);
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-//
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
         article.setMember(member);
 
+        System.out.println("4:"+member.getId());
+
         articleService.registerArticle(article);
         articleStoreService.registerArticleStore(articleStore);
 
 
+        try {
+            f.transferTo(f3); // 파일 복사
+            System.out.println("registerPost:"+f3.getAbsolutePath());
+//            articleStoreService.save(articleStore);
+
+            System.out.println("5:"+member.getId());
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+            System.out.println("6:"+member.getId());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+            System.out.println("7:"+member.getId());
+        }
+//
+
+        System.out.println("8:"+member.getId());
+
+        articleStore.getOriginFilename(fname1);
+        articleStore.getStoreFilename(fname2);
+        articleStore.setArticle(article);
+        article.setMember(member);
+
+
+        System.out.println("9:"+member.getId());
+
+
         if(articleStore.getOriginFilename().isEmpty()){
             articleStoreService.deleteEmptyName();
+
+            System.out.println("10:"+member.getId());
+
             if(f3.delete()){
                 System.out.println("인식함");
             }
@@ -233,11 +263,16 @@ public class BoardController {
             System.out.println("이상무");
         }
 
+
+        System.out.println("11:"+member.getId());
+
 //        return "thymeleaf/member/view";
 
         model.addAttribute("article", article);
 
         model.addAttribute("articleStore",articleStore);
+
+        System.out.println("12:"+member.getId());
 
         return "thymeleaf/board/articleView";
     }
@@ -292,7 +327,7 @@ public class BoardController {
         System.out.println("삭제됨articleId:"+articleId);
         System.out.println("삭제됨storeFilename:"+storeFilename);
 
-        return "redirect:/Boards/updateArticle/{articleId}";
+        return "thymeleaf/board/updateArticle";
     }
 
 
@@ -383,7 +418,7 @@ public class BoardController {
         redirectAttributes.addAttribute("articleId",articleId);
 
 
-        return "redirect:/Boards/{articleId}";
+        return "thymeleaf/board/updateArticle";
 
     }
 

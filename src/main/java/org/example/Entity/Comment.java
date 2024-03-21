@@ -42,7 +42,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date regdate;
 
-    @ManyToOne(fetch=LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch=LAZY)
     @JoinColumn(name="article_id")
     private Article article;
 
