@@ -54,7 +54,7 @@ public class Article {
     @Column(name = "order_no")
     private Long orderNo;
 
-    @ManyToOne(fetch= LAZY)
+    @ManyToOne(fetch= LAZY,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id")
     private Member member;
 

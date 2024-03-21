@@ -184,6 +184,8 @@ public class BoardController {
                            @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
                            @ModelAttribute Member member, Model model) throws IOException {
 
+        articleService.registerArticle(article);
+
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
         String fname1 = f.getOriginalFilename(); // 원본 파일명
