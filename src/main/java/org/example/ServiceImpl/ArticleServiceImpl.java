@@ -56,4 +56,5 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteAllImagesByArticleId(Long articleId){
         articleRepository.deleteAllImagesByArticleId(articleId);
     }
+
 }
