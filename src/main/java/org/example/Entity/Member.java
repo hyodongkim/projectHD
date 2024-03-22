@@ -47,5 +47,11 @@ public class Member{
     @Column(name="member_introduction")
     private String introduction;
 
+    @OneToMany(mappedBy = "member")
+    private List<Store> stores = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Article> articles = new ArrayList<>();
+
     public Member(){}
 }

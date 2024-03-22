@@ -22,5 +22,8 @@ public interface ArticleStoreRepository extends JpaRepository<ArticleStore, Long
     @Query(value="DELETE FROM ArticleStore s WHERE s.storeFilename=:storeFilename")
     public void deleteByStoreFilename(@Param("storeFilename") String storeFilename);
 
-
+    @Modifying
+    @Transactional
+    @Query(value="INSERT INTO article_store VALUES(:#{#artisto.article_num},:#{#artisto.originFilename},:#{#artisto.storeFilename},:#{#artisto.article_id})",nativeQuery=true)
+    void updateArticleStore(@Param("artisto") ArticleStore articleStore);
 }

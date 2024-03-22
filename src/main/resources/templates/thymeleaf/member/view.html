@@ -28,7 +28,7 @@
 
         <div class="alert alert-dismissable alert-danger">
         </div>
-    <form th:action="@{/Members/{id}(id=${id})}"  th:object="${member}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/Members/{id}(id=${id})}" th:object="${member}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tbody th:each="member : ${member}">

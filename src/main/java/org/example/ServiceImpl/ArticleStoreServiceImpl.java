@@ -32,4 +32,9 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     public void registerArticleStore(ArticleStore articleStore){
         articleStoreRepository.save(articleStore);
     }
+
+    @Override
+    public void updateArticleStore(ArticleStore articleStore){
+        articleStoreRepository.updateArticleStore(articleStore);
+    }
 }

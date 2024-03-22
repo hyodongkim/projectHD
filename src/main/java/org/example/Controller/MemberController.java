@@ -61,9 +61,10 @@ public class MemberController {
 
 
     @GetMapping("/register")
-    public String registerForm(@ModelAttribute Member member, Model model) {
+    public String registerForm(@ModelAttribute Member member,@ModelAttribute Store store, Model model) {
 
         model.addAttribute("member", member);
+        model.addAttribute("store", store);
 
         return "thymeleaf/member/registerForm";
     }
@@ -72,6 +73,10 @@ public class MemberController {
     public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
                            RedirectAttributes redirectAttributes,@ModelAttribute Store store,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
+
+        store.setMember(member);
+
+        memberService.register(member);
 
         System.out.println("1:"+member.getId());
 
@@ -113,32 +118,11 @@ public class MemberController {
 
         store.getOriginFilename(fname1);
         store.getStoreFilename(fname2);
-        store.setMember(member);
 
-        memberService.register(member);
         storeService.save(store);
 
 
         System.out.println("5:"+member.getId());
-
-
-        if(store.getOriginFilename().isEmpty()){
-            storeService.deleteEmptyName();
-
-            System.out.println("6:"+member.getId());
-
-            if(f3.delete()){
-                System.out.println("인식함");
-            }
-            else{
-                System.out.println("인식못함");
-            }
-        }
-        else{
-            System.out.println("이상무");
-        }
-
-        System.out.println("7:"+member.getId());
 
         return "thymeleaf/member/view";
     }
@@ -250,8 +234,8 @@ public class MemberController {
 
 
 
-        memberService.register(member);
-        storeService.save(store);
+        memberService.updateMember(member);
+        storeService.updateStore(store);
 
 
         if(store.getOriginFilename().isEmpty()){
@@ -293,7 +277,7 @@ public class MemberController {
         int requestPage = page.getPageable().getPageNumber() + 1;
         int totalPage = page.getTotalPages();
         int startPage = Math.max(1, requestPage - 4);
-        int endPage = Math.min(page.getTotalPages(), requestPage + 4);
+        int endPage   = Math.min(page.getTotalPages(), requestPage + 4);
         boolean hasPrevious = page.hasPrevious();
         boolean hasNext = page.hasNext();
 
@@ -431,8 +415,8 @@ public class MemberController {
 
 
 
-        memberService.register(member);
-        storeService.save(store);
+        memberService.updateMember(member);
+        storeService.updateStore(store);
 
 
         if(store.getOriginFilename().isEmpty()){

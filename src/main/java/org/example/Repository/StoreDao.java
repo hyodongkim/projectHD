@@ -49,4 +49,9 @@ public interface StoreDao extends JpaRepository<Store, Integer> {
     @Transactional
     @Query(value="DELETE FROM Store s WHERE s.member_id=:member_id",nativeQuery=true)
     public void deleteByNums(@Param("member_id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value="INSERT INTO Store VALUES(:#{#store.num},:#{#store.originFilename},:#{#store.storeFilename},:#{#store.member_id})",nativeQuery=true)
+    public void updateStore(@Param("store") Store store);
 }

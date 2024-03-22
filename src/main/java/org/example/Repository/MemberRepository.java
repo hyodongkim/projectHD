@@ -35,5 +35,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Transactional
     public void deleteById(Long id);
 
-
+    @Modifying
+    @Transactional
+    @Query(value="INSERT INTO Member VALUES(:#{#member.member_id},:#{#member.member_userid},:#{#member.member_password},:#{#member.member_email},:#{#member.member_name},:#{#member.member_sex},:#{#member.member_age},:#{#member.member_birth},:#{#member.member_first},:#{#member.member_introduction})",nativeQuery=true)
+    void updateMember(@Param("member") Member member);
 }

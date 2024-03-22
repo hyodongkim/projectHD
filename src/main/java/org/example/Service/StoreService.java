@@ -79,4 +79,6 @@ public class StoreService {
     public void deleteMemberImage(Long id) {
         dao.deleteByNums(id);
     }
+
+    public void updateStore(Store store){dao.updateStore(store);}
 }

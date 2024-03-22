@@ -51,7 +51,7 @@ public class BoardController {
 
     @GetMapping
     public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
-                                  @ModelAttribute Article article,@ModelAttribute ArticleStore articleStore, @RequestParam(required = false, defaultValue = "") String search,
+                                  @RequestParam(required = false, defaultValue = "") String search,
                                   Model model) {
 
         Page<Article> page = articleService.findArticles(search, pageable);
@@ -61,7 +61,7 @@ public class BoardController {
         int requestPage = page.getPageable().getPageNumber() + 1;
         int totalPage = page.getTotalPages();
         int startPage = Math.max(1, requestPage - 4);
-        int endPage = Math.min(page.getTotalPages(), requestPage + 4);
+        int endPage   = Math.min(page.getTotalPages(), requestPage + 4);
         boolean hasPrevious = page.hasPrevious();
         boolean hasNext = page.hasNext();
 
@@ -73,8 +73,6 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("hasPrevious", hasPrevious);
         model.addAttribute("hasNext", hasNext);
-
-//        model.addAttribute("articleStore",articleStore);
 
         return "thymeleaf/board/articleForm";
     }
@@ -136,7 +134,10 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
         articleStore.setArticle(article);
-        article.setMember(member);
+//        article.setMember(member);
+
+        articleService.updateArticle(article);
+        articleStoreService.updateArticleStore(articleStore);
 
         if(store.getOriginFilename().isEmpty()){
             articleStoreService.deleteEmptyName();
@@ -172,7 +173,6 @@ public class BoardController {
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
                                HttpServletRequest request, HttpServletResponse response,Model model) {
 
-
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);
 
@@ -184,6 +184,9 @@ public class BoardController {
                            @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
                            @ModelAttribute Member member, Model model) throws IOException {
 
+        article.setMember(member);
+
+        articleService.updateArticle(article);
 
         System.out.println("1:"+member.getId());
 
@@ -209,13 +212,12 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
         articleStore.setArticle(article);
-        article.setMember(member);
+
 
         System.out.println("4:"+member.getId());
 
-        articleService.registerArticle(article);
-        articleStoreService.registerArticleStore(articleStore);
 
+        articleStoreService.updateArticleStore(articleStore);
 
         try {
             f.transferTo(f3); // 파일 복사
@@ -235,33 +237,33 @@ public class BoardController {
             System.out.println("7:"+member.getId());
         }
 //
-
-        System.out.println("8:"+member.getId());
-
-        articleStore.getOriginFilename(fname1);
-        articleStore.getStoreFilename(fname2);
-        articleStore.setArticle(article);
-        article.setMember(member);
-
-
-        System.out.println("9:"+member.getId());
-
-
-        if(articleStore.getOriginFilename().isEmpty()){
-            articleStoreService.deleteEmptyName();
-
-            System.out.println("10:"+member.getId());
-
-            if(f3.delete()){
-                System.out.println("인식함");
-            }
-            else{
-                System.out.println("인식못함");
-            }
-        }
-        else{
-            System.out.println("이상무");
-        }
+//
+//        System.out.println("8:"+member.getId());
+//
+//        articleStore.getOriginFilename(fname1);
+//        articleStore.getStoreFilename(fname2);
+//        articleStore.setArticle(article);
+//        article.setMember(member);
+//
+//
+//        System.out.println("9:"+member.getId());
+//
+//
+//        if(articleStore.getOriginFilename().isEmpty()){
+//            articleStoreService.deleteEmptyName();
+//
+//            System.out.println("10:"+member.getId());
+//
+//            if(f3.delete()){
+//                System.out.println("인식함");
+//            }
+//            else{
+//                System.out.println("인식못함");
+//            }
+//        }
+//        else{
+//            System.out.println("이상무");
+//        }
 
 
         System.out.println("11:"+member.getId());
@@ -399,8 +401,8 @@ public class BoardController {
 
 
 
-        articleService.registerArticle(article);
-        articleStoreService.save(articleStore);
+        articleService.updateArticle(article);
+        articleStoreService.updateArticleStore(articleStore);
 
 
         if(articleStore.getOriginFilename().isEmpty()){

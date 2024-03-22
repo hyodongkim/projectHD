@@ -23,4 +23,6 @@ public interface ArticleService {
     void deleteArticles(Long articleId);
 
     void deleteAllImagesByArticleId(Long articleId);
+
+    void updateArticle(Article article);
 }

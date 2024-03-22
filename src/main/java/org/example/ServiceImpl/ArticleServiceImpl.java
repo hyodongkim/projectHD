@@ -56,5 +56,8 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteAllImagesByArticleId(Long articleId){
         articleRepository.deleteAllImagesByArticleId(articleId);
     }
-
+    @Override
+    public void updateArticle(Article article){
+        articleRepository.updateArticle(article);
+    }
 }

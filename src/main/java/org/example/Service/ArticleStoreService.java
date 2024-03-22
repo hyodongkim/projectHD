@@ -12,4 +12,5 @@ public interface ArticleStoreService {
 
     void registerArticleStore(ArticleStore articleStore);
 
+    void updateArticleStore(ArticleStore articleStore);
 }
