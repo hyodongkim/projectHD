@@ -27,7 +27,7 @@
 
     <div class="alert alert-dismissable alert-danger">
     </div>
-    <form th:action="@{/Boards/{articleId}(articleId=${articleId})}"  th:object="${article}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/Boards/{articleId}(articleId=${articleId})}" th:object="${article}" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tbody th:each="article : ${article}">
@@ -75,11 +75,9 @@
         </div>
     </form>
     <div class="pull-right" th:each="article : ${article}">
-        <div class="pull-right" th:each="articleStore : ${articleStore}">
         <a th:href="@{/Boards/updateArticle/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">게시글수정</button></a>
         <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
         <a th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
-        </div>
     </div>
 
 </section>

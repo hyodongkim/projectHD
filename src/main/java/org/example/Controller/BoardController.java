@@ -139,20 +139,8 @@ public class BoardController {
         articleService.updateArticle(article);
         articleStoreService.updateArticleStore(articleStore);
 
-        if(store.getOriginFilename().isEmpty()){
-            articleStoreService.deleteEmptyName();
-            if(f3.delete()){
-                System.out.println("인식함");
-            }
-            else{
-                System.out.println("인식못함");
-            }
-        }
-        else{
-            System.out.println("이상무");
-        }
 
-        return "thymeleaf/board/articleView";
+        return "thymeleaf/board/articleForm";
     }
 
     @GetMapping("/delete/{articleId}")
@@ -171,7 +159,12 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               HttpServletRequest request, HttpServletResponse response,Model model) {
+                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute Member member, Model model) {
+
+        HttpSession session = request.getSession();
+        session.getAttribute("id");
+
+        System.out.print("ssss:"+member);
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);
@@ -182,7 +175,10 @@ public class BoardController {
     @PostMapping("/writeArticle")
     public String register(ArticleStoreDto dto,
                            @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
-                           @ModelAttribute Member member, Model model) throws IOException {
+                           @ModelAttribute Member member,
+                           Model model) throws IOException {
+
+
 
         article.setMember(member);
 
@@ -207,17 +203,11 @@ public class BoardController {
         File f3 = new File(fname3+fname);
         f3.mkdirs();
 
+        System.out.print("2관문 통과");
 
 
-        articleStore.getOriginFilename(fname1);
-        articleStore.getStoreFilename(fname2);
-        articleStore.setArticle(article);
 
-
-        System.out.println("4:"+member.getId());
-
-
-        articleStoreService.updateArticleStore(articleStore);
+        System.out.print("3관문 통과");
 
         try {
             f.transferTo(f3); // 파일 복사
@@ -236,45 +226,18 @@ public class BoardController {
 
             System.out.println("7:"+member.getId());
         }
-//
-//
-//        System.out.println("8:"+member.getId());
-//
-//        articleStore.getOriginFilename(fname1);
-//        articleStore.getStoreFilename(fname2);
-//        articleStore.setArticle(article);
-//        article.setMember(member);
-//
-//
-//        System.out.println("9:"+member.getId());
-//
-//
-//        if(articleStore.getOriginFilename().isEmpty()){
-//            articleStoreService.deleteEmptyName();
-//
-//            System.out.println("10:"+member.getId());
-//
-//            if(f3.delete()){
-//                System.out.println("인식함");
-//            }
-//            else{
-//                System.out.println("인식못함");
-//            }
-//        }
-//        else{
-//            System.out.println("이상무");
-//        }
+
+        System.out.print("4관문 통과");
+
+        articleStore.getOriginFilename(fname1);
+        articleStore.getStoreFilename(fname2);
+        articleStore.setArticle(article);
 
 
-        System.out.println("11:"+member.getId());
+        System.out.println("4:"+member.getId());
 
-//        return "thymeleaf/member/view";
 
-        model.addAttribute("article", article);
-
-        model.addAttribute("articleStore",articleStore);
-
-        System.out.println("12:"+member.getId());
+        articleStoreService.save(articleStore);
 
         return "thymeleaf/board/articleView";
     }

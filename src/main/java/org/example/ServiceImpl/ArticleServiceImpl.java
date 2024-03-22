@@ -47,10 +47,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.save(article);
     }
 
-    @Override
-    public void deleteEmptyValue(){
-        articleRepository.deleteEmptyValue();
-    }
+//    @Override
+//    public void deleteEmptyValue(){
+//        articleRepository.deleteEmptyValue();
+//    }
 
     @Override
     public void deleteAllImagesByArticleId(Long articleId){

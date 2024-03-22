@@ -18,7 +18,7 @@ public interface ArticleService {
 
     void registerArticle(Article article);
 
-    void deleteEmptyValue();
+//    void deleteEmptyValue();
 
     void deleteArticles(Long articleId);
 

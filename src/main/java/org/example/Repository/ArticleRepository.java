@@ -25,10 +25,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Transactional
     public void deleteByArticleId(Long articleId);
 
-    @Modifying
-    @Transactional
-    @Query(value="Delete From Article a Where a.groupNo Is Null")
-    void deleteEmptyValue();
+//    @Modifying
+//    @Transactional
+//    @Query(value="Delete From Article a Where a.groupNo Is Null")
+//    void deleteEmptyValue();
 
     @Modifying
     @Transactional
@@ -37,6 +37,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     @Modifying
     @Transactional
-    @Query(value="INSERT INTO Article VALUES(:#{#arti.article_id},:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.hitcount},:#{#arti.group_no},:#{#arti.level_no},:#{#arti.order_no},:#{#arti.member_id})",nativeQuery=true)
+    @Query(value="INSERT INTO Article a VALUES(a.article_seq,:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.member_id})",nativeQuery=true)
     void updateArticle(@Param("arti") Article article);
 }

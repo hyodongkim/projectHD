@@ -43,16 +43,14 @@
             </thead>
             <tbody>
             <tr th:if="${totalElements == 0}"><td colspan="5" class="text-center">검색된 회원이 없습니다.</td></tr>
-            <div th:each="articleStore : ${articleStore}">
             <tr class="text-center" th:each="article, articleStat : ${list}">
 
                     <td th:text="${articleStat.count}">1</td>
-                    <td><a th:href="@{Boards/{articleId}?articleNum={articleId}(articleId=${article.articleId})}">[[${article.name}]]</a></td>
+                    <td><a th:href="@{Boards/{articleId}(articleId=${article.articleId})}">[[${article.name}]]</a></td>
                     <td th:text="${article.subject}">10</td>
                     <td th:text="${article.content}">자기소개</td>
                     <td th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td>
             </tr>
-            </div>
             </tbody>
         </table>
 
