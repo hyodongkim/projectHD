@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -152,19 +153,16 @@ public class BoardController {
         articleService.deleteArticle(articleId);
 
         System.out.println("삭제");
-        return "thymeleaf/board/articleForm";
+        return "redirect:/Boards";
     }
 
 
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute Member member, Model model) {
-
-        HttpSession session = request.getSession();
-        session.getAttribute("id");
-
-        System.out.print("ssss:"+member);
+                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute Member member,
+                               @ModelAttribute("loginForm") LoginForm loginForm,
+                               @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);
@@ -182,7 +180,7 @@ public class BoardController {
 
         article.setMember(member);
 
-        articleService.updateArticle(article);
+        articleService.registerArticle(article);
 
         System.out.println("1:"+member.getId());
 

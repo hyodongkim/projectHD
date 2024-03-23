@@ -262,7 +262,7 @@ public class MemberController {
 
         memberService.deleteMember(id);
         System.out.println("삭제");
-        return "thymeleaf/member/list";
+        return "redirect:/Members";
     }
 
 

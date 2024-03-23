@@ -38,5 +38,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Modifying
     @Transactional
     @Query(value="INSERT INTO Article a VALUES(a.article_seq,:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.member_id})",nativeQuery=true)
-    void updateArticle(@Param("arti") Article article);
+    public void updateArticle(@Param("arti") Article article);
 }
