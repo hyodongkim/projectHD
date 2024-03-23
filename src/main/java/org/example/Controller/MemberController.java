@@ -415,8 +415,8 @@ public class MemberController {
 
 
 
-        memberService.updateMember(member);
-        storeService.updateStore(store);
+        memberService.register(member);
+        storeService.save(store);
 
 
         if(store.getOriginFilename().isEmpty()){
@@ -432,7 +432,7 @@ public class MemberController {
             System.out.println("이상무");
         }
 
-        return "thymeleaf/member/list";
+        return "thymeleaf/member/view";
 
     }
 }

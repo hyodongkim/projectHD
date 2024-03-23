@@ -264,7 +264,9 @@ public class BoardController {
 
     @GetMapping("/deletePhoto/{articleId}/{storeFilename}")
     public String deletePhoto(@PathVariable String storeFilename,@PathVariable Long articleId,@ModelAttribute Member member,@ModelAttribute Store store,
-                              @ModelAttribute Article article,RedirectAttributes redirectAttributes,Model model) throws IOException {
+                              @ModelAttribute Article article,RedirectAttributes redirectAttributes,
+                              @ModelAttribute("loginForm") LoginForm loginForm,
+                              @CookieValue(value = "rememberId", required = false) String rememberId,Model model) throws IOException {
         article.setArticleId(articleId);
         store.getStoreFilename(storeFilename);
 
@@ -290,7 +292,7 @@ public class BoardController {
         System.out.println("삭제됨articleId:"+articleId);
         System.out.println("삭제됨storeFilename:"+storeFilename);
 
-        return "thymeleaf/board/updateArticle";
+        return "redirect:/Boards/updateArticle/{articleId}";
     }
 
 
@@ -329,7 +331,9 @@ public class BoardController {
 
     @PostMapping("/updateArticle/{articleId}")
     public String updates(@ModelAttribute ArticleStore articleStore, @ModelAttribute Article article , ArticleStoreDto dto, @PathVariable Long articleId,
-                          RedirectAttributes redirectAttributes, Model model) throws IOException {
+                          RedirectAttributes redirectAttributes,
+                          @ModelAttribute("loginForm") LoginForm loginForm,
+                          @CookieValue(value = "rememberId", required = false) String rememberId,Model model) throws IOException {
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
@@ -362,8 +366,8 @@ public class BoardController {
 
 
 
-        articleService.updateArticle(article);
-        articleStoreService.updateArticleStore(articleStore);
+        articleService.registerArticle(article);
+        articleStoreService.save(articleStore);
 
 
         if(articleStore.getOriginFilename().isEmpty()){
@@ -381,7 +385,7 @@ public class BoardController {
         redirectAttributes.addAttribute("articleId",articleId);
 
 
-        return "thymeleaf/board/updateArticle";
+        return "thymeleaf/board/articleView";
 
     }
 
