@@ -1,7 +1,19 @@
-    section.row{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding-top: 5%;
-    }
+*{
+    margin: 0%;
+    padding: 0%;
+    overflow: hidden;
+}
+.text-center{
+    text-align: center;
+}
+section{
+    position: relative;
+    left:20%;
+}
+.inline{
+    display:inline;
+}
+section{
+    position: relative;
+    left:47%;
+}

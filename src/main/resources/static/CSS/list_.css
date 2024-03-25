@@ -1,0 +1,39 @@
+*{
+  margin: 0%;
+  padding: 0%;
+}
+.fixBox{
+  position: fixed;
+  min-height: 4vh;
+  border: 1px solid black;
+  background-color: white;
+  z-index: 6;
+  width: 100%;
+}
+nav{
+    display: flex;
+    justify-content:space-between;
+}
+header >.logo{
+  font-size: 2rem;
+  font-family: 'DM Serif Display', serif;
+}
+div.logo{
+  font-family: 'DM Serif Display', serif;
+  font-weight: bold;
+}
+.pagination-align{
+    display:flex;
+    flex-direction: row;
+}
+table {
+    width: 100%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border-bottom: 1px solid #444444;
+  }
+.text-center{
+    text-align:center;
+}

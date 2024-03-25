@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-
+<script th:src="@{/JS/updateForm.js}" defer></script>
+<link th:href="@{/CSS/updateForm.css}" rel="stylesheet">
 <div th:include="layout/templateV1.html"></div>
 
 <!-- 내비게이션 -->
@@ -107,7 +108,7 @@
 
     </form>
     <div th:each="img : ${imgs}">
-        <form th:action="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}" method="get" enctype="multipart/form-data">
+        <form th:action="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}" method="get" enctype="multipart/form-data" class="inline">
              <!-- 파일 이름이 들어가있음. -->
                 <!-- 컨트롤러로 요청 보냄. -->
                 <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>

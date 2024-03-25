@@ -177,7 +177,7 @@ public class MemberController {
         System.out.println("삭제됨Id:"+id);
         System.out.println("삭제됨storeFilename:"+storeFilename);
 
-        return "thymeleaf/member/updateForm";
+        return "redirect:/Members/updateMember/{id}";
     }
 
     @GetMapping("/{id}")

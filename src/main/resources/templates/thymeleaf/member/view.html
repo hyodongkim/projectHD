@@ -2,6 +2,8 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{/JS/view.js}" defer></script>
+<link th:href="@{/CSS/view.css}" rel="stylesheet">
 
 <div th:include="layout/templateV1.html"></div>
 
@@ -29,7 +31,7 @@
         <div class="alert alert-dismissable alert-danger">
         </div>
     <form th:action="@{/Members/{id}(id=${id})}" th:object="${member}" method="post" enctype="multipart/form-data">
-        <div class="table-responsive">
+        <div>
             <table class="table table-bordered">
                 <tbody th:each="member : ${member}">
                 <tr>
@@ -78,7 +80,7 @@
 <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
 
                 <h3>업로드 목록</h3>
-                <div th:each="img : ${imgs}"> <!-- 파일 이름이 들어가있음. -->
+                <div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
                         <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>

@@ -1,0 +1,19 @@
+*{
+    margin: 0%;
+    padding: 0%;
+}
+table {
+    width: 70vw;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+}
+th, td {
+    border-bottom: 1px solid #444444;
+}
+section{
+    position: relative;
+    left:20%;
+}
+.inline{
+    display:inline;
+}

@@ -2,6 +2,9 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{/JS/registerForm.js}" defer></script>
+<link th:href="@{/CSS/registerForm.css}" rel="stylesheet">
+
 <div th:include="layout/templateV1.html"></div>
 <!-- 타이틀 -->
 <title>:: 커뮤니티 회원 가입 ::</title>
@@ -23,7 +26,7 @@
         <div class="well">
             <p>아래 항목들을 정성껏 작성해 주세요^^.</p>
 <!--            <form th:action="@{/Members/register}" method="post" th:object="${member}" enctype="multipart/form-data">-->
-            <fieldset>
+            <fieldset class="inline">
             <form th:action="@{/Members/register}" method="post" th:object="${member}" enctype="multipart/form-data">
 
 
@@ -39,9 +42,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">아이디</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{userid}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{userid}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{userid}">아이디 입력 오류</div>
                         </div>
                     </div>
@@ -49,9 +54,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">비밀번호</label>
                         <div class="col-lg-11">
-                            <input type="password" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{password}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="password" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{password}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{password}">비밀번호
                                 입력 오류</div>
                         </div>
@@ -60,9 +67,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">E-Mail</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{email}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{email}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{email}">E-Mail 입력오류</div>
                         </div>
                     </div>
@@ -70,9 +79,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">이름</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{name}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{name}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{name}">이름입력
                                 오류</div>
                         </div>
@@ -81,9 +92,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">성별</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{sex}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{sex}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{sex}">성별입력 오류</div>
                         </div>
                     </div>
@@ -91,9 +104,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">나이</label>
                         <div class="col-lg-11">
-                            <input type="number" class="form-control"
-                                   placeholder="테스트용 항목입니다." th:field="*{age}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="number" class="form-control"
+                                       placeholder="테스트용 항목입니다." th:field="*{age}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{age}">나이 입력 오류</div>
                         </div>
                     </div>
@@ -101,9 +116,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">생년월일</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{birth}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{birth}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{birth}">생년월일 입력 오류</div>
                         </div>
                     </div>
@@ -116,9 +133,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">자기소개</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="자기소개 항목입니다." th:field="*{introduction}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="자기소개 항목입니다." th:field="*{introduction}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{introduction}">자기소개 오류</div>
                         </div>
                     </div>

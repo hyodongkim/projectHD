@@ -2,6 +2,9 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{/JS/writeArticle.js}" defer></script>
+<link th:href="@{/CSS/writeArticle.css}" rel="stylesheet">
+
 <div th:include="layout/templateV1.html"></div>
 <!-- 타이틀 -->
 <title>:: 커뮤니티 회원 가입 ::</title>
@@ -22,7 +25,7 @@
 
         <div class="well">
             <p>아래 항목들을 정성껏 작성해 주세요^^.</p>
-            <fieldset>
+            <fieldset class="inline">
                 <form th:action="@{/Boards/writeArticle}" method="post" th:object="${article}" enctype="multipart/form-data">
 
                     <div class="form-group">
@@ -40,11 +43,13 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">글쓴이닉네임</label>
                         <div class="col-lg-11" th:if="${session.loginMember != null}">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다."
-                                   th:value="${session.loginMember.name}"
-                                   th:name="name"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다."
+                                       th:value="${session.loginMember.name}"
+                                       th:name="name"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{name}">오류2</div>
                         </div>
                     </div>
@@ -52,9 +57,11 @@
                     <div class="form-group">
                         <label class="col-lg-1 control-label">주제</label>
                         <div class="col-lg-11">
-                            <input type="text" class="form-control"
-                                   placeholder="필수 입력항목입니다." th:field="*{subject}"
-                                   th:errorclass="field-error">
+                            <label>
+                                <input type="text" class="form-control"
+                                       placeholder="필수 입력항목입니다." th:field="*{subject}"
+                                       th:errorclass="field-error">
+                            </label>
                             <div class="field-error" th:errors="*{subject}">오류4</div>
                         </div>
                     </div>
