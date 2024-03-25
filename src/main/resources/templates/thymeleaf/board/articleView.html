@@ -1,9 +1,17 @@
 <link th:href="@{/CSS/view.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<script th:src="@{/JS/image_moving.js}" defer></script>
 <script th:src="@{/JS/articleView.js}" defer></script>
 <link th:href="@{/CSS/articleView.css}" rel="stylesheet">
+<link th:href="@{/CSS/table.css}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <div th:include="layout/templateV1.html"></div>
 
@@ -34,8 +42,8 @@
             <table class="table table-bordered">
                 <tbody th:each="article : ${article}">
                 <tr>
-                    <th>키값(확인용)</th>
-                    <td th:text="${article.articleId}">id</td>
+                    <th style="border-radius: 20px 0px 0px 0px;">키값(확인용)</th>
+                    <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${article.articleId}">id</td>
                 </tr>
 
                 <tr>
@@ -52,8 +60,8 @@
                         th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
                 </tr>
                 <tr>
-                    <th>게시글</th>
-                    <td th:text="${article.content}">글</td>
+                    <th style="border-radius: 0px 0px 0px 20px;">게시글</th>
+                    <td style="border-radius: 0px 0px 20px 0px;" th:text="${article.content}">글</td>
                 </tr>
                 <tr>
 
@@ -66,23 +74,31 @@
                 <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
 
                 <h3>업로드 목록</h3>
+
+                    <br>
+
                 <div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
-                    <img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px"  alt=""/>
+                    <div data-aos="zoom-in"><img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px;border-radius:10px;" alt=""/></div>
+
+                    <br>
 
                 </div>
+
+
 
                 </tbody>
             </table>
         </div>
     </form>
+    <br>
     <div class="pull-right" th:each="article : ${article}">
         <a th:href="@{/Boards/updateArticle/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">게시글수정</button></a>
         <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
         <a th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
     </div>
-
+    <br> <br> <br> <br>
 </section>
 
 

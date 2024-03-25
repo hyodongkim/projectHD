@@ -4,6 +4,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <script th:src="@{/JS/view.js}" defer></script>
 <link th:href="@{/CSS/view.css}" rel="stylesheet">
+<link th:href="@{/CSS/table.css}" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script th:src="@{/JS/image_moving.js}" defer></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <div th:include="layout/templateV1.html"></div>
 
@@ -28,6 +37,7 @@
             <strong>커뮤니티 회원 가입을 축하합니다.</strong>
         </div>
 
+        <br>
         <div class="alert alert-dismissable alert-danger">
         </div>
     <form th:action="@{/Members/{id}(id=${id})}" th:object="${member}" method="post" enctype="multipart/form-data">
@@ -35,8 +45,8 @@
             <table class="table table-bordered">
                 <tbody th:each="member : ${member}">
                 <tr>
-                    <th>키값(확인용)</th>
-                    <td th:text="${member.id}">id</td>
+                    <th style="border-radius: 20px 0px 0px 0px;">키값(확인용)</th>
+                    <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${member.id}">id</td>
                 </tr>
 
                 <tr>
@@ -69,7 +79,7 @@
                         th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
                 </tr>
                 <tr>
-                    <th>자기소개</th>
+                    <th style="border-radius: 0px 0px 0px 20px;">자기소개</th>
                     <td th:text="${member.introduction}">introduction</td>
                 </tr>
 <!--                <tr>-->
@@ -83,14 +93,16 @@
                 <div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
-                        <img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px"  alt=""/>
+                    <div data-aos="zoom-in"><img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
 
+                    <br>
                 </div>
 
                 </tbody>
             </table>
         </div>
     </form>
+    <br>
         <div class="pull-right" th:each="member : ${member}">
             <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>

@@ -2,16 +2,19 @@
     margin: 0%;
     padding: 0%;
 }
+:root{
+  background-color: white;
+}
 table {
     width: 70vw;
-    border-collapse: collapse;
+
   }
   th{
     border: 5px solid rgb(224, 255, 255);
     background-color:rgb(224, 255, 255);
   }
   td{
-      border: 5px solid rgb(224, 255, 255);
+
 }
 .text-center{
     text-align: center;
@@ -19,4 +22,5 @@ table {
 section{
     position: relative;
     left:20%;
+    border-radius: 20px 20px 20px 20px;
 }
