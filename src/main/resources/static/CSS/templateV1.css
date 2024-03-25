@@ -9,8 +9,8 @@
 .fixBox{
   position: fixed;
   min-height: 4vh;
-  border: 1px solid black;
-  background-color: white;
+  border-bottom: 3px solid rgb(0,250,154);
+  background-color: rgb(144,238,144);
   z-index: 6;
   width: 100%;
   padding-left: 3%;
@@ -36,7 +36,7 @@ a{
     align-items: center;
     width: 100%;
     background-color: white;
-    border:1px dashed black;
+    border: 5px dashed rgb(167, 199, 231);
     z-index:2;
 
 }
@@ -52,7 +52,7 @@ header > div:nth-of-type(2){
 }
 .main_background{
     width:80%;
-    padding-top: 5%;
+    padding-top: 3%;
 }
 header >.logo{
   font-size: 2rem;
@@ -61,4 +61,16 @@ header >.logo{
 div.logo{
   font-family: 'DM Serif Display', serif;
   font-weight: bold;
+}
+
+@keyframes blink-effect {
+  0% {
+    border: 1px solid rgb(167, 199, 231);
+  }
+  50%{
+    border: 1px solid rgb(224, 255, 255);
+  }
+}
+#blink {
+  animation: blink-effect 2s step-end infinite;
 }

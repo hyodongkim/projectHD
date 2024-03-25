@@ -13,7 +13,7 @@
 <div th:include="layout/templateV1.html"></div>
 
 <section>
-            <h2 id="container">커뮤니티 회원목록 (총 <span th:text="${totalElements}">0</span> 명)</h2>
+            <h2 id="container">커뮤니티 회원목록 (총 <span th:text="${totalElements}">0</span> 명)</h2><br>
         <div>
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -29,6 +29,8 @@
                     </form>
                 </div>
             </div>
+
+            <br>
 
             <!-- 회원목록 -->
                 <table>
@@ -55,7 +57,7 @@
                     </tbody>
                 </table>
 
-
+            <br>
 
             <!-- 페이징 처리 -->
             <div class="pagination-align">

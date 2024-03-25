@@ -4,12 +4,15 @@
 }
 table {
     width: 70vw;
-    border-top: 1px solid #444444;
     border-collapse: collapse;
   }
-  th, td {
-    border-bottom: 1px solid #444444;
+  th{
+    border: 5px solid rgb(224, 255, 255);
+    background-color:rgb(224, 255, 255);
   }
+  td{
+      border: 5px solid rgb(224, 255, 255);
+}
 .text-center{
     text-align: center;
 }

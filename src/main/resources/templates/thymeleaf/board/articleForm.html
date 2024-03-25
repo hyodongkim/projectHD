@@ -13,22 +13,24 @@
 <div th:include="layout/templateV1.html"></div>
 
 <section>
-    <h2 id="container">커뮤니티 게시글목록 (총 <span th:text="${totalElements}">0</span> 개)</h2>
+    <h2 id="container">커뮤니티 게시글목록 (총 <span th:text="${totalElements}">0</span> 개)</h2> <br>
     <div>
         <div class="panel panel-default">
             <div class="panel-body">
                 <form class="form-search">
                     <div class="input-group">
                         <label>
-                            <input type="text" class="form-control" placeholder="회원명 또는 내용" name="search">
-                        </label>
-                        <span class="input-group-btn">
+                            <span class="input-group-btn">
+                                <input type="text" class="form-control" placeholder="회원명 또는 내용" name="search">
+
                                 <button type="submit" class="btn btn-primary">검색</button>
                             </span>
+                        </label>
                     </div>
                 </form>
             </div>
         </div>
+        <br>
 
         <!-- 회원목록 -->
         <table>
@@ -54,6 +56,7 @@
             </tbody>
         </table>
 
+        <br>
         <!-- 페이징 처리 -->
         <div class="pagination-align">
 

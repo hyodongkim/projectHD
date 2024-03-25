@@ -6,14 +6,14 @@
 .text-center{
     text-align: center;
 }
-section{
-    position: relative;
-    left:20%;
-}
 .inline{
     display:inline;
 }
 section{
     position: relative;
-    left:47%;
+    left:44%;
+}
+fieldset{
+    padding:3%;
+    border: 5px solid rgb(224, 255, 255);
 }
