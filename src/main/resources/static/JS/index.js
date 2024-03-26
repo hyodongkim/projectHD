@@ -7,59 +7,6 @@
 //};
         AOS.init();
 
-        let swiper1 = new Swiper('.swiper1', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-            autoplay: {
-                delay: 9000,
-            },
-
-            // If we need pagination
-            pagination: {
-              el: '.swiper-pagination',
-            },
-
-            // Navigation arrows
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-
-            // And if we need scrollbar
-            scrollbar: {
-              el: '.swiper-scrollbar',
-            },
- });
-
-
-let swiper2 = new Swiper('.swiper2', {
-            // Optional parameters
-            direction: 'horizontal',
-            loop: true,
-            autoplay: {
-                delay: 9000,
-            },
-
-            // If we need pagination
-            pagination: {
-              el: '.swiper-pagination',
-            },
-
-            // Navigation arrows
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-
-            // And if we need scrollbar
-            scrollbar: {
-              el: '.swiper-scrollbar',
-            },
- });
-
-
-
 
 //    function click_aside(e){
 //        //  $("#menu_button").css('backround','linear-gradient(90deg , white, orange )').show();

@@ -13,9 +13,11 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" th:href="@{/IMG/}">
+<link rel="stylesheet" th:href="@{IMG}">
 
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
 
 
@@ -25,28 +27,55 @@
 <div th:include="layout/templateV1.html"></div>
 
 <div class="main_background">
-    <main>
 
-        <div data-aos="zoom-in"><img src="./IMG/img10.webp"></div>
+    <div class="line">
+        <div class="fill-img">
+            <img src="./IMG/img10.webp" alt="">
+            <div class="box" style="padding-left:20vw;padding-right:10vw;">
+                <div class="big-font">"꿈은 도망치지 않는다. 도망치는건 네 자신이다. - 신형만"</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white-line"></div>
+
+    <div class="line">
+        <div class="fill-img">
+            <img src="./IMG/img6.webp" style="order:1;" alt="">
+            <div class="box" style="order:0;padding-right:20vw;padding-left:10vw;">
+                <div class="big-font">"성공한 사람이 되려는 노력보다 가치있는 사람이 되는 노력을 하라. – 알버트 아인슈타인"</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white-line"></div>
+
+    <div class="line">
+        <div class="fill-img">
+            <img src="./IMG/img9.webp" alt="">
+            <div class="box" style="padding-left:20vw;padding-right:10vw;">
+                <div class="big-font">"추구할 수 있는 용기가 있다면 우리의 모든 꿈은 이뤄질 수 있다. – 월트 디즈니"</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="white-line"></div>
+
+    <div class="line">
+        <div class="fill-img">
+            <img src="./IMG/img12.webp" style="order:1;" alt="">
+            <div class="box" style="order:0;padding-right:20vw;padding-left:10vw;">
+                <div class="big-font">"열정을 잃지 않고 실패에서 실패로 걸어가는 것이 성공이다. – 윈스턴 처칠"<br></div>
+            </div>
+        </div>
+    </div>
+    <div class="white-line"></div>
 
 
-        <div data-aos="zoom-in"><img src="./IMG/img6.webp"></div>
-
-
-        <div data-aos="zoom-in"><img src="./IMG/img9.webp"></div>
-
-
-        <div data-aos="zoom-in"><img src="./IMG/img12.webp"></div>
-
-
-        <div data-aos="zoom-in"><img src="./IMG/img7.webp"></div>
-
-
-
-    </main>
 
 
 </div>
+
 <footer>
 
     <div class="footerLeft">
