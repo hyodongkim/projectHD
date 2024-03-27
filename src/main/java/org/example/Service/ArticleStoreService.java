@@ -10,7 +10,7 @@ public interface ArticleStoreService {
 
     void deleteEmptyName();
 
-    void registerArticleStore(ArticleStore articleStore);
+    void insertArticleStore(ArticleStore articleStore);
 
     void updateArticleStore(ArticleStore articleStore);
 }

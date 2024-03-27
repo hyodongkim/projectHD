@@ -137,8 +137,8 @@ public class BoardController {
         articleStore.setArticle(article);
 //        article.setMember(member);
 
-        articleService.updateArticle(article);
-        articleStoreService.updateArticleStore(articleStore);
+        articleService.insertArticle(article);
+        articleStoreService.insertArticleStore(articleStore);
 
 
         return "thymeleaf/board/articleForm";
@@ -180,7 +180,7 @@ public class BoardController {
 
         article.setMember(member);
 
-        articleService.registerArticle(article);
+        articleService.save(article);
 
         System.out.println("1:"+member.getId());
 
@@ -333,7 +333,8 @@ public class BoardController {
     public String updates(@ModelAttribute ArticleStore articleStore, @ModelAttribute Article article , ArticleStoreDto dto, @PathVariable Long articleId,
                           RedirectAttributes redirectAttributes,
                           @ModelAttribute("loginForm") LoginForm loginForm,
-                          @CookieValue(value = "rememberId", required = false) String rememberId,Model model) throws IOException {
+                          @CookieValue(value = "rememberId", required = false) String remember,
+                          @ModelAttribute Member member,Model model) throws IOException {
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
@@ -363,11 +364,11 @@ public class BoardController {
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
         articleStore.setArticle(article);
+        article.setMember(member);
 
 
-
-        articleService.registerArticle(article);
-        articleStoreService.save(articleStore);
+        articleService.updateArticle(article);
+        articleStoreService.updateArticleStore(articleStore);
 
 
         if(articleStore.getOriginFilename().isEmpty()){

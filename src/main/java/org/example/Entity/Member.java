@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.Dto.Gender;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
@@ -13,13 +14,14 @@ import java.util.List;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@DynamicInsert
 @ToString
 @Getter
 @Setter
 @SequenceGenerator( name= "member_id_seq_gen",
         sequenceName = "member_seq",
         allocationSize = 1)
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
 public class Member{
@@ -50,8 +52,8 @@ public class Member{
     @OneToMany(mappedBy = "member")
     private List<Store> stores = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "member")
-//    private List<Article> articles = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Article> articles = new ArrayList<>();
 
     public Member(){}
 }

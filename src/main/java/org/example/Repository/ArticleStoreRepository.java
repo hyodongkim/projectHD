@@ -25,5 +25,9 @@ public interface ArticleStoreRepository extends JpaRepository<ArticleStore, Long
     @Modifying
     @Transactional
     @Query(value="INSERT INTO article_store VALUES(:#{#artisto.article_num},:#{#artisto.originFilename},:#{#artisto.storeFilename},:#{#artisto.article_id})",nativeQuery=true)
-    void updateArticleStore(@Param("artisto") ArticleStore articleStore);
+    void insertArticleStore(@Param("artisto") ArticleStore articleStore);
+
+    @Modifying
+    @Query(value="UPDATE Article_store a set a.article_num=a.article_store_seq, a.originFilename=:#{#artisto.originFilename}, a.storeFilename=:#{#artisto.storeFilename} WHERE a.article_id=:#{#artisto.article_id})",nativeQuery=true)
+    public void updateArticleStore(@Param("artisto") ArticleStore articleStore);
 }

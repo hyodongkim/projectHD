@@ -29,10 +29,9 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     }
 
     @Override
-    public void registerArticleStore(ArticleStore articleStore){
-        articleStoreRepository.save(articleStore);
+    public void insertArticleStore(ArticleStore articleStore){
+        articleStoreRepository.insertArticleStore(articleStore);
     }
-
     @Override
     public void updateArticleStore(ArticleStore articleStore){
         articleStoreRepository.updateArticleStore(articleStore);

@@ -16,7 +16,7 @@ public interface ArticleService {
 
     void deleteArticle(Long articleId);
 
-    void registerArticle(Article article);
+    void save(Article article);
 
 //    void deleteEmptyValue();
 
@@ -24,5 +24,7 @@ public interface ArticleService {
 
     void deleteAllImagesByArticleId(Long articleId);
 
-    void updateArticle(Article article);
+    void insertArticle(Article article);
+
+    public void updateArticle(Article article);
 }

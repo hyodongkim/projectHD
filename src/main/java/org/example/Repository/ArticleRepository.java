@@ -1,11 +1,9 @@
 package org.example.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import org.example.Entity.Article;
-import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,5 +36,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Modifying
     @Transactional
     @Query(value="INSERT INTO Article a VALUES(a.article_seq,:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.member_id})",nativeQuery=true)
+    public void insertArticle(@Param("arti") Article article);
+
+    @Modifying
+    @Query(value="UPDATE Article a set a.article_id=:#{#arti.article_id},a.name=:#{#arti.name},a.subject=:#{#arti.subject},a.content=:#{#arti.content},a.day=:#{#arti.day} where a.member_id=:#{#arti.member_id}",nativeQuery=true)
     public void updateArticle(@Param("arti") Article article);
 }

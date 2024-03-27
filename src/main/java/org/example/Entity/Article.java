@@ -29,7 +29,7 @@ import static jakarta.persistence.FetchType.LAZY;
         sequenceName = "article_seq",
         initialValue = 1,
         allocationSize = 1)
-//@DynamicUpdate
+@DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
 public class Article {
 

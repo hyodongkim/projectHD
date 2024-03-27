@@ -43,7 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void registerArticle(Article article) {
+    public void save(Article article) {
         articleRepository.save(article);
     }
 
@@ -55,6 +55,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void deleteAllImagesByArticleId(Long articleId){
         articleRepository.deleteAllImagesByArticleId(articleId);
+    }
+    @Override
+    public void insertArticle(Article article){
+        articleRepository.insertArticle(article);
     }
     @Override
     public void updateArticle(Article article){
