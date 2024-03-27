@@ -98,6 +98,8 @@ public class BoardController {
         model.addAttribute("imgs", files);
 //            model.addAttribute("imgs", files);
 
+
+
         return "thymeleaf/board/articleView";
     }
 
@@ -134,12 +136,25 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
-        articleStore.setArticle(article);
+        articleStore.setArticle(article.getArticleId());
 //        article.setMember(member);
 
         articleService.insertArticle(article);
         articleStoreService.insertArticleStore(articleStore);
 
+        if(articleStore.getOriginFilename().isEmpty()){
+
+            if(f3.delete()){
+                System.out.println("삭제성공");
+            }
+            else{
+                System.out.println("삭제실패");
+            }
+        }
+        else{
+            System.out.println("이상무");
+        }
+        articleStoreService.deleteEmptyName();
 
         return "thymeleaf/board/articleForm";
     }
@@ -178,7 +193,7 @@ public class BoardController {
 
 
 
-        article.setMember(member);
+        article.setMember(member.getId());
 
         articleService.save(article);
 
@@ -229,13 +244,27 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
-        articleStore.setArticle(article);
+        articleStore.setArticle(article.getArticleId());
 
 
         System.out.println("4:"+member.getId());
 
 
         articleStoreService.save(articleStore);
+
+        if(articleStore.getOriginFilename().isEmpty()){
+
+            if(f3.delete()){
+                System.out.println("삭제성공");
+            }
+            else{
+                System.out.println("삭제실패");
+            }
+        }
+        else{
+            System.out.println("이상무");
+        }
+        articleStoreService.deleteEmptyName();
 
         return "thymeleaf/board/articleView";
     }
@@ -363,16 +392,16 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
-        articleStore.setArticle(article);
-        article.setMember(member);
+        articleStore.setArticle(article.getArticleId());
+        article.setMember(member.getId());
 
+        System.out.println("값을 보여줘 : "+member.getId());
 
-        articleService.updateArticle(article);
-        articleStoreService.updateArticleStore(articleStore);
-
+        articleService.save(article);
+        articleStoreService.save(articleStore);
 
         if(articleStore.getOriginFilename().isEmpty()){
-            articleStoreService.deleteEmptyName();
+
             if(f3.delete()){
                 System.out.println("삭제성공");
             }
@@ -383,6 +412,8 @@ public class BoardController {
         else{
             System.out.println("이상무");
         }
+        articleStoreService.deleteEmptyName();
+
         redirectAttributes.addAttribute("articleId",articleId);
 
 

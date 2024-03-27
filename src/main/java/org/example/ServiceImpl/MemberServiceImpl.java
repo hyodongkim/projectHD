@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository memberRepository;
 
     @Override
-    public void register(Member member) {
+    public void save(Member member) {
         memberRepository.save(member);
     }
     @Override

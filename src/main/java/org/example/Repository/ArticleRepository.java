@@ -35,10 +35,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     @Modifying
     @Transactional
-    @Query(value="INSERT INTO Article a VALUES(a.article_seq,:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.member_id})",nativeQuery=true)
+    @Query(value="INSERT INTO Article a VALUES(a.article_seq.NEXTVAL,:#{#arti.name},:#{#arti.subject},:#{#arti.content},:#{#arti.day},:#{#arti.member})",nativeQuery=true)
     public void insertArticle(@Param("arti") Article article);
 
     @Modifying
-    @Query(value="UPDATE Article a set a.article_id=:#{#arti.article_id},a.name=:#{#arti.name},a.subject=:#{#arti.subject},a.content=:#{#arti.content},a.day=:#{#arti.day} where a.member_id=:#{#arti.member_id}",nativeQuery=true)
-    public void updateArticle(@Param("arti") Article article);
+    @Transactional
+    @Query(value="UPDATE article a set a.article_id=article_seq.NEXTVAL,a.name=:#{#article.name},a.subject=:#{#article.subject},a.content=:#{#article.content},a.day=:#{#article.day} where a.member=:#{#article.member}",nativeQuery=true)
+    public void updateArticle(@Param("article") Article article);
 }

@@ -31,9 +31,8 @@ public class ArticleStore {
     @Column(name="storeFilename")
     private String storeFilename;
 
-    @ManyToOne(fetch= LAZY)
-    @JoinColumn(name = "article_id")
-    private Article article;
+
+    private Long article;
 
     public void getOriginFilename(String fname1) {
         originFilename = fname1;

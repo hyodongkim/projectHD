@@ -76,7 +76,7 @@ public class MemberController {
 
         store.setMember(member);
 
-        memberService.register(member);
+        memberService.save(member);
 
         System.out.println("1:"+member.getId());
 
@@ -120,6 +120,21 @@ public class MemberController {
         store.getStoreFilename(fname2);
 
         storeService.save(store);
+
+        if(store.getOriginFilename().isEmpty()){
+
+            if(f3.delete()){
+                System.out.println("인식함");
+            }
+            else{
+                System.out.println("인식못함");
+            }
+        }
+        else{
+            System.out.println("이상무");
+        }
+
+        storeService.deleteEmptyName();
 
 
         System.out.println("5:"+member.getId());
@@ -239,7 +254,7 @@ public class MemberController {
 
 
         if(store.getOriginFilename().isEmpty()){
-            storeService.deleteEmptyName();
+
             if(f3.delete()){
                 System.out.println("인식함");
             }
@@ -250,6 +265,8 @@ public class MemberController {
         else{
             System.out.println("이상무");
         }
+
+        storeService.deleteEmptyName();
 
         return "thymeleaf/member/view";
     }
@@ -415,12 +432,12 @@ public class MemberController {
 
 
 
-        memberService.register(member);
+        memberService.save(member);
         storeService.save(store);
 
 
         if(store.getOriginFilename().isEmpty()){
-            storeService.deleteEmptyName();
+
             if(f3.delete()){
                 System.out.println("인식함");
             }
@@ -431,6 +448,8 @@ public class MemberController {
         else{
             System.out.println("이상무");
         }
+
+        storeService.deleteEmptyName();
 
         return "thymeleaf/member/view";
 

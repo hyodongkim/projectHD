@@ -51,7 +51,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${totalElements == 0}"><td colspan="5" class="text-center">검색된 회원이 없습니다.</td></tr>
+                    <tr th:if="${totalElements == 0}"><td colspan="6" class="text-center">검색된 회원이 없습니다.</td></tr>
                     <tr class="text-center" th:each="member, memberStat : ${list}">
                         <td class="text-center" th:text="${memberStat.count}">1</td>
                         <td class="text-center" th:text="${member.userid}">tester</td>

@@ -15,7 +15,7 @@ public interface MemberService {
      *
      * @return
      */
-    public void register(Member member);
+    public void save(Member member);
     public void edit(List<Member> member);
     /**
      * 회원 인증
