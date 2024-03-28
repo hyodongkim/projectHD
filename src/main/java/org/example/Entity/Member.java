@@ -52,7 +52,7 @@ public class Member{
     @OneToMany(mappedBy = "member")
     private List<Store> stores = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Article> articles = new ArrayList<>();
 
     public Member(){}
