@@ -80,7 +80,7 @@ public class BoardController {
 
     @GetMapping("/{articleId}")
     public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store,
-                              @ModelAttribute ArticleStore articleStore, Model model) {
+                              @ModelAttribute ArticleStore articleStore,@ModelAttribute Member member, Model model) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -136,8 +136,8 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
-        articleStore.setArticle(article.getArticleId());
-//        article.setMember(member);
+        articleStore.setArticle(article);
+        article.setMember(member.getId());
 
         articleService.insertArticle(article);
         articleStoreService.insertArticleStore(articleStore);
@@ -244,7 +244,7 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
-        articleStore.setArticle(article.getArticleId());
+        articleStore.setArticle(article);
 
 
         System.out.println("4:"+member.getId());
@@ -392,7 +392,7 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(f3.getAbsolutePath());
-        articleStore.setArticle(article.getArticleId());
+        articleStore.setArticle(article);
         article.setMember(member.getId());
 
         System.out.println("값을 보여줘 : "+member.getId());
