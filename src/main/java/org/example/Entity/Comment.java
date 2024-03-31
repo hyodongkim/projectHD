@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +28,7 @@ import static jakarta.persistence.FetchType.LAZY;
         sequenceName = "comment_seq",
         initialValue = 1,
         allocationSize = 1)
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
 
     @Id
@@ -35,11 +39,9 @@ public class Comment {
     private String writer;
     @Column(name = "content")
     private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date day;
+    @Column(name="day")
+    @CreatedDate
+    private LocalDateTime day;
 
     private Long articleId;
-
-
 }

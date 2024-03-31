@@ -123,8 +123,10 @@
         </label>
         <tr>
             <th>날짜</th>
-            <input type="hidden" class="form-control"
-                   placeholder="테스트용 항목입니다." th:field="*{day}">
+            <label>
+                <input type="text" class="form-control"
+                       placeholder="테스트용 항목입니다." th:field="*{day}">
+            </label>
         </tr>
         <tr>
             <th>(확인용) 키값</th>
@@ -141,7 +143,7 @@
 <tr class="text-center" th:each="comment : ${list}">
     <td><a th:href="@{Boards/{articleId}(articleId=${comment.articleId})}">[[${comment.writer}]]</a></td>
     <td class="text-center" th:text="${comment.content}">10</td>
-    <td class="text-center" th:text="${#temporals.format(comment.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td>
+    <td class="text-center" th:text="${#temporals.format(comment.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td><br>
 </tr>
 
 <div class="pagination-align">

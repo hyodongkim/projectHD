@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     public Page<Comment> findByArticleId(@Param("article_id") Long article_id, Pageable pageable);
 
-    @Modifying
-    @Transactional
-    @Query(value="INSERT INTO comments(comment_id, writer, content, day, articleId) VALUES(comment_seq.NEXTVAL,:#{#comment.writer},:#{#comment.content},:#{#comment.day},:#{#comment.articleId})",nativeQuery=true)
-    public void insertArticle(@Param("comment") Comment comment);
+//    @Modifying
+//    @Transactional
+//    @Query(value="INSERT INTO comments(comment_id,writer,content,day,articleId) VALUES(comment_seq.NEXTVAL,:#{#comment.writer},:#{#comment.content},:#{#comment.day},:#{#comment.articleId})",nativeQuery=true)
+//    public void insertArticle(@Param("comment") Comment comment);
 }
