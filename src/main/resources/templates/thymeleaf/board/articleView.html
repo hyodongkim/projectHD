@@ -99,7 +99,64 @@
         <a th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
     </div>
     <br> <br> <br> <br>
+
+
+    <form th:action="@{/Boards/writeComment/{articleId}(articleId=${articleId})}"  th:object="${comment}" method="get" enctype="multipart/form-data">
+        <tbody th:each="comment : ${comment}">
+        <tr>
+            <th>(확인용) Id</th>
+            <td th:text="${comment.commentId}">commentId</td>
+        </tr>
+        <tr>
+            <th>글쓴이</th>
+            <label>
+                <input type="text" class="form-control"
+                       placeholder="필수 입력항목입니다."
+                       th:value="${session.loginMember.name}"
+                       th:name="writer"
+                       th:errorclass="field-error">
+            </label>
+        </tr>
+        <label>
+            <input type="text" class="form-control"
+                   placeholder="필수 입력항목입니다." th:field="*{content}">
+        </label>
+        <tr>
+            <th>날짜</th>
+            <input type="hidden" class="form-control"
+                   placeholder="테스트용 항목입니다." th:field="*{day}">
+        </tr>
+        <tr>
+            <th>(확인용) 키값</th>
+            <td th:text="${comment.articleId}">키값</td>
+        </tr>
+        </tbody>
+
+        <button type="submit">댓글쓰기</button>
+    </form>
+
+
+
+<tr th:if="${totalElements == 0}"><td colspan="6" class="text-center"> 댓글이 없습니다.</td></tr>
+<tr class="text-center" th:each="comment : ${list}">
+    <td><a th:href="@{Boards/{articleId}(articleId=${comment.articleId})}">[[${comment.writer}]]</a></td>
+    <td class="text-center" th:text="${comment.content}">10</td>
+    <td class="text-center" th:text="${#temporals.format(comment.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td>
+</tr>
+
+<div class="pagination-align">
+
+
+    <div th:if="${hasPrevious}"><a th:href="@{/Boards(page=${requestPage-2}, search=${param.search})}" th:text="'Previous'">이전페이지</a></div>
+
+    <th:block th:if="${totalElements != 0}" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <div class="active" th:if="${page == requestPage}"><a th:text="${page}">1</a></div>
+        <div th:if="${page != requestPage}"><a th:href="@{/Boards(page=${page-1}, search=${param.search})}" th:text="${page}">1</a></div>
+    </th:block>
+
+
+    <div th:if="${hasNext}"><a th:href="@{/Boards(page=${requestPage}, search=${param.search})}" th:text="'Next'">다음페이지</a></div>
+</div>
+
 </section>
-
-
 </html>

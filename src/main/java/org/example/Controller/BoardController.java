@@ -9,6 +9,7 @@ import org.example.Dto.*;
 import org.example.Entity.*;
 import org.example.Service.ArticleService;
 import org.example.Service.ArticleStoreService;
+import org.example.Service.CommentService;
 import org.example.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,9 @@ public class BoardController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping
     public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
                                   @RequestParam(required = false, defaultValue = "") String search,
@@ -80,7 +84,10 @@ public class BoardController {
 
     @GetMapping("/{articleId}")
     public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store,
-                              @ModelAttribute ArticleStore articleStore,@ModelAttribute Member member, Model model) {
+                              @ModelAttribute ArticleStore articleStore,@ModelAttribute Member member,
+                              @ModelAttribute Comment comment,
+                              @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
+                              Model model) {
 
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -100,8 +107,46 @@ public class BoardController {
 
 
 
+
+
+
+
+        Page<Comment> page = commentService.findByArticleId(articleId,pageable);
+
+        long totalElements = page.getTotalElements();
+        List<Comment> list = page.getContent();
+        int requestPage = page.getPageable().getPageNumber() + 1;
+        int totalPage = page.getTotalPages();
+        int startPage = Math.max(1, requestPage - 4);
+        int endPage   = Math.min(page.getTotalPages(), requestPage + 4);
+        boolean hasPrevious = page.hasPrevious();
+        boolean hasNext = page.hasNext();
+
+        model.addAttribute("totalElements", totalElements);
+        model.addAttribute("list", list);
+        model.addAttribute("requestPage", requestPage);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("hasPrevious", hasPrevious);
+        model.addAttribute("hasNext", hasNext);
+
+
         return "thymeleaf/board/articleView";
     }
+    @GetMapping("/writeComment/{articleId}")
+    public String registerComment(@ModelAttribute Comment comment, @PathVariable("articleId") Long articleId,
+                                  RedirectAttributes redirectAttributes,Model model){
+
+        commentService.insertArticle(comment);
+
+        model.addAttribute("comment",comment);
+
+        redirectAttributes.addAttribute("articleId",articleId);
+
+        return "redirect:/Boards/{articleId}";
+    }
+
 
     @PostMapping("/{articleId}")
     public String viewArticlePost(@PathVariable Long articleId, @ModelAttribute ArticleStore articleStore, @ModelAttribute Article article,
@@ -266,7 +311,7 @@ public class BoardController {
         }
         articleStoreService.deleteEmptyName();
 
-        return "thymeleaf/board/articleView";
+        return "redirect:/Boards";
     }
 
     @GetMapping("/read_img/{articleId}/{img}")

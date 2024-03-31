@@ -139,7 +139,9 @@ public class MemberController {
 
         System.out.println("5:"+member.getId());
 
-        return "thymeleaf/member/view";
+        redirectAttributes.addAttribute("id",member.getId());
+
+        return "redirect:/Members";
     }
 
     @GetMapping("/read_img/{id}/{img}")
@@ -357,8 +359,15 @@ public class MemberController {
             Optional<Member> optional = memberService.intoLogin(loginMember.getUserid());
             model.addAttribute("member", optional.get());
         }
-//          return "redirect:"+redirect;
-            return "thymeleaf/member/view";
+
+        String path1 = path + member.getId();
+        File dir = new File(path1);
+        System.out.println("view:"+path1);
+        String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
+        model.addAttribute("imgs", files);
+
+//            return "thymeleaf/member/view";
+        return "redirect:/Members";
     }
 
     @GetMapping("/logout")
@@ -401,7 +410,8 @@ public class MemberController {
     }
 
     @PostMapping("/updateMember/{id}")
-    public String updates(@ModelAttribute Store store, @ModelAttribute Member member , StoreDto dto, @PathVariable Long id, Model model) throws IOException {
+    public String updates(@ModelAttribute Store store, @ModelAttribute Member member , StoreDto dto, @PathVariable Long id,
+                          RedirectAttributes redirectAttributes,Model model) throws IOException {
 
         UUID uuid = UUID.randomUUID();
         MultipartFile f = dto.getFile();
@@ -451,7 +461,9 @@ public class MemberController {
 
         storeService.deleteEmptyName();
 
-        return "thymeleaf/member/view";
+        redirectAttributes.addAttribute("id",id);
+
+        return "redirect:/Members/{id}";
 
     }
 }
