@@ -89,6 +89,7 @@ public class BoardController {
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               Model model) {
 
+        articleService.plusClickCount(articleId);
 
         Optional<Article> article1 = articleService.findArticle(articleId);
         model.addAttribute("article", article1.get());
@@ -136,7 +137,8 @@ public class BoardController {
     }
     @GetMapping("/writeComment/{articleId}")
     public String registerComment(@ModelAttribute Comment comment, @PathVariable("articleId") Long articleId,
-                                  RedirectAttributes redirectAttributes,Model model){
+                                  RedirectAttributes redirectAttributes,
+                                  Model model){
 
         commentService.insertArticle(comment);
 
@@ -150,8 +152,8 @@ public class BoardController {
 
     @PostMapping("/{articleId}")
     public String viewArticlePost(@PathVariable Long articleId, @ModelAttribute ArticleStore articleStore, @ModelAttribute Article article,
-                                  ArticleStoreDto dto, Store store, @ModelAttribute Member member, Model model) {
-
+                                  ArticleStoreDto dto, Store store, @ModelAttribute Member member,
+                                  Model model) {
 
         Optional<Article> article1 = articleService.findArticle(articleId);
         model.addAttribute("article", article1.get());
@@ -220,9 +222,7 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               HttpServletRequest request, HttpServletResponse response,@ModelAttribute Member member,
-                               @ModelAttribute("loginForm") LoginForm loginForm,
-                               @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
+                               Model model) {
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);

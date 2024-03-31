@@ -47,10 +47,13 @@
                 <th class="text-center">주제</th>
                 <th class="text-center">내용</th>
                 <th class="text-center">등록일자</th>
+                <th class="text-center">추천수</th>
+                <th class="text-center">조회수</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr th:if="${totalElements == 0}"><td colspan="5" class="text-center">검색된 회원이 없습니다.</td></tr>
+            <tr th:if="${totalElements == 0}"><td colspan="7" class="text-center">검색된 회원이 없습니다.</td></tr>
             <tr class="text-center" th:each="article, articleStat : ${list}">
 
                     <td th:text="${articleStat.count}">1</td>
@@ -58,6 +61,8 @@
                     <td th:text="${article.subject}">10</td>
                     <td th:text="${article.content}">자기소개</td>
                     <td th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td>
+                    <td th:text="${article.hitcount}">추천수</td>
+                    <td th:text="${article.clickcount}">조회수</td>
             </tr>
             </tbody>
         </table>

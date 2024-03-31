@@ -94,6 +94,28 @@
                             <div class="field-error" th:errors="*{day}">오류5</div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-lg-1 control-label">추천수</label>
+                        <div class="col-lg-11">
+                            <input type="hidden" class="form-control"
+                                   placeholder="필수 입력항목입니다."
+                                   th:value=0
+                                   th:name="hitcount"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{hitcount}">오류5</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-1 control-label">조회수</label>
+                        <div class="col-lg-11">
+                            <input type="hidden" class="form-control"
+                                   placeholder="필수 입력항목입니다."
+                                   th:value=0
+                                   th:name="clickcount"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{clickcount}">오류5</div>
+                        </div>
+                    </div>
 
                     file:<input name="file" type="file">
 

@@ -42,4 +42,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Transactional
     @Query(value="UPDATE article a set a.article_id=article_seq.NEXTVAL,a.name=:#{#article.name},a.subject=:#{#article.subject},a.content=:#{#article.content},a.day=:#{#article.day} where a.member=:#{#article.member}",nativeQuery=true)
     public void updateArticle(@Param("article") Article article);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE article a set a.clickcount=a.clickcount+1 where a.article_id=:articleId",nativeQuery=true)
+    public void plusClickCount(@Param("articleId") Long articleId);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE article a set a.hitcount=a.hitcount+1 where a.article_id=:articleId",nativeQuery=true)
+    public void plusHitCount(@Param("articleId") Long articleId);
 }

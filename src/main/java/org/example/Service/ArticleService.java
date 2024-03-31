@@ -27,4 +27,8 @@ public interface ArticleService {
     void insertArticle(Article article);
 
     public void updateArticle(Article article);
+
+    public void plusHitCount(Long articleId);
+
+    public void plusClickCount(Long articleId);
 }

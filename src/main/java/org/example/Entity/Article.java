@@ -45,14 +45,11 @@ public class Article {
     private String content;
     @CreatedDate
     private LocalDateTime day;
-//    @Column(name = "hitcount")
-//    private Long hitcount;
-//    @Column(name = "group_no")
-//    private Long groupNo;
-//    @Column(name = "level_no")
-//    private Long levelNo;
-//    @Column(name = "order_no")
-//    private Long orderNo;
+    @Column(name = "hitcount")
+    private Integer hitcount;
+    @Column(name = "clickcount")
+    private Integer clickcount;
+
 
     private Long member;
 

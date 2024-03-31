@@ -32,13 +32,13 @@ public class MyController {
 //        return "redirect:/admin/views/admin_notice";
     }
 
-    @GetMapping("/{id}")
-    public String main(@PathVariable("id") String id, Model model) {
-//        List<entity> list = Service.findAll();
-//        model.addAttribute("list", list);
-        return "views/main";
-//        return "redirect:/admin/views/admin_notice";
-    }
+//    @GetMapping("/{id}")
+//    public String main(@PathVariable("id") String id, Model model) {
+////        List<entity> list = Service.findAll();
+////        model.addAttribute("list", list);
+//        return "views/main";
+////        return "redirect:/admin/views/admin_notice";
+//    }
 
     @GetMapping("/test")
     public String test_main(Model model) {

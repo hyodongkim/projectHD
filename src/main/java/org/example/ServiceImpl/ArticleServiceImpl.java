@@ -64,4 +64,12 @@ public class ArticleServiceImpl implements ArticleService {
     public void updateArticle(Article article){
         articleRepository.updateArticle(article);
     }
+    @Override
+    public void plusHitCount(Long articleId){
+        articleRepository.plusHitCount(articleId);
+    }
+    @Override
+    public void plusClickCount(Long articleId){
+        articleRepository.plusClickCount(articleId);
+    }
 }

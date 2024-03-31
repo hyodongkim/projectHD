@@ -3,6 +3,7 @@ package org.example.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.Dto.Gender;
+import org.example.Dto.Position;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
@@ -48,6 +49,8 @@ public class Member{
     private LocalDateTime day;
     @Column(name="member_introduction")
     private String introduction;
+    @Column(name="member_job")
+    private Position job;
 
     @OneToMany(mappedBy = "member")
     private List<Store> stores = new ArrayList<>();

@@ -48,6 +48,7 @@
                         <th class="text-center">나이</th>
                         <th class="text-center">자기소개</th>
                         <th class="text-center">등록일자</th>
+                        <th class="text-center">신분</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,7 @@
                         <td class="text-center" th:text="${member.age}">10</td>
                         <td class="text-center" th:text="${member.introduction}">자기소개</td>
                         <td class="text-center" th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td>
+                        <td class="text-center" th:text="${member.job}">사용자</td>
                     </tr>
                     </tbody>
                 </table>
