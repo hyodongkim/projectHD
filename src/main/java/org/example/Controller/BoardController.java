@@ -88,14 +88,14 @@ public class BoardController {
     private Cookie createCookieForForNotOverlap(Long id) {
         Cookie cookie = new Cookie(VIEWCOOKIENAME+id, String.valueOf(id));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
-        cookie.setMaxAge(getRemainSecondForTommorow()); 	// 하루를 준다.
+        cookie.setMaxAge(60); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
     private Cookie createCookieForForNotOverlap1(Long id) {
         Cookie cookie = new Cookie(HITCOOKIENAME+id, String.valueOf(id));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
-        cookie.setMaxAge(getRemainSecondForTommorow()); 	// 하루를 준다.
+        cookie.setMaxAge(60); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
@@ -114,7 +114,6 @@ public class BoardController {
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               Model model) {
 
-        HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;
         int result = 0;
@@ -123,16 +122,16 @@ public class BoardController {
             for (Cookie cookiess : cookies)
             {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(VIEWCOOKIENAME+cookie.getValue())) checkCookie = true;
+                if (cookiess.getName().equals(VIEWCOOKIENAME+articleId)) checkCookie = true;
 
             }
             if(!checkCookie){
-                Cookie newCookie = createCookieForForNotOverlap(Long.valueOf(cookie.getValue()));
+                Cookie newCookie = createCookieForForNotOverlap(articleId);
                 response.addCookie(newCookie);
                 articleService.plusClickCount(articleId);
             }
         } else {
-            Cookie newCookie = createCookieForForNotOverlap(Long.valueOf(cookie.getValue()));
+            Cookie newCookie = createCookieForForNotOverlap(articleId);
             response.addCookie(newCookie);
             articleService.plusClickCount(articleId);
         }
@@ -186,7 +185,6 @@ public class BoardController {
                                @CookieValue(value = "id", required = false) Cookie cookie,
                                HttpServletRequest request, HttpServletResponse response){
 
-        HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;
         int result = 0;
@@ -195,16 +193,16 @@ public class BoardController {
             for (Cookie cookiess : cookies)
             {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(HITCOOKIENAME+cookie.getValue())) checkCookie = true;
+                if (cookiess.getName().equals(HITCOOKIENAME+articleId)) checkCookie = true;
 
             }
             if(!checkCookie){
-                Cookie newCookie = createCookieForForNotOverlap1(Long.valueOf(cookie.getValue()));
+                Cookie newCookie = createCookieForForNotOverlap1(articleId);
                 response.addCookie(newCookie);
                 articleService.plusHitCount(articleId);
             }
         } else {
-            Cookie newCookie = createCookieForForNotOverlap1(Long.valueOf(cookie.getValue()));
+            Cookie newCookie = createCookieForForNotOverlap1(articleId);
             response.addCookie(newCookie);
             articleService.plusHitCount(articleId);
         }
