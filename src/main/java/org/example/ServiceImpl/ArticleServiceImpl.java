@@ -1,8 +1,13 @@
 package org.example.ServiceImpl;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.Entity.Article;
 import org.example.Entity.ArticleStore;
 import org.example.Repository.ArticleRepository;
@@ -18,6 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
+
+
     @Autowired
     private ArticleRepository articleRepository;
 
@@ -68,8 +75,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void plusHitCount(Long articleId){
         articleRepository.plusHitCount(articleId);
     }
+
     @Override
-    public void plusClickCount(Long articleId){
+    public void plusClickCount(Long articleId) {
         articleRepository.plusClickCount(articleId);
     }
 }

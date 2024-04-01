@@ -71,7 +71,8 @@ public class MemberController {
 
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
-                           RedirectAttributes redirectAttributes,@ModelAttribute Store store,Model model) throws IOException {
+                           RedirectAttributes redirectAttributes,@ModelAttribute Store store,
+                           HttpServletRequest request, HttpServletResponse response,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
 
         store.setMember(member);
@@ -139,7 +140,18 @@ public class MemberController {
 
         System.out.println("5:"+member.getId());
 
-        redirectAttributes.addAttribute("id",member.getId());
+
+
+        Cookie rememberCookie = new Cookie("id",String.valueOf(member.getId()));
+
+        // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
+        rememberCookie.setPath("/");
+
+        // 쿠키를 유지할 시간 설정(단위 : 초)
+        rememberCookie.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
+
+        response.addCookie(rememberCookie);
+
 
         return "redirect:/Members";
     }

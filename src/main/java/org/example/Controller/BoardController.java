@@ -31,6 +31,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,6 +42,8 @@ import java.util.UUID;
 @Slf4j
 public class BoardController {
 
+    private final static String VIEWCOOKIENAME = "alreadyViewCookie";
+    private final static String HITCOOKIENAME = "alreadyHitCookie";
     @Value("${spring.servlet.multipart.location}")
     private String path_article;
     @Autowired
@@ -81,15 +85,57 @@ public class BoardController {
 
         return "thymeleaf/board/articleForm";
     }
+    private Cookie createCookieForForNotOverlap(Long id) {
+        Cookie cookie = new Cookie(VIEWCOOKIENAME+id, String.valueOf(id));
+//        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
+        cookie.setMaxAge(getRemainSecondForTommorow()); 	// 하루를 준다.
+        cookie.setHttpOnly(true);				// 서버에서만 조작 가능
+        return cookie;
+    }
+    private Cookie createCookieForForNotOverlap1(Long id) {
+        Cookie cookie = new Cookie(HITCOOKIENAME+id, String.valueOf(id));
+//        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
+        cookie.setMaxAge(getRemainSecondForTommorow()); 	// 하루를 준다.
+        cookie.setHttpOnly(true);				// 서버에서만 조작 가능
+        return cookie;
+    }
 
+    // 다음 날 정각까지 남은 시간(초)
+    private int getRemainSecondForTommorow() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tommorow = LocalDateTime.now().plusDays(1L).truncatedTo(ChronoUnit.DAYS);
+        return (int) now.until(tommorow, ChronoUnit.SECONDS);
+    }
     @GetMapping("/{articleId}")
     public String viewArticle(@PathVariable Long articleId, @ModelAttribute Article article, @ModelAttribute Store store,
+                              @CookieValue(value = "id", required = false) Cookie cookie,
                               @ModelAttribute ArticleStore articleStore,@ModelAttribute Member member,
-                              @ModelAttribute Comment comment,
+                              @ModelAttribute Comment comment,HttpServletRequest request, HttpServletResponse response,
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               Model model) {
 
-        articleService.plusClickCount(articleId);
+        HttpSession session = request.getSession();
+        Cookie[] cookies = request.getCookies();
+        boolean checkCookie = false;
+        int result = 0;
+
+        if(cookies != null){
+            for (Cookie cookiess : cookies)
+            {
+                // 이미 조회를 한 경우 체크
+                if (cookiess.getName().equals(VIEWCOOKIENAME+cookie.getValue())) checkCookie = true;
+
+            }
+            if(!checkCookie){
+                Cookie newCookie = createCookieForForNotOverlap(Long.valueOf(cookie.getValue()));
+                response.addCookie(newCookie);
+                articleService.plusClickCount(articleId);
+            }
+        } else {
+            Cookie newCookie = createCookieForForNotOverlap(Long.valueOf(cookie.getValue()));
+            response.addCookie(newCookie);
+            articleService.plusClickCount(articleId);
+        }
 
         Optional<Article> article1 = articleService.findArticle(articleId);
         model.addAttribute("article", article1.get());
@@ -134,6 +180,36 @@ public class BoardController {
 
 
         return "thymeleaf/board/articleView";
+    }
+    @GetMapping("/plusHitCount/{articleId}")
+    public String plusHitCount(@PathVariable Long articleId,
+                               @CookieValue(value = "id", required = false) Cookie cookie,
+                               HttpServletRequest request, HttpServletResponse response){
+
+        HttpSession session = request.getSession();
+        Cookie[] cookies = request.getCookies();
+        boolean checkCookie = false;
+        int result = 0;
+
+        if(cookies != null){
+            for (Cookie cookiess : cookies)
+            {
+                // 이미 조회를 한 경우 체크
+                if (cookiess.getName().equals(HITCOOKIENAME+cookie.getValue())) checkCookie = true;
+
+            }
+            if(!checkCookie){
+                Cookie newCookie = createCookieForForNotOverlap1(Long.valueOf(cookie.getValue()));
+                response.addCookie(newCookie);
+                articleService.plusHitCount(articleId);
+            }
+        } else {
+            Cookie newCookie = createCookieForForNotOverlap1(Long.valueOf(cookie.getValue()));
+            response.addCookie(newCookie);
+            articleService.plusHitCount(articleId);
+        }
+
+        return "redirect:/Boards/{articleId}";
     }
     @GetMapping("/writeComment/{articleId}")
     public String registerComment(@ModelAttribute Comment comment, @PathVariable("articleId") Long articleId,
