@@ -41,7 +41,9 @@ public interface MemberService {
 
     Optional<Member> findMemberss(Long id);
 
+    public void createAdmin(Long id);
 
+    public void createUser(Long id);
 
 
 }

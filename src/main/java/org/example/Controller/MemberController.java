@@ -70,7 +70,8 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
+//    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
+    public String register(StoreDto dto, @ModelAttribute Member member, @ModelAttribute LoginForm loginForm,
                            RedirectAttributes redirectAttributes,@ModelAttribute Store store,
                            HttpServletRequest request, HttpServletResponse response,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
@@ -82,11 +83,11 @@ public class MemberController {
         System.out.println("1:"+member.getId());
 
 
-        if (bindingResult.hasErrors()) {
-            log.info("bindingResults : {}", bindingResult);
-            // BindingResult는 모델에 자동 저장된다.
-            return "thymeleaf/member/registerForm";
-        }
+//        if (bindingResult.hasErrors()) {
+//            log.info("bindingResults : {}", bindingResult);
+//            // BindingResult는 모델에 자동 저장된다.
+//            return "thymeleaf/member/registerForm";
+//        }
 
 
         System.out.println("2:"+member.getId());
@@ -151,6 +152,20 @@ public class MemberController {
         rememberCookie.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
 
         response.addCookie(rememberCookie);
+
+
+
+
+
+        Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
+
+        if(!member.getUserid().startsWith("admin")){
+            memberService.createUser(loginMember.getId());
+        }
+        else{
+            memberService.createAdmin(loginMember.getId());
+        }
+        System.out.println(loginMember.getId());
 
 
         return "redirect:/Members";
@@ -326,7 +341,9 @@ public class MemberController {
 
 
     @GetMapping("/signup")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm, @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
+//    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
+    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
+                            @CookieValue(value = "rememberId", required = false) String rememberId, Model model) {
         if (rememberId != null) {
             loginForm.setUserid(rememberId);
             loginForm.setRemember(true);
@@ -338,12 +355,12 @@ public class MemberController {
     public String login(@Validated @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult,
                         @RequestParam(name = "redirect", defaultValue = "thymeleaf/member/view") String redirect, HttpServletRequest request, HttpServletResponse response, @ModelAttribute Member member,
                         Model model) {
-        log.info("로그인저장 체크 : {}", loginForm.getRemember());
-        log.info("리다이렉트 : {}", redirect);
-        if (bindingResult.hasErrors()) {
-            // BindingResult는 모델에 자동 저장된다.
-            return "thymeleaf/member/loginForm";
-        }
+//        log.info("로그인저장 체크 : {}", loginForm.getRemember());
+//        log.info("리다이렉트 : {}", redirect);
+//        if (bindingResult.hasErrors()) {
+//            // BindingResult는 모델에 자동 저장된다.
+//            return "thymeleaf/member/loginForm";
+//        }
 
         Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
         if (loginMember == null) {
@@ -377,6 +394,19 @@ public class MemberController {
         System.out.println("view:"+path1);
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
+
+
+        Cookie rememberCookie = new Cookie("id",String.valueOf(loginMember.getId()));
+
+        // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
+        rememberCookie.setPath("/");
+
+        // 쿠키를 유지할 시간 설정(단위 : 초)
+        rememberCookie.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
+
+        response.addCookie(rememberCookie);
+
+
 
 //            return "thymeleaf/member/view";
         return "redirect:/Members";

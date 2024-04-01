@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member isMember(String userid, String password) {
+
         return memberRepository.findByUseridAndPassword(userid, password);
     }
 
@@ -66,6 +67,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Optional<Member> findMemberss(Long id){
         return memberRepository.findById(id);
+    }
+
+    @Override
+    public void createAdmin(Long id){
+        memberRepository.createAdmin(id);
+    }
+
+    @Override
+    public void createUser(Long id){
+        memberRepository.createUser(id);
     }
 
 

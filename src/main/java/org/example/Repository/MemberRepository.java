@@ -39,4 +39,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Transactional
     @Query(value="INSERT INTO Member VALUES(:#{#member.member_id},:#{#member.member_userid},:#{#member.member_password},:#{#member.member_email},:#{#member.member_name},:#{#member.member_sex},:#{#member.member_age},:#{#member.member_birth},:#{#member.member_first},:#{#member.member_introduction})",nativeQuery=true)
     void updateMember(@Param("member") Member member);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE Member m set m.member_job=1 where m.member_id=:memberId",nativeQuery=true)
+    public void createAdmin(@Param("memberId") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE Member m set m.member_job=0 where m.member_id=:memberId",nativeQuery=true)
+    public void createUser(@Param("memberId") Long id);
 }

@@ -48,8 +48,5 @@ public class MemberForm {
 
     private String introduction;
 
-    private MultipartFile attachFile;          // 첨부 파일
-
-    private List<MultipartFile> imageFiles;    // 첨부 이미지
-
+    private String job;
 }
