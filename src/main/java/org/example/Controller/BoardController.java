@@ -85,15 +85,17 @@ public class BoardController {
 
         return "thymeleaf/board/articleForm";
     }
-    private Cookie createCookieForForNotOverlap(Long id) {
-        Cookie cookie = new Cookie(VIEWCOOKIENAME+id, String.valueOf(id));
+    private Cookie createCookieForForNotOverlap(Long articleId) {
+        UUID uuid = UUID.randomUUID();
+        Cookie cookie = new Cookie(VIEWCOOKIENAME+articleId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
         cookie.setMaxAge(60); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
-    private Cookie createCookieForForNotOverlap1(Long id) {
-        Cookie cookie = new Cookie(HITCOOKIENAME+id, String.valueOf(id));
+    private Cookie createCookieForForNotOverlap1(Long articleId) {
+        UUID uuid = UUID.randomUUID();
+        Cookie cookie = new Cookie(HITCOOKIENAME+articleId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
         cookie.setMaxAge(60); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
@@ -113,6 +115,7 @@ public class BoardController {
                               @ModelAttribute Comment comment,HttpServletRequest request, HttpServletResponse response,
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               Model model) {
+
 
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;

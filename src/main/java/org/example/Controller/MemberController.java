@@ -142,8 +142,7 @@ public class MemberController {
         System.out.println("5:"+member.getId());
 
 
-
-        Cookie rememberCookie = new Cookie("id",String.valueOf(member.getId()));
+        Cookie rememberCookie = new Cookie("id",uuid+String.valueOf(member.getId()));
 
         // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
         rememberCookie.setPath("/");
@@ -360,6 +359,7 @@ public class MemberController {
 //            // BindingResult는 모델에 자동 저장된다.
 //            return "thymeleaf/member/loginForm";
 //        }
+        UUID uuid = UUID.randomUUID();
 
         Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
         if (loginMember == null) {
@@ -395,7 +395,7 @@ public class MemberController {
         model.addAttribute("imgs", files);
 
 
-        Cookie rememberCookie = new Cookie("id",String.valueOf(loginMember.getId()));
+        Cookie rememberCookie = new Cookie("id",uuid+String.valueOf(loginMember.getId()));
 
         // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
         rememberCookie.setPath("/");
