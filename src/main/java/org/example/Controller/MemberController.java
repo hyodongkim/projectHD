@@ -330,7 +330,15 @@ public class MemberController {
 
     @GetMapping
     /* default page = 0, default size = 10 */
-    public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search, Model model) {
+    public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                        @ModelAttribute Member member,@RequestParam(required = false, defaultValue = "") String search,
+                                        @SessionAttribute(name = "userId", required = false) String userId,
+                                        @ModelAttribute LoginForm loginForm,Model model) {
+
+        if(!userId.startsWith("admin")){
+            return "thymeleaf/errors/adminPage";
+        }
+
 
         Page<Member> page = memberService.findMembers(search, pageable);
 
@@ -388,6 +396,14 @@ public class MemberController {
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
+
+
+
+
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("userId",loginMember.getUserid());
+
+
 
         // 로그인 저장 체크시
         if (loginForm.getRemember()) {

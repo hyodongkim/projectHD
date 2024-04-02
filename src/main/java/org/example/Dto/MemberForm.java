@@ -22,7 +22,7 @@ public class MemberForm {
     private Long id;
 
     @NotBlank(message = "회원 아이디는 필수입니다.")
-    @Pattern(regexp="[a-zA-Z1-9]{8,20}", message = "아이디는 영어와 숫자로 포함해서 8 ~ 20자리 사이로 입력해주세요.")
+    @Pattern(regexp="[a-zA-Z0-9]{8,20}", message = "아이디는 영어와 숫자로 포함해서 8 ~ 20자리 사이로 입력해주세요.")
     private String userid;
 
     @NotBlank(message = "회원 비밀번호는 필수입니다.")
