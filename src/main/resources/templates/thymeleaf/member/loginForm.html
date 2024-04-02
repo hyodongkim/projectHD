@@ -87,7 +87,7 @@
         <h2 class="form-signin-heading">커뮤니티 로그인</h2>
     </div>
     <!-- form -->
-    <form class="form-signin" th:action="@{signin}"  method="post" th:object="${loginForm}">
+    <form class="form-signin" th:action="@{signin}" method="post" th:object="${loginForm}">
         <!-- 글로벌 오류 처리 -->
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>

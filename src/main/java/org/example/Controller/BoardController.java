@@ -89,7 +89,7 @@ public class BoardController {
         UUID uuid = UUID.randomUUID();
         Cookie cookie = new Cookie(VIEWCOOKIENAME+articleId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
-        cookie.setMaxAge(60); 	// 하루를 준다.
+        cookie.setMaxAge(60*60*24); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
@@ -97,7 +97,7 @@ public class BoardController {
         UUID uuid = UUID.randomUUID();
         Cookie cookie = new Cookie(HITCOOKIENAME+articleId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
-        cookie.setMaxAge(60); 	// 하루를 준다.
+        cookie.setMaxAge(60*60*24); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
@@ -539,7 +539,7 @@ public class BoardController {
         redirectAttributes.addAttribute("articleId",articleId);
 
 
-        return "thymeleaf/board/articleView";
+        return "redirect:/Boards/{articleId}";
 
     }
 

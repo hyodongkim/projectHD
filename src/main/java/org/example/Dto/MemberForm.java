@@ -48,5 +48,6 @@ public class MemberForm {
 
     private String introduction;
 
-    private String job;
+    @Enumerated(value = EnumType.STRING)
+    private Position job;
 }

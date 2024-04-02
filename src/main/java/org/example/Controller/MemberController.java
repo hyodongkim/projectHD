@@ -70,24 +70,42 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-//    public String register(@Validated @ModelAttribute MemberForm form, BindingResult bindingResult, StoreDto dto, @ModelAttribute Member member,
-    public String register(StoreDto dto, @ModelAttribute Member member, @ModelAttribute LoginForm loginForm,
+    public String register(@Validated @ModelAttribute("member") MemberForm member, BindingResult bindingResult, StoreDto dto,
+                           @ModelAttribute LoginForm loginForm,
                            RedirectAttributes redirectAttributes,@ModelAttribute Store store,
                            HttpServletRequest request, HttpServletResponse response,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
 
-        store.setMember(member);
+        Member member1 = new Member();
 
-        memberService.save(member);
+        member1.setId(member.getId());
+        member1.setUserid(member.getUserid());
+        member1.setPassword(member.getPassword());
+        member1.setEmail(member.getEmail());
+        member1.setName(member.getName());
+        member1.setSex(member.getSex());
+        member1.setAge(member.getAge());
+        member1.setBirth(member.getBirth());
+        member1.setDay(member.getDay());
+        member1.setIntroduction(member.getIntroduction());
+        member1.setJob(member.getJob());
+
+
+        store.setMember(member1);
+
+        memberService.save(member1);
 
         System.out.println("1:"+member.getId());
 
+//
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResults : {}", bindingResult);
 
-//        if (bindingResult.hasErrors()) {
-//            log.info("bindingResults : {}", bindingResult);
-//            // BindingResult는 모델에 자동 저장된다.
-//            return "thymeleaf/member/registerForm";
-//        }
+            // BindingResult는 모델에 자동 저장된다.
+            return "thymeleaf/member/registerForm";
+        }
+
+
 
 
         System.out.println("2:"+member.getId());
@@ -97,11 +115,11 @@ public class MemberController {
         String fname1 = f.getOriginalFilename(); // 원본 파일명
         String fname2 = uuid +"_"+ fname1;
         String fname="/"+fname2;
-                File f2 = new File(path+member.getId()); // 업로드된 파일을 저장할 새 파일 생성
+                File f2 = new File(path+member1.getId()); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
         File f3 = new File(f2+fname);
 
-        System.out.println("3:"+member.getId());
+        System.out.println("3:"+member1.getId());
 
         try {
             f.transferTo(f3); // 파일 복사
@@ -115,7 +133,7 @@ public class MemberController {
             e.printStackTrace();
         }
 
-        System.out.println("4:"+member.getId());
+        System.out.println("4:"+member1.getId());
 
 
         store.getOriginFilename(fname1);
@@ -139,10 +157,10 @@ public class MemberController {
         storeService.deleteEmptyName();
 
 
-        System.out.println("5:"+member.getId());
+        System.out.println("5:"+member1.getId());
 
 
-        Cookie rememberCookie = new Cookie("id",uuid+String.valueOf(member.getId()));
+        Cookie rememberCookie = new Cookie("id",uuid+String.valueOf(member1.getId()));
 
         // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
         rememberCookie.setPath("/");
