@@ -168,7 +168,7 @@ public class MemberController {
         System.out.println(loginMember.getId());
 
 
-        return "redirect:/Members";
+        return "redirect:/Boards";
     }
 
     @GetMapping("/read_img/{id}/{img}")
@@ -311,7 +311,6 @@ public class MemberController {
         return "redirect:/Members";
     }
 
-
     @GetMapping
     /* default page = 0, default size = 10 */
     public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable, @RequestParam(required = false, defaultValue = "") String search, Model model) {
@@ -409,7 +408,7 @@ public class MemberController {
 
 
 //            return "thymeleaf/member/view";
-        return "redirect:/Members";
+        return "redirect:/Boards";
     }
 
     @GetMapping("/logout")
@@ -418,7 +417,7 @@ public class MemberController {
         if (session != null) {
             session.invalidate();
         }
-        return "redirect:/Members";
+        return "redirect:/Boards";
     }
 
     @GetMapping("/updateMember/{id}")
