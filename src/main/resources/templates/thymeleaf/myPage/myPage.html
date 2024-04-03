@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<div th:include="layout/templateV1.html"></div>
+
+
+<body>
+<div>내 프로필</div>
+
+<div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
+    <!-- 컨트롤러로 요청 보냄. -->
+
+    <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
+
+    <br>
+</div>
+
+<table class="table table-bordered">
+    <tbody th:each="member : ${member}">
+    <tr>
+        <th style="border-radius: 20px 0px 0px 0px;">키값(확인용)</th>
+        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${member.id}">id</td>
+    </tr>
+
+    <tr>
+        <th>아이디</th>
+        <td th:text="${member.userid}">id</td>
+    </tr>
+    <tr>
+        <th>E-Mail</th>
+        <td th:text="${member.email}">email</td>
+    </tr>
+    <tr>
+        <th>회원명</th>
+        <td th:text="${member.name}">name</td>
+    </tr>
+    <tr>
+        <th>성별</th>
+        <td th:text="${member.sex}">sex</td>
+    </tr>
+    <tr>
+        <th>나이</th>
+        <td th:text="${member.age}">age</td>
+    </tr>
+    <tr>
+        <th>생년월일</th>
+        <td th:text="${member.birth}">birth</td>
+    </tr>
+    <tr>
+        <th>가입일자</th>
+        <td class="text-left"
+            th:text="${#temporals.format(member.day, 'yyyy-MM-dd HH:mm')}">day</td>
+    </tr>
+    <tr>
+        <th>자기소개</th>
+        <td th:text="${member.introduction}">introduction</td>
+    </tr>
+    <tr>
+        <th style="border-radius: 0px 0px 0px 20px;">신분</th>
+        <td th:text="${member.job}">job</td>
+    </tr>
+    <!--                <tr>-->
+    <!--                    <th>프로필사진</th>-->
+    <!--                    <td th:text="${member.file}">photo</td>-->
+    <!--                </tr>-->
+    <!--                <tr>-->
+    <!--                    <img th:src="@{|/PROFILE/${member.file}|}" alt="사진 미리보기">-->
+
+    </tbody>
+</table>
+
+
+
+<div>내가 쓴 게시글</div>
+    <tbody th:each="article : ${article}">
+    <tr>
+        <th>키값(확인용)</th>
+        <td th:text="${article.articleId}">id</td>
+    </tr>
+
+    <tr>
+        <th>글쓴이</th>
+        <td th:text="${article.name}">글쓴이</td>
+    </tr>
+    <tr>
+        <th>주제</th>
+        <td th:text="${article.subject}">주제</td>
+    </tr>
+    <tr>
+        <th>게시일자</th>
+        <td class="text-left"
+            th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
+    </tr>
+    <tr>
+        <th>게시글</th>
+        <td th:text="${article.content}">글</td>
+    </tr>
+    <tr>
+        <th>추천수</th>
+        <td th:text="${article.hitcount}">글</td>
+    </tr>
+    <tr>
+        <th>조회수</th>
+        <td th:text="${article.clickcount}">글</td>
+    </tr>
+    <br>
+    </tbody>
+
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+</html>

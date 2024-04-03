@@ -1,9 +1,11 @@
 package org.example.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import org.example.Entity.Article;
+import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -52,4 +54,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Transactional
     @Query(value="UPDATE article a set a.hitcount=a.hitcount+1 where a.article_id=:articleId",nativeQuery=true)
     public void plusHitCount(@Param("articleId") Long articleId);
+
+
+    @Query(value="SELECT * FROM Article a WHERE a.name=:name",nativeQuery=true)
+    public List<Article> findMembersName(@Param("name") String name);
 }

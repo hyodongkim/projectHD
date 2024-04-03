@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.example.Dto.WriteBoardForm;
 import org.example.Entity.Article;
+import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -33,4 +34,6 @@ public interface ArticleService {
     public void plusHitCount(Long articleId);
 
     public void plusClickCount(Long articleId);
+
+    public List<Article> findMembersName(String article);
 }

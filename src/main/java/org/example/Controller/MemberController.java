@@ -404,6 +404,10 @@ public class MemberController {
         session1.setAttribute("userId",loginMember.getUserid());
 
 
+        HttpSession session2 = request.getSession();
+        session2.setAttribute("name",loginMember.getName());
+
+
 
         // 로그인 저장 체크시
         if (loginForm.getRemember()) {
@@ -438,6 +442,19 @@ public class MemberController {
         rememberCookie.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
 
         response.addCookie(rememberCookie);
+
+
+
+
+        Cookie rememberCookie1 = new Cookie("memberId",String.valueOf(loginMember.getId()));
+
+        // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
+        rememberCookie1.setPath("/");
+
+        // 쿠키를 유지할 시간 설정(단위 : 초)
+        rememberCookie1.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
+
+        response.addCookie(rememberCookie1);
 
 
 

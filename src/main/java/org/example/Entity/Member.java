@@ -15,7 +15,7 @@ import java.util.List;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@ToString
+//@ToString
 @Getter
 @Setter
 @SequenceGenerator( name= "member_id_seq_gen",

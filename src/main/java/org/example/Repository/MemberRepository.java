@@ -1,6 +1,7 @@
 package org.example.Repository;
 
 import jakarta.transaction.Transactional;
+import org.example.Entity.Article;
 import org.example.Entity.Member;
 import org.example.Entity.Store;
 import org.springframework.data.domain.Page;
@@ -49,4 +50,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Transactional
     @Query(value="UPDATE Member m set m.member_job=0 where m.member_id=:memberId",nativeQuery=true)
     public void createUser(@Param("memberId") Long id);
+
+    List<Member> findByName(String name);
 }

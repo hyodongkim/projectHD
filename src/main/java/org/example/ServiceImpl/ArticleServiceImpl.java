@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.Entity.Article;
 import org.example.Entity.ArticleStore;
+import org.example.Entity.Member;
 import org.example.Repository.ArticleRepository;
 import org.example.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void plusClickCount(Long articleId) {
         articleRepository.plusClickCount(articleId);
+    }
+
+    @Override
+    public List<Article> findMembersName(String name){
+        return articleRepository.findMembersName(name);
+
     }
 }
