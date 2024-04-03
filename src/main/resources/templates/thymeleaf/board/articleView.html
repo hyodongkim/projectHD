@@ -84,7 +84,7 @@
 
                     <br>
 
-                <div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
+                <div th:each="img : ${imgs}" style="display:inline-block;"> <!-- 파일 이름이 들어가있음. -->
                     <!-- 컨트롤러로 요청 보냄. -->
 
                     <div data-aos="zoom-in"><img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px;border-radius:10px;" alt=""/></div>

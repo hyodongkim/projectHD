@@ -173,6 +173,17 @@ public class MemberController {
 
 
 
+        Cookie rememberCookie1 = new Cookie("memberId",String.valueOf(member1.getId()));
+
+        // 쿠키 경로 설정, "/"는 모든 경로에서 사용하겠다는 뜻
+        rememberCookie1.setPath("/");
+
+        // 쿠키를 유지할 시간 설정(단위 : 초)
+        rememberCookie1.setMaxAge(60*60*24*30); // 30일 동안 쿠키 유지.
+
+        response.addCookie(rememberCookie1);
+
+
 
         Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
 
@@ -463,11 +474,22 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
+
+        Cookie myCookie = new Cookie("id", null);
+        myCookie.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
+        myCookie.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
+        response.addCookie(myCookie);
+
+        Cookie myCookie1 = new Cookie("memberId", null);
+        myCookie1.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
+        myCookie1.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
+        response.addCookie(myCookie1);
+
         return "redirect:/Boards";
     }
 

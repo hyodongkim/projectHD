@@ -1,5 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<script th:src="@{/JS/image_moving.js}" defer></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 
 <head>
     <meta charset="UTF-8">
@@ -12,12 +18,12 @@
 <body>
 <div>내 프로필</div>
 
-<div th:each="img : ${imgs}" class="inline"> <!-- 파일 이름이 들어가있음. -->
+<div th:each="img : ${imgs}" style="display:inline-block;"> <!-- 파일 이름이 들어가있음. -->
     <!-- 컨트롤러로 요청 보냄. -->
 
-    <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
+    <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(img=${img})}" style="width:200px;height:200px;border-radius:10px;" alt=""/></div>
 
-    <br>
+
 </div>
 
 <table class="table table-bordered">
@@ -124,4 +130,8 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
+
+<script>
+
+</script>
 </html>

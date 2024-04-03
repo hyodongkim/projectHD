@@ -100,7 +100,7 @@
         </div>
 
     </form>
-    <div th:each="img : ${imgs}">
+    <div th:each="img : ${imgs}" style="display:inline-block;">
         <form th:action="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}" method="get" enctype="multipart/form-data">
              <!-- 파일 이름이 들어가있음. -->
                 <!-- 컨트롤러로 요청 보냄. -->
