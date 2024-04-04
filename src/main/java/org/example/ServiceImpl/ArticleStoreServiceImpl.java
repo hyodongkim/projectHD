@@ -36,4 +36,9 @@ public class ArticleStoreServiceImpl implements ArticleStoreService {
     public void updateArticleStore(ArticleStore articleStore){
         articleStoreRepository.updateArticleStore(articleStore);
     }
+
+    @Override
+    public void deleteArticleStoreMember(Long articleId){
+        articleStoreRepository.deleteArticleStoreMember(articleId);
+    }
 }

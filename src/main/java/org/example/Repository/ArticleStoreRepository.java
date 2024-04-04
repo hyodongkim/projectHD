@@ -29,6 +29,11 @@ public interface ArticleStoreRepository extends JpaRepository<ArticleStore, Long
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE Article_store a set a.article_num=article_store_seq.NEXTVAL, a.originFilename=:#{#artisto.originFilename}, a.storeFilename=:#{#artisto.storeFilename} WHERE a.article=:#{#artisto.article}",nativeQuery=true)
+    @Query(value="UPDATE article_store a set a.article_num=article_store_seq.NEXTVAL, a.originFilename=:#{#artisto.originFilename}, a.storeFilename=:#{#artisto.storeFilename} WHERE a.article=:#{#artisto.article}",nativeQuery=true)
     public void updateArticleStore(@Param("artisto") ArticleStore articleStore);
+
+    @Modifying
+    @Transactional
+    @Query(value="Delete FROM article_store s Where EXISTS(SELECT * FROM article a WHERE s.article_id=a.article_id and a.member=:articleId)",nativeQuery=true)
+    public void deleteArticleStoreMember(@Param("articleId") Long articleId);
 }

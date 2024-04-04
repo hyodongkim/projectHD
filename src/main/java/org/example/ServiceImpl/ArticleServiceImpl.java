@@ -83,12 +83,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findMembersName(String name){
-        return articleRepository.findMembersName(name);
+    public List<Article> findMembersId(Long member){
+        return articleRepository.findMembersId(member);
     }
 
     @Override
     public List<Article> findByAdminArticle(){
         return articleRepository.findByAdminArticle();
+    }
+
+    @Override
+    public void deleteArticleMember(Long member){
+        articleRepository.deleteArticleMember(member);
     }
 }

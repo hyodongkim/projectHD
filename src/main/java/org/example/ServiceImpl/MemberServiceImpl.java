@@ -1,6 +1,5 @@
 package org.example.ServiceImpl;
 
-import org.example.Entity.Article;
 import org.example.Entity.Member;
 import org.example.Repository.MemberRepository;
 import org.example.Service.MemberService;
@@ -80,8 +79,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findProfileName(String name){
-        return memberRepository.findByName(name);
+    public List<Member> findProfileId(Long id){
+        return memberRepository.findId(id);
     }
 
 }

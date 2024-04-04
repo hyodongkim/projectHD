@@ -56,10 +56,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     public void plusHitCount(@Param("articleId") Long articleId);
 
 
-    @Query(value="SELECT * FROM Article a WHERE a.name=:name",nativeQuery=true)
-    public List<Article> findMembersName(@Param("name") String name);
+    @Query(value="SELECT * FROM Article a WHERE a.member=:id",nativeQuery=true)
+    public List<Article> findMembersId(@Param("id") Long member);
 
     @Query(value="select * from article a inner join member m on m.member_id=a.member where m.member_job=1",nativeQuery=true)
     public List<Article> findByAdminArticle();
 
+    @Modifying
+    @Transactional
+    @Query(value="DELETE FROM article a WHERE a.member=:member",nativeQuery=true)
+    public void deleteArticleMember(@Param("member") Long member);
 }

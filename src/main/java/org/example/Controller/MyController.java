@@ -55,7 +55,7 @@ public class MyController {
     public String myPage(@SessionAttribute(name = "name", required = false) String name,
                          @CookieValue(value = "memberId", required = false) Long id,
                          Model model) {
-        List<Article> article = articleService.findMembersName(name);
+        List<Article> article = articleService.findMembersId(id);
         model.addAttribute("article",article);
 
         String path1 = path + id;
@@ -64,7 +64,7 @@ public class MyController {
         String[] files = dir.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
 
-        List<Member> member = memberService.findProfileName(name);
+        List<Member> member = memberService.findProfileId(id);
         model.addAttribute("member",member);
 
         return "thymeleaf/myPage/myPage";

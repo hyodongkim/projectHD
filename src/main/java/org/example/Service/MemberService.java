@@ -1,6 +1,5 @@
 package org.example.Service;
 
-import org.example.Entity.Article;
 import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +44,5 @@ public interface MemberService {
 
     public void createUser(Long id);
 
-
-    List<Member> findProfileName(String name);
+    public List<Member> findProfileId(Long Id);
 }

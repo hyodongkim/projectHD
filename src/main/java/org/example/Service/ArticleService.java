@@ -35,7 +35,9 @@ public interface ArticleService {
 
     public void plusClickCount(Long articleId);
 
-    public List<Article> findMembersName(String article);
+    public List<Article> findMembersId(Long member);
 
     public List<Article> findByAdminArticle();
+
+    public void deleteArticleMember(Long member);
 }

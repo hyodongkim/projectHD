@@ -11,6 +11,8 @@ import org.example.Entity.Member;
 import org.example.Entity.Store;
 import org.example.Repository.MemberRepository;
 
+import org.example.Service.ArticleService;
+import org.example.Service.ArticleStoreService;
 import org.example.Service.MemberService;
 import org.example.Service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,6 +58,11 @@ public class MemberController {
     @Autowired
     private StoreService storeService;
 
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private ArticleStoreService articleStoreService;
     private final String rootPath = System.getProperty("user.dir");
     // 프로젝트 루트 경로에 있는 files 디렉토리
     private final String fileDir = rootPath + "/src/main/resource/static/PROFILE/";
@@ -331,11 +339,16 @@ public class MemberController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
 
+        articleStoreService.deleteArticleStoreMember(id);
+
+        articleService.deleteArticleMember(id);
+
         System.out.println("회원PK:"+id);
         storeService.deleteMemberImage(id);
 
         memberService.deleteMember(id);
         System.out.println("삭제");
+
         return "redirect:/Members";
     }
 

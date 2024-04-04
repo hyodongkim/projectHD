@@ -13,4 +13,6 @@ public interface ArticleStoreService {
     void insertArticleStore(ArticleStore articleStore);
 
     void updateArticleStore(ArticleStore articleStore);
+
+    void deleteArticleStoreMember(Long articleId);
 }

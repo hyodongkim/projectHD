@@ -51,5 +51,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value="UPDATE Member m set m.member_job=0 where m.member_id=:memberId",nativeQuery=true)
     public void createUser(@Param("memberId") Long id);
 
-    public List<Member> findByName(String name);
+    @Query(value="SELECT m.* FROM Member m WHERE m.member_id=:id",nativeQuery=true)
+    public List<Member> findId(@Param("id") Long id);
 }
