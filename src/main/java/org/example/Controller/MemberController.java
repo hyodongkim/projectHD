@@ -31,7 +31,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 import javax.swing.*;
@@ -501,6 +503,9 @@ public class MemberController {
         myCookie1.setMaxAge(0); // 쿠키의 expiration 타임을 0으로 하여 없앤다.
         myCookie1.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
         response.addCookie(myCookie1);
+
+
+
 
         return "redirect:/Boards";
     }
