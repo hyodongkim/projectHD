@@ -85,6 +85,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> findMembersName(String name){
         return articleRepository.findMembersName(name);
+    }
 
+    @Override
+    public List<Article> findByAdminArticle(){
+        return articleRepository.findByAdminArticle();
     }
 }

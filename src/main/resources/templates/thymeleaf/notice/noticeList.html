@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<script th:src="@{/JS/image_moving.js}" defer></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>공지사항</div>
+<tbody th:each="article : ${article}">
+<tr>
+    <th>키값(확인용)</th>
+    <td th:text="${article.articleId}">id</td>
+</tr>
+
+<tr>
+    <th>글쓴이</th>
+    <td th:text="${article.name}">글쓴이</td>
+</tr>
+<tr>
+    <th>주제</th>
+    <td th:text="${article.subject}">주제</td>
+</tr>
+<tr>
+    <th>게시일자</th>
+    <td class="text-left"
+        th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
+</tr>
+<tr>
+    <th>게시글</th>
+    <td th:text="${article.content}">글</td>
+</tr>
+<tr>
+    <th>추천수</th>
+    <td th:text="${article.hitcount}">글</td>
+</tr>
+<tr>
+    <th>조회수</th>
+    <td th:text="${article.clickcount}">글</td>
+</tr>
+<br>
+</tbody>
+
+</body>
+</html>

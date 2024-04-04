@@ -408,16 +408,15 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
-
-
-
         HttpSession session1 = request.getSession();
         session1.setAttribute("userId",loginMember.getUserid());
 
 
         HttpSession session2 = request.getSession();
-        session2.setAttribute("name",loginMember.getName());
+        session2.setAttribute("Id",loginMember.getId());
 
+        HttpSession session3 = request.getSession();
+        session.setAttribute("loginMember", loginMember);
 
 
         // 로그인 저장 체크시

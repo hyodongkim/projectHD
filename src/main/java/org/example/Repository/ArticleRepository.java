@@ -58,4 +58,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     @Query(value="SELECT * FROM Article a WHERE a.name=:name",nativeQuery=true)
     public List<Article> findMembersName(@Param("name") String name);
+
+    @Query(value="select * from article a inner join member m on m.member_id=a.member where m.member_job=1",nativeQuery=true)
+    public List<Article> findByAdminArticle();
+
 }
