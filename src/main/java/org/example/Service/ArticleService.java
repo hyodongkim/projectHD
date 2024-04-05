@@ -40,4 +40,5 @@ public interface ArticleService {
     public List<Article> findByAdminArticle();
 
     public void deleteArticleMember(Long member);
+
 }

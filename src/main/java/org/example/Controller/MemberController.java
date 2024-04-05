@@ -39,6 +39,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -488,7 +489,7 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
@@ -504,10 +505,7 @@ public class MemberController {
         myCookie1.setPath("/"); // 모든 경로에서 삭제 됬음을 알린다.
         response.addCookie(myCookie1);
 
-
-
-
-        return "redirect:/Boards";
+        return "redirect:/logout";
     }
 
     @GetMapping("/updateMember/{id}")

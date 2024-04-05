@@ -66,4 +66,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Transactional
     @Query(value="DELETE FROM article a WHERE a.member=:member",nativeQuery=true)
     public void deleteArticleMember(@Param("member") Long member);
+
 }

@@ -96,4 +96,6 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteArticleMember(Long member){
         articleRepository.deleteArticleMember(member);
     }
+
+
 }

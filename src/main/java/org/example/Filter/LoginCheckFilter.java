@@ -14,7 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 public class LoginCheckFilter implements Filter {
 
     private static final String[] whiteList = {"/" , "/Members/signin", "/Members/signup", "/Members/logout", "/Members",
-                                                "/CSS/*","/JS/*","/PROFILE/*","/IMG/*","layout/*" ,"/Boards","/Members/register"};
+                                                "/CSS/*","/JS/*","/PROFILE/*","/IMG/*","layout/*" ,"/Boards","/Members/register",
+                                                "/logout"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
