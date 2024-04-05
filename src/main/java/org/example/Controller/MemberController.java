@@ -87,6 +87,14 @@ public class MemberController {
                            HttpServletRequest request, HttpServletResponse response,Model model) throws IOException {
         // 검증 실패 시 다시 입력폼으로 포워드
 
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResults : {}", bindingResult);
+
+            // BindingResult는 모델에 자동 저장된다.
+            return "thymeleaf/member/registerForm";
+        }
+
+
         Member member1 = new Member();
 
         member1.setId(member.getId());
@@ -109,12 +117,7 @@ public class MemberController {
         System.out.println("1:"+member.getId());
 
 //
-        if (bindingResult.hasErrors()) {
-            log.info("bindingResults : {}", bindingResult);
 
-            // BindingResult는 모델에 자동 저장된다.
-            return "thymeleaf/member/registerForm";
-        }
 
 
 

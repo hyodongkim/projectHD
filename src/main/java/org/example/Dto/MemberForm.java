@@ -29,6 +29,7 @@ public class MemberForm {
     @Size(min=10, max=20, message = "비밀번호는 10~20자리 사이로 입력해 주세요.")
     private String password;
 
+    @NotBlank(message = "회원 이메일은 필수입니다.")
     @Email(message = "이메일 형식을 맞춰주세요.")
     private String email;
 
@@ -42,10 +43,13 @@ public class MemberForm {
     @Max(value = 100, message = "나이는 100을 초과할 수 없습니다.")
     private Integer age;
 
+    @NotBlank(message = "회원 생년월일은 필수입니다.")
     private String birth;
+
     @CreatedDate
     private LocalDateTime day;
 
+    @NotBlank(message = "회원 자기소개는 필수입니다.")
     private String introduction;
 
     @Enumerated(value = EnumType.STRING)

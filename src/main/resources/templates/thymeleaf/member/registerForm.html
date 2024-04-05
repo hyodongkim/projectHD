@@ -102,9 +102,10 @@
                         <label class="col-lg-1 control-label">성별</label>
                         <div class="col-lg-11">
                             <label>
-                                <input type="text" class="form-control"
-                                       placeholder="필수 입력항목입니다." th:field="*{sex}"
-                                       th:errorclass="field-error">
+                                <select th:field="*{sex}" th:errorclass="field-error">
+                                    <option value="남자" selected>남자</option>
+                                    <option value="여자">여자</option>
+                                </select>
                             </label>
                             <div class="field-error" th:errors="*{sex}">성별입력 오류</div>
                         </div>
@@ -143,16 +144,15 @@
                         <label class="col-lg-1 control-label">자기소개</label>
                         <div class="col-lg-11">
                             <label>
-                                <input type="text" class="form-control"
-                                       placeholder="자기소개 항목입니다." th:field="*{introduction}"
-                                       th:errorclass="field-error">
+                                <textarea th:field="*{introduction}" th:errorclass="field-error">
+                                    자기소개를 적어주세요.
+                                </textarea>
                             </label>
                             <div class="field-error" th:errors="*{introduction}">자기소개 오류</div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-1 control-label">신분</label>
                         <div class="col-lg-11">
                             <label>
                                 <input type="hidden" class="form-control"
