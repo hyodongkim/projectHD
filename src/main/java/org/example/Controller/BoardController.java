@@ -85,17 +85,17 @@ public class BoardController {
 
         return "thymeleaf/board/articleForm";
     }
-    private Cookie createCookieForForNotOverlap(Long articleId) {
+    private Cookie createCookieForForNotOverlap(Long articleId, Long memberId) {
         UUID uuid = UUID.randomUUID();
-        Cookie cookie = new Cookie(VIEWCOOKIENAME+articleId,uuid+String.valueOf(articleId));
+        Cookie cookie = new Cookie(VIEWCOOKIENAME+articleId+"_"+memberId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
         cookie.setMaxAge(60*60*24); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
-    private Cookie createCookieForForNotOverlap1(Long articleId) {
+    private Cookie createCookieForForNotOverlap1(Long articleId, Long memberId) {
         UUID uuid = UUID.randomUUID();
-        Cookie cookie = new Cookie(HITCOOKIENAME+articleId,uuid+String.valueOf(articleId));
+        Cookie cookie = new Cookie(HITCOOKIENAME+articleId+"_"+memberId,uuid+String.valueOf(articleId));
 //        cookie.setComment("조회수 중복 증가 방지 쿠키");	// 쿠키 용도 설명 기재
         cookie.setMaxAge(60*60*24); 	// 하루를 준다.
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
@@ -114,6 +114,7 @@ public class BoardController {
                               @ModelAttribute ArticleStore articleStore,@ModelAttribute Member member,
                               @ModelAttribute Comment comment,HttpServletRequest request, HttpServletResponse response,
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
+                              @CookieValue(value = "memberId", required = false) Long memberId,
                               Model model) {
 
 
@@ -125,16 +126,16 @@ public class BoardController {
             for (Cookie cookiess : cookies)
             {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(VIEWCOOKIENAME+articleId)) checkCookie = true;
+                if (cookiess.getName().equals(VIEWCOOKIENAME+articleId+"_"+memberId)) checkCookie = true;
 
             }
             if(!checkCookie){
-                Cookie newCookie = createCookieForForNotOverlap(articleId);
+                Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusClickCount(articleId);
             }
         } else {
-            Cookie newCookie = createCookieForForNotOverlap(articleId);
+            Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusClickCount(articleId);
         }
@@ -186,6 +187,7 @@ public class BoardController {
     @GetMapping("/plusHitCount/{articleId}")
     public String plusHitCount(@PathVariable Long articleId,
                                @CookieValue(value = "id", required = false) Cookie cookie,
+                               @CookieValue(value = "memberId", required = false) Long memberId,
                                HttpServletRequest request, HttpServletResponse response){
 
         Cookie[] cookies = request.getCookies();
@@ -196,16 +198,16 @@ public class BoardController {
             for (Cookie cookiess : cookies)
             {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(HITCOOKIENAME+articleId)) checkCookie = true;
+                if (cookiess.getName().equals(HITCOOKIENAME+articleId+"_"+memberId)) checkCookie = true;
 
             }
             if(!checkCookie){
-                Cookie newCookie = createCookieForForNotOverlap1(articleId);
+                Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusHitCount(articleId);
             }
         } else {
-            Cookie newCookie = createCookieForForNotOverlap1(articleId);
+            Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusHitCount(articleId);
         }

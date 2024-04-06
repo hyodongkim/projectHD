@@ -435,7 +435,7 @@ public class MemberController {
         session2.setAttribute("Id",loginMember.getId());
 
         HttpSession session3 = request.getSession();
-        session.setAttribute("loginMember", loginMember);
+        session3.setAttribute("loginMember", loginMember);
 
 
         // 로그인 저장 체크시
