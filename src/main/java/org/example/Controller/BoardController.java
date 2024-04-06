@@ -301,7 +301,8 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               Model model) {
+                               @ModelAttribute("loginForm") LoginForm loginForm,Model model) {
+
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);

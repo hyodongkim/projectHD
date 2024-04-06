@@ -69,20 +69,20 @@
 
         <br>
         <!-- 페이징 처리 -->
-        <div class="pagination-align">
+        <div class="pagination-align" style="width:85%;text-align:center;">
 
 
-            <div th:if="${hasPrevious}"><a th:href="@{/Boards(page=${requestPage-2}, search=${param.search})}" th:text="'Previous'">이전페이지</a></div>
+            <div style="display:inline-block;margin-bottom:5px;" th:if="${hasPrevious}"><a id="previous" th:href="@{/Boards(page=${requestPage-2}, search=${param.search})}" th:text="'Previous'">이전페이지</a></div>
 
             <th:block th:if="${totalElements != 0}" th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                <div class="active" th:if="${page == requestPage}"><a th:text="${page}">1</a></div>
-                <div th:if="${page != requestPage}"><a th:href="@{/Boards(page=${page-1}, search=${param.search})}" th:text="${page}">1</a></div>
+                <div style="display:inline-block;font-size:25px;" class="active" th:if="${page == requestPage}"><a th:text="${page}">1</a></div>
+                <div style="display:inline-block;font-size:25px;" th:if="${page != requestPage}"><a th:href="@{/Boards(page=${page-1}, search=${param.search})}" th:text="${page}">1</a></div>
             </th:block>
 
 
-            <div th:if="${hasNext}"><a th:href="@{/Boards(page=${requestPage}, search=${param.search})}" th:text="'Next'">다음페이지</a></div>
+            <div th:if="${hasNext}"><a id="next" th:href="@{/Boards(page=${requestPage}, search=${param.search})}"></a></div>
 
-            <div><a th:href="@{/Boards/writeArticle}">글쓰기</a></div>
+            <div style="display:inline-block;margin-bottom:5px;"><a th:href="@{/Boards/writeArticle}">글쓰기</a></div>
         </div>
 
     </div>
