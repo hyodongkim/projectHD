@@ -3,6 +3,8 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
+<script th:src="@{/JS/updateArticle.js}" defer></script>
+<link th:href="@{/CSS/updateArticle.css}" rel="stylesheet">
 <link th:href="@{/CSS/table.css}" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script th:src="@{/JS/image_moving.js}" defer></script>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -31,7 +33,7 @@
 <!--                    <tbody th:each="member: ${member}">-->
                 <tr>
                     <label>
-                        <input type="text" th:field="*{articleId}"/>
+                        <input type="hidden" th:field="*{articleId}"/>
                     </label>
                 </tr>
                 <tr>
@@ -64,10 +66,9 @@
                 </tr>
 
                 <div class="form-group">
-                    <label class="col-lg-1 control-label">유저PK(확인용)</label>
                     <div class="col-lg-11" th:if="${session.loginMember != null}">
                         <label>
-                            <input type="text" class="form-control"
+                            <input type="hidden" class="form-control"
                                    placeholder="필수 입력항목입니다."
                                    th:value="${session.loginMember.id}"
                                    th:name="member">
@@ -95,10 +96,11 @@
             </table>
         </div>
 
+        <br>
         <div class="pull-right">
             <button type="submit" class="btn btn-warning">게시글저장(form)</button>
         </div>
-
+        <br>
     </form>
     <div th:each="img : ${imgs}" style="display:inline-block;">
         <form th:action="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}" method="get" enctype="multipart/form-data">
@@ -106,11 +108,14 @@
                 <!-- 컨트롤러로 요청 보냄. -->
             <div data-aos="zoom-in"><img th:src="@{/Boards/read_img/{articleId}/{img}(articleId=${articleId},img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
 
-                <a th:href="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}"><button>이미지 삭제하기</button></a>
+                <br>
+                <a th:href="@{/Boards/deletePhoto/{articleId}/{img}(articleId=${articleId},img=${img})}"><button style="width:120px;height:32px;background-color:rgb(233, 233, 233);">이미지 삭제하기</button></a>
         </form>
     </div>
     <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
 </section>
+
+<br>
 
 
 </html>

@@ -28,7 +28,7 @@
 
 
     <div class="page-header">
-        <h2 id="container">커뮤니티 회원상세</h2>
+        <h2 id="container">커뮤니티 게시글상세</h2>
     </div>
 
     <div class="alert alert-dismissable alert-success"
@@ -42,8 +42,7 @@
             <table class="table table-bordered">
                 <tbody th:each="article : ${article}">
                 <tr>
-                    <th style="border-radius: 20px 0px 0px 0px;">키값(확인용)</th>
-                    <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${article.articleId}">id</td>
+                    <td style="display:none;border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${article.articleId}">id</td>
                 </tr>
 
                 <tr>
@@ -100,25 +99,23 @@
         </div>
     </form>
     <br>
-    <div class="pull-right" th:each="article : ${article}">
+    <div class="pull-right" th:each="article : ${article}" style="margin-left:53%;">
         <a th:href="@{/Boards/updateArticle/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">게시글수정</button></a>
         <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
         <a th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
         <a th:href="@{/Boards/plusHitCount/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">추천하기</button></a>
     </div>
-    <br> <br> <br> <br>
+    <br>
 
 
     <form th:action="@{/Boards/writeComment/{articleId}(articleId=${articleId})}"  th:object="${comment}" method="get" enctype="multipart/form-data">
         <tbody th:each="comment : ${comment}">
         <tr>
-            <th>(확인용) Id</th>
-            <td th:text="${comment.commentId}">commentId</td>
+            <td style="display:none;" th:text="${comment.commentId}">commentId</td>
         </tr>
         <tr>
-            <th>글쓴이</th>
             <label>
-                <input type="text" class="form-control"
+                <input type="hidden" class="form-control"
                        placeholder="필수 입력항목입니다."
                        th:value="${session.loginMember.name}"
                        th:name="writer"
@@ -126,25 +123,24 @@
             </label>
         </tr>
         <label>
-            <input type="text" class="form-control"
-                   placeholder="필수 입력항목입니다." th:field="*{content}">
+            <input type="text" class="form-control" style="width:78%;"
+                   placeholder="댓글을 입력해주세요." th:field="*{content}">
         </label>
         <tr>
-            <th>날짜</th>
             <label>
-                <input type="text" class="form-control"
+                <input type="hidden" class="form-control"
                        placeholder="테스트용 항목입니다." th:field="*{day}">
             </label>
         </tr>
         <tr>
-            <th>(확인용) 키값</th>
-            <td th:text="${comment.articleId}">키값</td>
+            <td style="display:none;"></td>
         </tr>
         </tbody>
 
         <button type="submit">댓글쓰기</button>
     </form>
 
+    <br>
 
 
 <tr th:if="${totalElements == 0}"><td colspan="6" class="text-center"> 댓글이 없습니다.</td></tr>
@@ -169,4 +165,5 @@
 </div>
 
 </section>
+<br>
 </html>

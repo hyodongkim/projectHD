@@ -36,7 +36,7 @@
 <!--                    <tbody th:each="member: ${member}">-->
                 <tr>
                     <label>
-                        <input type="text" th:field="*{id}"/>
+                        <input type="hidden" th:field="*{id}"/>
                     </label>
                 </tr>
                 <tr>
@@ -108,7 +108,7 @@
                     </th>
                 </tr>
 
-                file:<input name="file" type="file">
+                <b>File : </b><input name="file" type="file">
 
 
 
@@ -120,10 +120,11 @@
         </div>
 
         <div class="pull-right">
+            <br>
             <button type="submit" class="btn btn-warning">정보저장(form)</button>
 
         </div>
-
+        <br>
     </form>
     <div th:each="img : ${imgs}" style="display:inline-block;">
         <form th:action="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}" method="get" enctype="multipart/form-data" class="inline">
@@ -131,11 +132,14 @@
                 <!-- 컨트롤러로 요청 보냄. -->
             <div data-aos="zoom-in"><img th:src="@{/Members/read_img/{id}/{img}(id=${id},img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
 
-                <a th:href="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}"><button>이미지 삭제하기</button></a>
+            <br>
+            <a th:href="@{/Members/deletePhoto/{id}/{img}(id=${id},img=${img})}"><button style="width:120px;height:32px;background-color:rgb(233, 233, 233);">이미지 삭제하기</button></a>
+            <br>
         </form>
     </div>
     <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
-</section>
 
+</section>
+<br>
 
 </html>

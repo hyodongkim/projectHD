@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.*;
 import org.example.Entity.*;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -301,8 +303,13 @@ public class BoardController {
 
     @GetMapping("/writeArticle")
     public String writeArticle(@ModelAttribute("article") Article article, @ModelAttribute("articleStore") ArticleStore articleStore,
-                               @ModelAttribute("loginForm") LoginForm loginForm,Model model) {
+                               @ModelAttribute("loginForm") LoginForm loginForm,
+                               HttpServletRequest request, HttpServletResponse response, Model model) {
 
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "thymeleaf/popup/plzLogin";
+        }
 
         model.addAttribute("article",article);
         model.addAttribute("articleStore",articleStore);
@@ -311,16 +318,35 @@ public class BoardController {
     }
 
     @PostMapping("/writeArticle")
-    public String register(ArticleStoreDto dto,
-                           @ModelAttribute ArticleStore articleStore, @ModelAttribute("article") Article article,
+    public String register(@Validated @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult bindingResult,
+                           ArticleStoreDto dto,
+                           @ModelAttribute ArticleStore articleStore,
                            @ModelAttribute Member member,
+                           @ModelAttribute Article article,
                            Model model) throws IOException {
 
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResults : {}", bindingResult);
+
+            // BindingResult는 모델에 자동 저장된다.
+            return "thymeleaf/board/writeArticle";
+        }
+
+        Article article1 = new Article();
+        article1.setArticleId(article.getArticleId());
+        article1.setName(article.getName());
+        article1.setSubject(articleDto.getSubject());
+        article1.setContent(articleDto.getContent());
+        article1.setDay(articleDto.getDay());
+        article1.setHitcount(articleDto.getHitcount());
+        article1.setClickcount(articleDto.getClickcount());
+        article1.setMember(articleDto.getMember());
 
 
-        article.setMember(member.getId());
 
-        articleService.save(article);
+        article1.setMember(member.getId());
+
+        articleService.save(article1);
 
         System.out.println("1:"+member.getId());
 
@@ -334,7 +360,7 @@ public class BoardController {
         String fname="/"+fname2;
         File f2 = new File(path_article+"ARTICLE"); // 업로드된 파일을 저장할 새 파일 생성
         f2.mkdirs();
-        String fname3=f2+"/"+article.getArticleId();
+        String fname3=f2+"/"+article1.getArticleId();
 
         System.out.println("3:"+member.getId());
 
@@ -369,7 +395,7 @@ public class BoardController {
 
         articleStore.getOriginFilename(fname1);
         articleStore.getStoreFilename(fname2);
-        articleStore.setArticle(article);
+        articleStore.setArticle(article1);
 
 
         System.out.println("4:"+member.getId());

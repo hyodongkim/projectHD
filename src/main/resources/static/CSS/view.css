@@ -20,3 +20,11 @@ section{
 .inline{
     display:inline;
 }
+button{
+	width: 64px;
+	height: 32px;
+	font-size: 15px;
+	background-color:rgb(176,224,230);
+	border-radius: 5px;
+    font-weight:bolder;
+}

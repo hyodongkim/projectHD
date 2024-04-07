@@ -30,3 +30,26 @@ section{
 tr:nth-child(5){
     height: 60vh;
 }
+input {
+  width: 500px;
+  height: 32px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
+}
+button{
+	width: 90px;
+	height: 35px;
+	margin-left:2%;
+	font-size: 15px;
+	background-color:rgb(176,224,230);
+	border-radius: 5px;
+	font-weight: bolder;
+}
+.form-control{
+    display:inline-block;
+    width:10vw;
+}
