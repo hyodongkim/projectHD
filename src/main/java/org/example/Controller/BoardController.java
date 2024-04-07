@@ -318,11 +318,10 @@ public class BoardController {
     }
 
     @PostMapping("/writeArticle")
-    public String register(@Validated @ModelAttribute("articleDto") ArticleDto articleDto, BindingResult bindingResult,
+    public String register(@Validated @ModelAttribute("article") ArticleDto article,BindingResult bindingResult,
                            ArticleStoreDto dto,
                            @ModelAttribute ArticleStore articleStore,
                            @ModelAttribute Member member,
-                           @ModelAttribute Article article,
                            Model model) throws IOException {
 
         if (bindingResult.hasErrors()) {
@@ -335,16 +334,14 @@ public class BoardController {
         Article article1 = new Article();
         article1.setArticleId(article.getArticleId());
         article1.setName(article.getName());
-        article1.setSubject(articleDto.getSubject());
-        article1.setContent(articleDto.getContent());
-        article1.setDay(articleDto.getDay());
-        article1.setHitcount(articleDto.getHitcount());
-        article1.setClickcount(articleDto.getClickcount());
-        article1.setMember(articleDto.getMember());
+        article1.setSubject(article.getSubject());
+        article1.setContent(article.getContent());
+        article1.setDay(article.getDay());
+        article1.setHitcount(article.getHitcount());
+        article1.setClickcount(article.getClickcount());
+        article1.setMember(article.getMember());
 
-
-
-        article1.setMember(member.getId());
+//        article1.setMember(member.getId());
 
         articleService.save(article1);
 

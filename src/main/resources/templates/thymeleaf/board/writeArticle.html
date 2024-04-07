@@ -31,7 +31,7 @@
                 <form th:action="@{/Boards/writeArticle}" method="post" th:object="${article}" enctype="multipart/form-data">
 
                     <div class="form-group">
-                        <div class="col-lg-11" th:if="${session.loginMember != null}">
+                        <div class="col-lg-11">
                             <label>
                                 <input type="text" class="form-control"
                                        placeholder="필수 입력항목입니다."
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-lg-11" th:if="${session.loginMember != null}">
+                        <div class="col-lg-11">
                             <label>
                                 <input type="text" class="form-control"
                                        placeholder="필수 입력항목입니다."
