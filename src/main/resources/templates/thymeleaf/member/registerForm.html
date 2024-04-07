@@ -177,15 +177,22 @@
 
 <!--                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">-->
 
-                    <div style="display:flex;margin-left:12%;">
-
-                            <a th:href="@{/Boards}" class="btn btn-success"><button type="submit" class="btn btn-success">확 인</button></a>
-
-                    </div>
+                <div style="display:flex;justify-content:flex-end;margin-right:32%;">
+                    <button type="submit">확 인</button>
+                    <a th:href="@{/Boards}"><input type="button" value="취 소"
+                                                   style="width: 120px;
+                                                                    height: 32px;
+                                                                    font-size: 15px;
+                                                                    background-color:rgb(176,224,230);
+                                                                    border:2px solid black;
+                                                                    border-radius: 5px;
+                                                                    font-weight:bolder;">
+                    </a>
+                </div>
 
             </form>
 
-            <a th:href="@{/Boards}"><button class="btn btn-default">취 소</button></a>
+
 
         </div>
 </section>

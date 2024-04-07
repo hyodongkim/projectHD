@@ -44,6 +44,7 @@
                     </div>
 
                     <div class="form-group">
+                        <b>닉네임</b>
                         <div class="col-lg-11">
                             <label>
                                 <input type="text" class="form-control"
@@ -124,13 +125,21 @@
                     <!--                    </div>-->
 
                     <!--                    <img th:src="@{|/PROFILE/${file}|}" alt="사진 미리보기">-->
-                    <div style="margin-left:56%;">
+                    <div style="display:flex;justify-content:flex-end;margin-right:23%;">
                              <button type="submit">확 인</button>
-
+                             <a th:href="@{/Boards}"><input type="button" value="취 소"
+                                                            style="width: 120px;
+                                                                    height: 32px;
+                                                                    font-size: 15px;
+                                                                    background-color:rgb(176,224,230);
+                                                                    border:2px solid black;
+                                                                    border-radius: 5px;
+                                                                    font-weight:bolder;">
+                             </a>
                     </div>
                 </form>
 
-                <a th:href="@{/Boards}"><button>취 소</button></a>
+
 
 
 </section>
