@@ -11,6 +11,12 @@
     <script th:src="@{/JS/templateV1.js}" defer></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!--  폰트 스타일 CDN  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+
     <style>
         .field-error {
           color: #ff0000;
@@ -34,7 +40,7 @@
             <div th:if="${session.loginMember != null}"><div>[[${session.loginMember.name}]]님 즐거운 하루 되세요.</div></div>
             <div th:if="${session.loginMember != null}"><a th:href="@{/Members/register}">회원가입</a> <a th:href="@{/Members/logout}">로그아웃</a></div>
         </div>
-        <h1 class="logo">Mr.200</h1>
+        <h1 class="logo">Code.200</h1>
 
         <div class='wave -one'></div>
         <div class='wave -two'></div>

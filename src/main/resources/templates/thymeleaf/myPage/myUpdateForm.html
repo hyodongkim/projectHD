@@ -1,0 +1,144 @@
+<link th:href="@{/CSS/updateForm.css}" rel="stylesheet" xmlns:th="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{/JS/updateForm.js}" defer></script>
+<link th:href="@{/CSS/updateForm.css}" rel="stylesheet">
+<link th:href="@{/CSS/table.css}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script th:src="@{/JS/image_moving.js}" defer></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+<div th:include="layout/templateV1.html"></div>
+
+
+
+<!-- 내비게이션 -->
+<nav>
+</nav>
+
+<!-- 컨텐츠 -->
+<section>
+        <div class="alert alert-dismissable alert-success"
+             th:if="${#strings.equals(param.status, 'new')}">
+            <strong>커뮤니티 회원 가입을 축하합니다.</strong>
+        </div>
+
+<!--        <form th:action="@{/Members/updateMember/{userid}(userid=${userid})}"  th:object="${member}" method="post" enctype="multipart/form-data" >-->
+    <form th:action="@{/updateMember}"  th:object="${member}" method="post" enctype="multipart/form-data">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                    <tbody th:each="member: ${member}">
+<!--                    <tbody th:each="member: ${member}">-->
+                <tr>
+                    <label>
+                        <input type="hidden" th:field="*{id}"/>
+                    </label>
+                </tr>
+                <tr>
+                    <th class="text-center">아이디
+                        <label>
+                            <input type="text" th:field="*{userid}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <label>
+                        <input type="hidden" th:field="*{password}"/>
+                    </label>
+                </tr>
+                <tr>
+                    <th class="text-center">E-Mail
+                    <label>
+                        <input type="text" th:field="*{email}"/>
+                    </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">회원명
+                    <label>
+                        <input type="text" th:field="*{name}"/>
+                    </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">성별
+                        <label>
+                            <input type="text" th:field="*{sex}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">나이
+                    <label>
+                        <input type="number" th:field="*{age}" />
+                    </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">생년월일
+                        <label>
+                            <input type="text" th:field="*{birth}" />
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">가입일자
+                        <label>
+                            <input type="text" th:field="*{day}"/>
+                        </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">자기소개
+                    <label>
+                        <input type="text" th:field="*{introduction}" />
+                    </label>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">신분
+                        <label>
+                            <input type="text" th:field="*{job}" />
+                        </label>
+                    </th>
+                </tr>
+
+                <b>File : </b><input name="file" type="file">
+
+
+
+
+
+
+
+            </table>
+        </div>
+
+        <div class="pull-right">
+            <br>
+            <button type="submit" class="btn btn-warning">정보저장(form)</button>
+
+        </div>
+        <br>
+    </form>
+    <div th:each="img : ${imgs}" style="display:inline-block;">
+        <form th:action="@{/deletePhoto/{img}(img=${img})}" method="get" enctype="multipart/form-data" class="inline">
+             <!-- 파일 이름이 들어가있음. -->
+                <!-- 컨트롤러로 요청 보냄. -->
+            <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(id=${id},img=${img})}" style="width:200px;height:200px;border-radius:10px;"  alt=""/></div>
+
+            <br>
+            <a th:href="@{/deletePhoto/{img}(img=${img})}"><button style="width:120px;height:32px;background-color:rgb(233, 233, 233);">이미지 삭제하기</button></a>
+            <br>
+        </form>
+    </div>
+
+</section>
+<br>
+
+</html>

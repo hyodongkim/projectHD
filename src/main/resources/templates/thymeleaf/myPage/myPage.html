@@ -2,6 +2,7 @@
 
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
+<link th:href="@{/CSS/table1.css}" rel="stylesheet">
 <link th:href="@{/CSS/myPage.css}" rel="stylesheet">
 <script th:src="@{/JS/image_moving.js}" defer></script>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -20,30 +21,25 @@
 
 <br><br><br>
 
-<div style="margin-left:37%;">
+<div style="margin-left:5%;">
 
-<div style="font-weight:bolder;">내 프로필</div>
+    <div style="font-weight:bolder;font-weight:bolder;font-size:40px;">내 프로필</div>
     <br>
-
-<div th:each="img : ${imgs}" style="display:inline-block;"> <!-- 파일 이름이 들어가있음. -->
-    <!-- 컨트롤러로 요청 보냄. -->
-
-    <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(img=${img})}" style="width:200px;height:200px;border-radius:10px;" alt=""/></div>
-
-
-</div>
+        <div th:each="img : ${imgs}" style="display:inline-block;"> <!-- 파일 이름이 들어가있음. -->
+            <div data-aos="zoom-in"><img th:src="@{/read_img/{img}(img=${img})}" style="width:200px;height:200px;border-radius:10px;" alt=""/></div>
+        </div>
     <br>
     <br>
 <table class="table table-bordered">
     <tbody th:each="member : ${member}">
     <tr>
 
-        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;display:none;" th:text="${member.id}">id</td>
+        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 20px 0px 0px 0px;display:none;" th:text="${member.id}">id</td>
     </tr>
 
     <tr>
-        <th>아이디</th>
-        <td th:text="${member.userid}">id</td>
+        <th style="border-top: 1px solid rgb(224, 255, 255);border-radius: 20px 0px 0px 0px;">아이디</th>
+        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;"th:text="${member.userid}">id</td>
     </tr>
     <tr>
         <th>E-Mail</th>
@@ -87,6 +83,13 @@
 
     </tbody>
 </table>
+
+    <br>
+
+    <div class="pull-right" th:each="member : ${member}">
+        <a th:href="@{/updateMember}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+        <a th:href="@{/delete}"><button class="btn btn-warning">회원탈퇴</button></a>
+    </div>
 
     <br><br><br>
 
