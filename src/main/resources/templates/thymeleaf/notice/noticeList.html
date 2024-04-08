@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
+<link th:href="@{/CSS/table1.css}" rel="stylesheet">
+<link th:href="@{/CSS/myPage.css}" rel="stylesheet">
 <script th:src="@{/JS/image_moving.js}" defer></script>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -11,41 +13,39 @@
 <body>
 <div th:include="layout/templateV1.html"></div>
 
+<div style="margin-left:18%;">
+    <div style="font-weight:bolder;font-size:40px;">공지사항</div>
+    <br>
+<table>
 
-<div>공지사항</div>
-<tbody th:each="article : ${article}">
-<tr>
-    <th>키값(확인용)</th>
-    <td th:text="${article.articleId}">id</td>
-</tr>
+    <thead>
+    <th class="text-center">글쓴이</th>
+    <th class="text-center">주제</th>
+    <th class="text-center">게시일자</th>
+    <th class="text-center">게시글</th>
+    <th class="text-center">추천수</th>
+    <th class="text-center">추천수</th>
+    </thead>
 
-<tr>
-    <th>글쓴이</th>
-    <td th:text="${article.name}">글쓴이</td>
-</tr>
-<tr>
-    <th>주제</th>
-    <td th:text="${article.subject}">주제</td>
-</tr>
-<tr>
-    <th>게시일자</th>
-    <td class="text-left"
-        th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
-</tr>
-<tr>
-    <th>게시글</th>
-    <td th:text="${article.content}">글</td>
-</tr>
-<tr>
-    <th>추천수</th>
-    <td th:text="${article.hitcount}">글</td>
-</tr>
-<tr>
-    <th>조회수</th>
-    <td th:text="${article.clickcount}">글</td>
-</tr>
+
+    <tbody th:each="article : ${article}">
+    <tr>
+        <td class="text-center" th:text="${article.name}">글쓴이</td>
+
+        <td class="text-center" th:text="${article.subject}">주제</td>
+
+        <td class="text-center" th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
+
+        <td class="text-center" th:text="${article.content}">글</td>
+
+        <td class="text-center" th:text="${article.hitcount}">글</td>
+
+        <td class="text-center" th:text="${article.clickcount}">글</td>
+    </tr>
+    </tbody>
+</table>
 <br>
-</tbody>
+</div>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -58,4 +58,6 @@
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
+
+
 </html>
