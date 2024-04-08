@@ -25,7 +25,7 @@
 <div class="buttonToggle" onmouseover="fixBox_slideDown();" id="blink"><br></div>
 
 <div class="fixBox">
-    <header>
+    <header class="box">
         <div>
             <div th:if="${session.loginMember == null}"><a th:href="@{/Members/signup}">로그인</a></div>
             <div th:if="${session.loginMember == null}"><a th:href="@{/Members/register}">회원가입</a></div>
@@ -35,7 +35,13 @@
             <div th:if="${session.loginMember != null}"><a th:href="@{/Members/register}">회원가입</a> <a th:href="@{/Members/logout}">로그아웃</a></div>
         </div>
         <h1 class="logo">Mr.Kim</h1>
+
+        <div class='wave -one'></div>
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
+
     </header>
+
         <nav>
 
             <a th:href="@{/}">홈</a>
@@ -49,7 +55,7 @@
             <i class="fa-solid fa-bag-shopping"></i>
         </nav>
 
-    </div>
+</div>
 
 
     <div class="main_background" onmousemove="fixBox_slideUp();">
