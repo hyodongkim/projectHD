@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <div th:include="layout/templateV1.html"></div>
 
     <title>부트스트랩 튜토리얼</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
@@ -18,7 +19,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <style type="text/css">
         body {
-            padding-top: 100px;
             padding-bottom: 40px;
             background-color: rgb(220,220,220);
         }
@@ -81,7 +81,7 @@
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-left:20%;margin-top:5%;">
     <!-- header -->
     <div class="login-header">
         <h2 class="form-signin-heading">커뮤니티 로그인</h2>
@@ -110,9 +110,6 @@
     </div>
 </div>
 
-<script src="/js/jquery-2.1.0.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/bootswatch.js"></script>
 </body>
 
 </html>
