@@ -17,7 +17,13 @@
 
 
 <body>
-<div>내 프로필</div>
+
+<br><br><br>
+
+<div style="margin-left:37%;">
+
+<div style="font-weight:bolder;">내 프로필</div>
+    <br>
 
 <div th:each="img : ${imgs}" style="display:inline-block;"> <!-- 파일 이름이 들어가있음. -->
     <!-- 컨트롤러로 요청 보냄. -->
@@ -26,12 +32,13 @@
 
 
 </div>
-
+    <br>
+    <br>
 <table class="table table-bordered">
     <tbody th:each="member : ${member}">
     <tr>
-        <th style="border-radius: 20px 0px 0px 0px;">키값(확인용)</th>
-        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;" th:text="${member.id}">id</td>
+
+        <td style="border-top: 1px solid rgb(224, 255, 255);border-radius: 0px 20px 0px 0px;display:none;" th:text="${member.id}">id</td>
     </tr>
 
     <tr>
@@ -81,50 +88,48 @@
     </tbody>
 </table>
 
+    <br><br><br>
 
+<div style="font-weight:bolder;font-size:40px;">내가 쓴 게시글</div>
 
-<div>내가 쓴 게시글</div>
-    <tbody th:each="article : ${article}">
-    <tr>
-        <th>키값(확인용)</th>
-        <td th:text="${article.articleId}">id</td>
-    </tr>
-
-    <tr>
-        <th>글쓴이</th>
-        <td th:text="${article.name}">글쓴이</td>
-    </tr>
-    <tr>
-        <th>주제</th>
-        <td th:text="${article.subject}">주제</td>
-    </tr>
-    <tr>
-        <th>게시일자</th>
-        <td class="text-left"
-            th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
-    </tr>
-    <tr>
-        <th>게시글</th>
-        <td th:text="${article.content}">글</td>
-    </tr>
-    <tr>
-        <th>추천수</th>
-        <td th:text="${article.hitcount}">글</td>
-    </tr>
-    <tr>
-        <th>조회수</th>
-        <td th:text="${article.clickcount}">글</td>
-    </tr>
     <br>
-    </tbody>
+
+    <table>
+
+        <thead>
+            <th class="text-center">글쓴이</th>
+            <th class="text-center">주제</th>
+            <th class="text-center">게시일자</th>
+            <th class="text-center">게시글</th>
+            <th class="text-center">추천수</th>
+            <th class="text-center">추천수</th>
+        </thead>
+
+
+        <tbody th:each="article : ${article}">
+    <tr>
+        <td class="text-center" th:text="${article.name}">글쓴이</td>
+
+        <td class="text-center" th:text="${article.subject}">주제</td>
+
+        <td class="text-center" th:text="${#temporals.format(article.day, 'yyyy-MM-dd HH:mm')}">day</td>
+
+        <td class="text-center" th:text="${article.content}">글</td>
+
+        <td class="text-center" th:text="${article.hitcount}">글</td>
+
+        <td class="text-center" th:text="${article.clickcount}">글</td>
+    </tr>
+        </tbody>
+    </table>
 
 
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
+    <br><br><br><br><br><br><br><br><br><br><br>
+
+
+</div>
 </body>
 
 
