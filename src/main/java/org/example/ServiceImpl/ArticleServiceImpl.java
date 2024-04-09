@@ -97,4 +97,9 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.deleteArticleMember(member);
     }
 
+    @Override
+    public Integer countAdminArticle(){
+        return articleRepository.countAdminArticle();
+    }
+
 }

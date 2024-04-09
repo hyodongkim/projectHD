@@ -116,7 +116,7 @@
 
         <tbody th:each="article : ${article}">
     <tr>
-        <td class="text-center" th:text="${article.name}">글쓴이</td>
+        <td class="text-center"><a th:href="@{Boards/{articleId}(articleId=${article.articleId})}">[[${article.name}]]</a></td>
 
         <td class="text-center" th:text="${article.subject}">주제</td>
 

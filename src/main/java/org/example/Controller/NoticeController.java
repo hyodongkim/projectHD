@@ -23,12 +23,11 @@ public class NoticeController {
     private ArticleService articleService;
 
     @GetMapping("/notice")
-    public String noticeList(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
-                             @CookieValue(value = "memberId", required = false) Long id,
+    public String noticeList(@CookieValue(value = "memberId", required = false) Long id,
                              @RequestParam(required = false, defaultValue = "") String search,
                              Model model) {
 
-        Integer count = articleService.countMembersId(id);
+        Integer count = articleService.countAdminArticle();
         List<Article> article = articleService.findByAdminArticle();
 
         model.addAttribute("article",article);

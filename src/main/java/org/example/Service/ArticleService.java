@@ -37,7 +37,7 @@ public interface ArticleService {
 
     public List<Article> findByAdminArticle();
 
+    public Integer countAdminArticle();
+
     public void deleteArticleMember(Long member);
-
-
 }

@@ -55,14 +55,17 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     public void plusHitCount(@Param("articleId") Long articleId);
 
 
-    @Query(value="SELECT * FROM Article a WHERE a.member=:id",nativeQuery=true)
+    @Query(value="SELECT * FROM Article a join member m on m.member_id=a.member WHERE a.member=:id and a.name=m.member_name",nativeQuery=true)
     public List<Article> findMembersId(@Param("id") Long member);
 
-    @Query(value="select a.member from article a where a.member = 0 union all select count(1) from article a where a.member =:id",nativeQuery = true)
+    @Query(value="SELECT Count(1) FROM Article a join member m on m.member_id=a.member WHERE a.member=:id and a.name=m.member_name",nativeQuery = true)
     public Integer countMembersId(@Param("id") Long member);
 
-    @Query(value="select * from article a inner join member m on m.member_id=a.member where m.member_job=1",nativeQuery=true)
+    @Query(value="select * from article a join member m on m.member_id=a.member where m.member_job=1 and a.name=m.member_name",nativeQuery=true)
     public List<Article> findByAdminArticle();
+
+    @Query(value="select Count(1) from article a join member m on m.member_id=a.member where m.member_job=1 and a.name=m.member_name",nativeQuery = true)
+    public Integer countAdminArticle();
 
     @Modifying
     @Transactional

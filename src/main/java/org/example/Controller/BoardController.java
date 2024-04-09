@@ -63,6 +63,7 @@ public class BoardController {
     @GetMapping
     public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
                                   @RequestParam(required = false, defaultValue = "") String search,
+                                  HttpServletRequest request, HttpServletResponse response,
                                   Model model) {
 
         Page<Article> page = articleService.findArticles(search, pageable);
@@ -84,6 +85,7 @@ public class BoardController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("hasPrevious", hasPrevious);
         model.addAttribute("hasNext", hasNext);
+
 
         return "thymeleaf/board/articleForm";
     }
@@ -117,6 +119,7 @@ public class BoardController {
                               @ModelAttribute Comment comment,HttpServletRequest request, HttpServletResponse response,
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               @CookieValue(value = "memberId", required = false) Long memberId,
+                              @SessionAttribute(value="userId", required = false) String userId,
                               Model model) {
 
 
@@ -156,8 +159,6 @@ public class BoardController {
         String[] files = dir1.list(); // 디렉토리에 저장된 파일들 이름을 배열에 담아줌.
         model.addAttribute("imgs", files);
 //            model.addAttribute("imgs", files);
-
-
 
 
 
