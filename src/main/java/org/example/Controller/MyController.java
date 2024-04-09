@@ -69,9 +69,16 @@ public class MyController {
     public String myPage(@SessionAttribute(name = "name", required = false) String name,
                          @CookieValue(value = "memberId", required = false) Long id,
                          Model model) {
+
+        Integer count = articleService.countMembersId(id);
         List<Article> article = articleService.findMembersId(id);
-//        Optional<Article> article = articleService.findByMember(id);
+
         model.addAttribute("article",article);
+        model.addAttribute("count",count);
+
+
+
+
 
         String path1 = path + id;
         File dir = new File(path1);

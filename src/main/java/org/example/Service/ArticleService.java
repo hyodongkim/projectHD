@@ -33,9 +33,11 @@ public interface ArticleService {
 
     public List<Article> findMembersId(Long member);
 
+    public Integer countMembersId(Long member);
+
     public List<Article> findByAdminArticle();
 
     public void deleteArticleMember(Long member);
 
-    public Optional<Article> findByMember(Long Member);
+
 }

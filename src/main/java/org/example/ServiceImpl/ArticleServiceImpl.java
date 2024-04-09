@@ -1,7 +1,5 @@
 package org.example.ServiceImpl;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,12 +78,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> findMembersId(Long member){
 
-        if(member == null){
-            System.out.println("Hello World!");
-            return Collections.emptyList();
-        }
-
         return articleRepository.findMembersId(member);
+    }
+
+    @Override
+    public Integer countMembersId(Long member){
+
+        return articleRepository.countMembersId(member);
     }
 
     @Override
@@ -98,15 +97,4 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.deleteArticleMember(member);
     }
 
-
-    @Override
-    public Optional<Article> findByMember(Long member) {
-
-        Optional<Article> article = articleRepository.findByMember(member);
-        if(article.isEmpty()){
-            return Optional.empty();
-        }
-
-        return articleRepository.findByMember(member);
-    }
 }

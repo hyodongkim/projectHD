@@ -16,6 +16,9 @@
 <div style="margin-left:18%;">
     <div style="font-weight:bolder;font-size:40px;">공지사항</div>
     <br>
+
+    <th:block th:if="${count != 0}">
+
 <table>
 
     <thead>
@@ -44,6 +47,32 @@
     </tr>
     </tbody>
 </table>
+
+    </th:block>
+
+
+    <th:block th:if="${count == 0}">
+
+        <table>
+
+            <thead>
+            <th class="text-center">글쓴이</th>
+            <th class="text-center">주제</th>
+            <th class="text-center">게시일자</th>
+            <th class="text-center">게시글</th>
+            <th class="text-center">추천수</th>
+            <th class="text-center">추천수</th>
+            </thead>
+
+
+            <tbody>
+            <tr>
+                <td colspan="6" class="text-center" style="border-radius: 0px 0px 20px 20px;">관리자가 올린 공지가 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </th:block>
 <br>
 </div>
 
