@@ -1,16 +1,11 @@
 package org.example.ServiceImpl;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.example.Entity.Article;
-import org.example.Entity.ArticleStore;
-import org.example.Entity.Member;
 import org.example.Repository.ArticleRepository;
 import org.example.Service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +79,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> findMembersId(Long member){
+
+        if(member == null){
+            System.out.println("Hello World!");
+            return Collections.emptyList();
+        }
+
         return articleRepository.findMembersId(member);
     }
 
@@ -98,4 +99,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
 
+    @Override
+    public Optional<Article> findByMember(Long member) {
+
+        Optional<Article> article = articleRepository.findByMember(member);
+        if(article.isEmpty()){
+            return Optional.empty();
+        }
+
+        return articleRepository.findByMember(member);
+    }
 }

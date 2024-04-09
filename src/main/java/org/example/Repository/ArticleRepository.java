@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 import org.example.Entity.Article;
-import org.example.Entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -67,4 +66,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
     @Query(value="DELETE FROM article a WHERE a.member=:member",nativeQuery=true)
     public void deleteArticleMember(@Param("member") Long member);
 
+    public Optional<Article> findByMember(Long member);
 }

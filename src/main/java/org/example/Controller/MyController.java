@@ -70,6 +70,7 @@ public class MyController {
                          @CookieValue(value = "memberId", required = false) Long id,
                          Model model) {
         List<Article> article = articleService.findMembersId(id);
+//        Optional<Article> article = articleService.findByMember(id);
         model.addAttribute("article",article);
 
         String path1 = path + id;
