@@ -355,7 +355,7 @@ public class MemberController {
         memberService.deleteMember(id);
         System.out.println("삭제");
 
-        return "redirect:/Members";
+        return "redirect:/deleteMemberPage";
     }
 
     @GetMapping

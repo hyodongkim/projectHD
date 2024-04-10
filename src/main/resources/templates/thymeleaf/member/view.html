@@ -108,9 +108,9 @@
     </form>
     <br>
         <div class="pull-right" th:each="member : ${member}">
-            <a th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
+            <a th:if="${session.loginMember.name == member.name}" th:href="@{/Members/updateMember/{id}(id=${member.id})}" class="btn btn-success"><button class="btn btn-warning">정보수정</button></a>
             <a th:href="@{/Members}"><button class="btn btn-warning">회원목록</button></a>
-            <a th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
+            <a th:if="${session.loginMember.name == member.name}" th:href="@{/Members/delete/{id}(id=${member.id})}"><button class="btn btn-warning">회원탈퇴</button></a>
         </div>
 
 </section>
