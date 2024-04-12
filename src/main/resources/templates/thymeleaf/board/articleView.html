@@ -141,13 +141,15 @@
     </form>
 
     <br>
-
+    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br>
 
 <tr th:if="${totalElements == 0}"><td colspan="6" class="text-center"> 댓글이 없습니다.</td></tr>
 <tr class="text-center" th:each="comment : ${list}">
+
     <td class="text-center" th:text="${comment.writer}">writer</td>
     <td class="text-center" th:text="${comment.content}">10</td>
     <td class="text-center" th:text="${#temporals.format(comment.day, 'yyyy-MM-dd HH:mm')}">2022-10-10</td><br>
+    -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br>
 </tr>
 
 <div class="pagination-align" style="width:85%;text-align:center;">
