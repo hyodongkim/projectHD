@@ -111,6 +111,26 @@
                             <div class="field-error" th:errors="*{clickcount}">오류5</div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-lg-11">
+                            <input type="hidden" class="form-control"
+                                   placeholder="필수 입력항목입니다."
+                                   th:value=no
+                                   th:name="viewSetCountArticle"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{viewSetCountArticle}">오류6</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-11">
+                            <input type="hidden" class="form-control"
+                                   placeholder="필수 입력항목입니다."
+                                   th:value=no
+                                   th:name="viewSetHitArticle"
+                                   th:errorclass="field-error">
+                            <div class="field-error" th:errors="*{viewSetHitArticle}">오류7</div>
+                        </div>
+                    </div>
 
                     <b>File : </b><input name="file" type="file">
 

@@ -45,4 +45,8 @@ public interface MemberService {
     public void createUser(Long id);
 
     public List<Member> findProfileId(Long Id);
+
+    public void changeCountYes();
+
+    public void changeHitYes();
 }

@@ -40,4 +40,8 @@ public interface ArticleService {
     public Integer countAdminArticle();
 
     public void deleteArticleMember(Long member);
+
+    public void changeHitYes();
+
+    public void changeCountYes();
 }

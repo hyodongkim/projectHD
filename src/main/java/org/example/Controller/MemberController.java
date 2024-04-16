@@ -108,6 +108,8 @@ public class MemberController {
         member1.setDay(member.getDay());
         member1.setIntroduction(member.getIntroduction());
         member1.setJob(member.getJob());
+        member1.setViewSetCount(member.getViewSetCount());
+        member1.setViewSetHit(member.getViewSetHit());
 
 
         store.setMember(member1);

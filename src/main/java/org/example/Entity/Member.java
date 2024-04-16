@@ -51,6 +51,10 @@ public class Member{
     private String introduction;
     @Column(name="member_job")
     private Position job;
+    @Column(name="member_viewSetCount")
+    private String viewSetCount;
+    @Column(name="member_viewSetHit")
+    private String viewSetHit;
 
     @OneToMany(mappedBy = "member")
     private List<Store> stores = new ArrayList<>();

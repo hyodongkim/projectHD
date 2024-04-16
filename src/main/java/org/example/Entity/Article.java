@@ -50,6 +50,10 @@ public class Article {
     @Column(name = "clickcount")
     private Integer clickcount;
 
+    @Column(name="viewSetCountArticle")
+    private String viewSetCountArticle;
+    @Column(name="viewSetHitArticle")
+    private String viewSetHitArticle;
 
     private Long member;
 

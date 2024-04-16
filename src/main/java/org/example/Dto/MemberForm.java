@@ -1,5 +1,6 @@
 package org.example.Dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -54,4 +55,9 @@ public class MemberForm {
 
     @Enumerated(value = EnumType.STRING)
     private Position job;
+
+    private String viewSetCount;
+    private String viewSetHit;
+
+    private String viewSet;
 }

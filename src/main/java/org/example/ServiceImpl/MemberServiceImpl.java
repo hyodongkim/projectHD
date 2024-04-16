@@ -83,4 +83,12 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findId(id);
     }
 
+    @Override
+    public void changeCountYes(){
+        memberRepository.changeCountYes();
+    }
+    @Override
+    public void changeHitYes(){
+        memberRepository.changeHitYes();
+    }
 }

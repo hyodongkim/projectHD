@@ -161,6 +161,32 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="col-lg-11">
+                            <label>
+                                <input type="hidden" class="form-control"
+                                       placeholder="신분 항목입니다."
+                                       th:name="viewSetCount"
+                                       th:value="no"
+                                       th:errorclass="field-error">
+                            </label>
+                            <div class="field-error" th:errors="*{viewSetCount}">여부 오류</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-11">
+                            <label>
+                                <input type="hidden" class="form-control"
+                                       placeholder="신분 항목입니다."
+                                       th:name="viewSetHit"
+                                       th:value="no"
+                                       th:errorclass="field-error">
+                            </label>
+                            <div class="field-error" th:errors="*{viewSetHit}">여부 오류</div>
+                        </div>
+                    </div>
+
                     <br>
 
                         <input name="file" type="file">

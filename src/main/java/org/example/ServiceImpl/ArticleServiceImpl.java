@@ -102,4 +102,14 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepository.countAdminArticle();
     }
 
+    @Override
+    public void changeCountYes(){
+        articleRepository.changeCountYes();
+    }
+
+    @Override
+    public void changeHitYes(){
+        articleRepository.changeHitYes();
+    }
+
 }

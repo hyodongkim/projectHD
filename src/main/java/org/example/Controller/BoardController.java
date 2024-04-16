@@ -120,8 +120,21 @@ public class BoardController {
                               @PageableDefault(page = 0, size = 10, sort = "commentId", direction = Sort.Direction.ASC) Pageable pageable,
                               @CookieValue(value = "memberId", required = false) Long memberId,
                               @SessionAttribute(value="userId", required = false) String userId,
+                              @RequestParam(name="viewSetHitArticle", defaultValue = "no") String viewSetHitArticle,
+                              @RequestParam(name="viewSetCountArticle", defaultValue = "no") String viewSetCountArticle,
                               Model model) {
 
+//        if(viewSet.equals("yes") && viewSetArticle.equals("yes")){
+//            Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
+//            response.addCookie(newCookie);
+//            articleService.plusClickCount(articleId);
+
+//            Cookie newCookie1 = createCookieForForNotOverlap1(articleId,memberId);
+//            response.addCookie(newCookie1);
+//            articleService.plusHitCount(articleId);
+//
+//            return "redirect:/Boards/{articleId}";
+//        }
 
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;
@@ -138,11 +151,13 @@ public class BoardController {
                 Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusClickCount(articleId);
+                articleService.changeCountYes();
             }
         } else {
             Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusClickCount(articleId);
+            articleService.changeCountYes();
         }
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -191,6 +206,8 @@ public class BoardController {
     public String plusHitCount(@PathVariable Long articleId,
                                @CookieValue(value = "id", required = false) Cookie cookie,
                                @CookieValue(value = "memberId", required = false) Long memberId,
+                               @RequestParam(name="viewSetHitArticle", defaultValue = "no") String viewSetHitArticle,
+                               @RequestParam(name="viewSetCountArticle", defaultValue = "no") String viewSetCountArticle,
                                HttpServletRequest request, HttpServletResponse response){
 
         Cookie[] cookies = request.getCookies();
@@ -208,11 +225,13 @@ public class BoardController {
                 Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusHitCount(articleId);
+                articleService.changeHitYes();
             }
         } else {
             Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusHitCount(articleId);
+            articleService.changeHitYes();
         }
 
         return "redirect:/Boards/{articleId}";
@@ -340,6 +359,8 @@ public class BoardController {
         article1.setDay(article.getDay());
         article1.setHitcount(article.getHitcount());
         article1.setClickcount(article.getClickcount());
+        article1.setViewSetCountArticle(article.getViewSetCountArticle());
+        article1.setViewSetHitArticle(article.getViewSetHitArticle());
         article1.setMember(article.getMember());
 
 //        article1.setMember(member.getId());
