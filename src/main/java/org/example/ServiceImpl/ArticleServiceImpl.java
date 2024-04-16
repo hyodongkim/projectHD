@@ -103,13 +103,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void changeCountYes(){
-        articleRepository.changeCountYes();
+    public void changeCountYes(Long member){
+        articleRepository.changeCountYes(member);
     }
 
     @Override
-    public void changeHitYes(){
-        articleRepository.changeHitYes();
+    public void changeHitYes(Long member){
+
+        articleRepository.changeHitYes(member);
     }
 
 }

@@ -151,13 +151,11 @@ public class BoardController {
                 Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusClickCount(articleId);
-                articleService.changeCountYes();
             }
         } else {
             Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusClickCount(articleId);
-            articleService.changeCountYes();
         }
 
         Optional<Article> article1 = articleService.findArticle(articleId);
@@ -225,13 +223,12 @@ public class BoardController {
                 Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusHitCount(articleId);
-                articleService.changeHitYes();
+
             }
         } else {
             Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
             response.addCookie(newCookie);
             articleService.plusHitCount(articleId);
-            articleService.changeHitYes();
         }
 
         return "redirect:/Boards/{articleId}";

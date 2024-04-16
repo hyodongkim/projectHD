@@ -42,7 +42,6 @@ public class ArticleDto {
     private String viewSetCountArticle;
     private String viewSetHitArticle;
 
-    private String viewSetArticle;
     @NotNull(message = "입력이 되지 않았습니다.")
     private Long member;
 

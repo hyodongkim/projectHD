@@ -41,7 +41,7 @@ public interface ArticleService {
 
     public void deleteArticleMember(Long member);
 
-    public void changeHitYes();
+    public void changeHitYes(Long member);
 
-    public void changeCountYes();
+    public void changeCountYes(Long member);
 }

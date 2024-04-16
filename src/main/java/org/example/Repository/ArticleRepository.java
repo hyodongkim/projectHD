@@ -74,16 +74,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE article a set a.viewSetArticle='yes'",nativeQuery=true)
-    void changeYes();
+    @Query(value="UPDATE article a set a.viewSetCountArticle='yes' where a.member=:member",nativeQuery=true)
+    void changeCountYes(@Param("member") Long member);
 
     @Modifying
     @Transactional
-    @Query(value="UPDATE article a set a.viewSetCountArticle='yes'",nativeQuery=true)
-    void changeCountYes();
-
-    @Modifying
-    @Transactional
-    @Query(value="UPDATE article a set a.viewSetHitArticle='yes'",nativeQuery=true)
-    void changeHitYes();
+    @Query(value="UPDATE article a set a.viewSetHitArticle='yes' where a.member=:member",nativeQuery=true)
+    void changeHitYes(@Param("member") Long member);
 }
