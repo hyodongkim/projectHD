@@ -103,14 +103,36 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void changeCountYes(Long member){
-        articleRepository.changeCountYes(member);
+    public void changeCountYes(Long articlId){
+        articleRepository.changeCountYes(articlId);
     }
 
     @Override
-    public void changeHitYes(Long member){
+    public void changeHitYes(Long articlId){
 
-        articleRepository.changeHitYes(member);
+        articleRepository.changeHitYes(articlId);
+    }
+
+    @Override
+    public Long isCountYes(Long articleId){
+
+        if (!articleRepository.isCountYes(articleId).equals("no")) {
+            return 0L;
+        }
+        else{
+            return 1L;
+        }
+    }
+    @Override
+    public Long isHitYes(Long articleId) {
+
+        if (!articleRepository.isHitYes(articleId).equals("no")) {
+            return 0L;
+        }
+        else{
+            return 1L;
+        }
+
     }
 
 }

@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.example.Dto.*;
 import org.example.Entity.*;
-import org.example.Service.ArticleService;
-import org.example.Service.ArticleStoreService;
-import org.example.Service.CommentService;
-import org.example.Service.MemberService;
+import org.example.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -60,6 +57,9 @@ public class BoardController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private SeeCatalogService seeCatalogService;
+
     @GetMapping
     public String registerArticle(@PageableDefault(page = 0, size = 10, sort = "articleId", direction = Sort.Direction.ASC) Pageable pageable,
                                   @RequestParam(required = false, defaultValue = "") String search,
@@ -97,6 +97,7 @@ public class BoardController {
         cookie.setHttpOnly(true);				// 서버에서만 조작 가능
         return cookie;
     }
+
     private Cookie createCookieForForNotOverlap1(Long articleId, Long memberId) {
         UUID uuid = UUID.randomUUID();
         Cookie cookie = new Cookie(HITCOOKIENAME+articleId+"_"+memberId,uuid+String.valueOf(articleId));
@@ -122,41 +123,56 @@ public class BoardController {
                               @SessionAttribute(value="userId", required = false) String userId,
                               @RequestParam(name="viewSetHitArticle", defaultValue = "no") String viewSetHitArticle,
                               @RequestParam(name="viewSetCountArticle", defaultValue = "no") String viewSetCountArticle,
+                              @SessionAttribute(value="viewSetCount", required = false) Long viewSetCount,
+                              @SessionAttribute(value="viewSetHit", required = false) Long viewSetHit,
                               Model model) {
 
-//        if(viewSet.equals("yes") && viewSetArticle.equals("yes")){
-//            Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
-//            response.addCookie(newCookie);
-//            articleService.plusClickCount(articleId);
 
-//            Cookie newCookie1 = createCookieForForNotOverlap1(articleId,memberId);
-//            response.addCookie(newCookie1);
-//            articleService.plusHitCount(articleId);
-//
-//            return "redirect:/Boards/{articleId}";
-//        }
+        HttpSession session1 = request.getSession();
+        session1.getAttribute(userId);
+
+        HttpSession session3 = request.getSession();
+        session3.getAttribute(String.valueOf(viewSetCount));
+
+        HttpSession session4 = request.getSession();
+        session4.getAttribute(String.valueOf(viewSetHit));
 
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;
         int result = 0;
 
-        if(cookies != null){
-            for (Cookie cookiess : cookies)
-            {
+        if(cookies != null) {
+            for (Cookie cookiess : cookies) {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(VIEWCOOKIENAME+articleId+"_"+memberId)) checkCookie = true;
+                if (cookiess.getName().equals(VIEWCOOKIENAME + articleId + "_" + memberId)) checkCookie = true;
 
             }
-            if(!checkCookie){
+            if(seeCatalogService.findBySeeInfoClickCount(articleId,memberId)==0){
                 Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
                 response.addCookie(newCookie);
                 articleService.plusClickCount(articleId);
+
+                seeCatalogService.info(articleId,memberId);
+                seeCatalogService.info_click(articleId,memberId);
+
             }
-        } else {
-            Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
-            response.addCookie(newCookie);
-            articleService.plusClickCount(articleId);
+//        } else if(seeCatalogService.findBySeeInfoClickCount(articleId,memberId)==1){
+//            Cookie newCookie = createCookieForForNotOverlap(articleId,memberId);
+//            response.addCookie(newCookie);
+//            articleService.plusClickCount(articleId);
+//
+//            seeCatalogService.info(articleId,memberId);
+//            seeCatalogService.info_click(articleId,memberId);
+//
         }
+//            if(articleService.isCountYes(articleId) == 1){
+//                Cookie newCookie = createCookieForForNotOverlap(articleId, memberId);
+//                response.addCookie(newCookie);
+//                articleService.plusClickCount(articleId);
+//                articleService.changeCountYes(articleId);
+//                System.out.println("테스트 확인1");
+//            }
+//        }
 
         Optional<Article> article1 = articleService.findArticle(articleId);
         model.addAttribute("article", article1.get());
@@ -212,25 +228,41 @@ public class BoardController {
         boolean checkCookie = false;
         int result = 0;
 
-        if(cookies != null){
-            for (Cookie cookiess : cookies)
-            {
+        if(cookies != null) {
+            for (Cookie cookiess : cookies) {
                 // 이미 조회를 한 경우 체크
-                if (cookiess.getName().equals(HITCOOKIENAME+articleId+"_"+memberId)) checkCookie = true;
+                if (cookiess.getName().equals(HITCOOKIENAME + articleId + "_" + memberId)) checkCookie = true;
 
             }
-            if(!checkCookie){
-                Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
+            if (seeCatalogService.findBySeeInfoHitCount(articleId, memberId) == 0) {
+                Cookie newCookie = createCookieForForNotOverlap1(articleId, memberId);
                 response.addCookie(newCookie);
                 articleService.plusHitCount(articleId);
 
+                seeCatalogService.info(articleId, memberId);
+                seeCatalogService.info_hit(articleId, memberId);
+                System.out.println("경우1");
             }
-        } else {
-            Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
-            response.addCookie(newCookie);
-            articleService.plusHitCount(articleId);
+//        }else if(seeCatalogService.findBySeeInfoClickCount(articleId,memberId)==1){
+//            Cookie newCookie = createCookieForForNotOverlap1(articleId,memberId);
+//            response.addCookie(newCookie);
+//            articleService.plusHitCount(articleId);
+//
+//            seeCatalogService.info(articleId,memberId);
+//            seeCatalogService.info_hit(articleId,memberId);
+//            System.out.println("경우2");
+//        }
         }
 
+//            if(articleService.isHitYes(articleId)==1){
+//                Cookie newCookie = createCookieForForNotOverlap1(articleId, memberId);
+//                response.addCookie(newCookie);
+//                articleService.plusHitCount(articleId);
+//                articleService.changeHitYes(articleId);
+//
+//                System.out.println("테스트 확인2");
+//            }
+//        }
         return "redirect:/Boards/{articleId}";
     }
     @GetMapping("/writeComment/{articleId}")

@@ -206,8 +206,13 @@ public class MemberController {
         if(!member.getUserid().startsWith("admin")){
             memberService.createUser(loginMember.getId());
         }
-        else{
+        else if(member.getUserid().startsWith("admin")
+                && member.getViewSetCount().startsWith("6568")
+                && member.getViewSetHit().startsWith("6865")){
             memberService.createAdmin(loginMember.getId());
+        }
+        else{
+            memberService.createUser(loginMember.getId());
         }
         System.out.println(loginMember.getId());
 
@@ -269,7 +274,17 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable Long id,@ModelAttribute StoreDto Dto,@ModelAttribute Store store, Model model) {
+    public String view(@PathVariable Long id,@ModelAttribute StoreDto Dto,@ModelAttribute Store store,
+                       @SessionAttribute(name = "viewSetCount", required = false) String viewSetCount,
+                       @SessionAttribute(name = "viewSetHit", required = false) String viewSetHit,
+                       HttpServletRequest request,
+                       Model model) {
+
+        HttpSession session3 = request.getSession();
+        session3.getAttribute(viewSetCount);
+
+        HttpSession session4 = request.getSession();
+        session4.getAttribute(viewSetHit);
 
 
         Optional<Member> member1 = memberService.findMember(id);
@@ -365,9 +380,15 @@ public class MemberController {
     public String listBySearchAndPaging(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                         @ModelAttribute Member member,@RequestParam(required = false, defaultValue = "") String search,
                                         @SessionAttribute(name = "userId", required = false) String userId,
+                                        @SessionAttribute(name = "viewSetCount", required = false) String viewSetCount,
+                                        @SessionAttribute(name = "viewSetHit", required = false) String viewSetHit,
+                                        @SessionAttribute(name = "job", required = false) String job,
                                         @ModelAttribute LoginForm loginForm,Model model) {
 
-        if(!userId.startsWith("admin")){
+        Member loginMember = memberService.isMember(loginForm.getUserid(), loginForm.getPassword());
+
+        if(job.equals("사용자"))
+        {
             return "thymeleaf/errors/adminPage";
         }
 
@@ -437,8 +458,13 @@ public class MemberController {
         session2.setAttribute("Id",loginMember.getId());
 
         HttpSession session3 = request.getSession();
-        session3.setAttribute("loginMember", loginMember);
+        session3.setAttribute("viewSetCount", loginMember.getViewSetCount());
 
+        HttpSession session4 = request.getSession();
+        session4.setAttribute("viewSetHit", loginMember.getViewSetHit());
+
+        HttpSession session5 = request.getSession();
+        session5.setAttribute("job", loginMember.getJob());
 
         // 로그인 저장 체크시
         if (loginForm.getRemember()) {

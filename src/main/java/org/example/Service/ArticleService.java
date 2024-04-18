@@ -41,7 +41,10 @@ public interface ArticleService {
 
     public void deleteArticleMember(Long member);
 
-    public void changeHitYes(Long member);
+    public void changeHitYes(Long articleId);
 
-    public void changeCountYes(Long member);
+    public void changeCountYes(Long articleId);
+
+    public Long isCountYes(Long articleId);
+    public Long isHitYes(Long articleId);
 }

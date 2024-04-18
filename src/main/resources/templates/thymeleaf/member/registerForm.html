@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="CSS/registerForm.css">
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <script th:src="@{/JS/registerForm.js}" defer></script>
 <link th:href="@{/CSS/registerForm.css}" rel="stylesheet">
 <link th:href="@{/CSS/table.css}" rel="stylesheet">
@@ -160,27 +160,29 @@
                             <div class="field-error" th:errors="*{job}">신분 오류</div>
                         </div>
                     </div>
-
+                <br>
                     <div class="form-group">
                         <div class="col-lg-11">
                             <label>
                                 <input type="hidden" class="form-control"
+                                       id="viewSetCount"
+                                       th:id="viewSetCount"
                                        placeholder="신분 항목입니다."
                                        th:name="viewSetCount"
-                                       th:value="no"
                                        th:errorclass="field-error">
                             </label>
                             <div class="field-error" th:errors="*{viewSetCount}">여부 오류</div>
                         </div>
                     </div>
-
+                <br>
                     <div class="form-group">
                         <div class="col-lg-11">
                             <label>
                                 <input type="hidden" class="form-control"
                                        placeholder="신분 항목입니다."
+                                       id="viewSetHit"
+                                       th:id="viewSetHit"
                                        th:name="viewSetHit"
-                                       th:value="no"
                                        th:errorclass="field-error">
                             </label>
                             <div class="field-error" th:errors="*{viewSetHit}">여부 오류</div>
@@ -222,6 +224,10 @@
 
         </div>
 </section>
+<script>
+
+
+</script>
 
 
 </html>
