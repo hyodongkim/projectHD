@@ -125,6 +125,8 @@ public class BoardController {
                               @RequestParam(name="viewSetCountArticle", defaultValue = "no") String viewSetCountArticle,
                               @SessionAttribute(value="viewSetCount", required = false) Long viewSetCount,
                               @SessionAttribute(value="viewSetHit", required = false) Long viewSetHit,
+                              @SessionAttribute(value="name", required = false) String name,
+                              @SessionAttribute(value="job", required = false) String job,
                               Model model) {
 
 
@@ -136,6 +138,12 @@ public class BoardController {
 
         HttpSession session4 = request.getSession();
         session4.getAttribute(String.valueOf(viewSetHit));
+
+        HttpSession session6 = request.getSession();
+        session6.getAttribute(name);
+
+        HttpSession session7 = request.getSession();
+        session7.getAttribute(job);
 
         Cookie[] cookies = request.getCookies();
         boolean checkCookie = false;

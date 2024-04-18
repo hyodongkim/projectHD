@@ -466,6 +466,9 @@ public class MemberController {
         HttpSession session5 = request.getSession();
         session5.setAttribute("job", loginMember.getJob());
 
+        HttpSession session6 = request.getSession();
+        session6.setAttribute("name", loginMember.getName());
+
         // 로그인 저장 체크시
         if (loginForm.getRemember()) {
             Cookie cookie = new Cookie("rememberId", loginMember.getUserid());
