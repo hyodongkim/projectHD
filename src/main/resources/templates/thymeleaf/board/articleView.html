@@ -102,7 +102,8 @@
     <div class="pull-right" th:each="article : ${article}" style="margin-left:53%;">
         <a th:if="${session.loginMember.name == article.name}" th:href="@{/Boards/updateArticle/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">게시글수정</button></a>
         <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
-        <a th:if="${session.loginMember.name == article.name} OR ${#strings.substring(session.viewSetCount, 0, 4)=='6568'} OR ${#strings.substring(session.viewSetHit, 0, 4)=='6865'}"
+        <a th:if="${session.loginMember.name == article.name} OR ${#strings.substring(session.viewSetCount, 0, 4)=='6568'} OR ${#strings.substring(session.viewSetHit, 0, 4)=='6865'} OR
+                  (${session.loginMember.name == article.name} AND ${#strings.substring(session.viewSetCount, 0, 4)!='6568'} AND ${#strings.substring(session.viewSetHit, 0, 4)=='6865'})"
            th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
 
         <a th:if="${session.loginMember.name != article.name &&

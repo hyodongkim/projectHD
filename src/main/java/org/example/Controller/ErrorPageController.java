@@ -24,6 +24,10 @@ public class ErrorPageController implements ErrorController {
             if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()){
                 return VIEW_PATH + "500";
             }
+            if(statusCode == HttpStatus.BAD_REQUEST.value()){
+                return VIEW_PATH + "400";
+            }
+
         }
         return "error";
     }
