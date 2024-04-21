@@ -55,6 +55,7 @@
             <a th:href="@{/Boards}">게시판</a>
             <a th:href="@{/myPage}">마이페이지</a>
             <a th:href="@{/notice}">공지사항</a>
+            <div onclick="new_window();">효카오톡</div>
 <!--            <a th:href="@{/Members/${session.loginMember.name}}">회원정보</a>-->
 <!--            <a th:href="@{/Members/delete/${session.loginMember.name}">탈퇴</a>-->
 <!--            <a th:href="@{/Members/signup}">로그인</a>-->
@@ -81,4 +82,11 @@
 
 
 </body>
+<script>
+    function new_window() {
+        window.open(
+          "http://localhost:5000"
+        );
+      }
+</script>
 </html>
