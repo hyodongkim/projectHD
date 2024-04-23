@@ -82,6 +82,10 @@ div.logo{
   animation: blink-effect 2s step-end infinite;
 }
 
+.field-error {
+  color: #ff0000;
+}
+
 
 
 
