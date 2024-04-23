@@ -105,8 +105,8 @@
         <a th:if="${session.loginMember.name == article.name || #strings.substring(session.viewSetCount, 0, 4)=='6568' && #strings.substring(session.viewSetHit, 0, 4)=='6865'}"
            th:href="@{/Boards/delete/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">게시글삭제</button></a>
 
-        <a th:if="${#strings.substring(session.viewSetCount, 0, 4)!='6568' &&
-                    #strings.substring(session.viewSetHit, 0, 4)!='6865' && session.loginMember.name != article.name}" th:href="@{/Boards/plusHitCount/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">추천하기</button></a>
+        <a th:if="${(#strings.substring(session.viewSetCount, 0, 4)!='6568' &&
+                    #strings.substring(session.viewSetHit, 0, 4)!='6865') || session.loginMember.name != article.name}" th:href="@{/Boards/plusHitCount/{articleId}(articleId=${article.articleId})}"><button class="btn btn-warning">추천하기</button></a>
     </div>
     <br>
 
