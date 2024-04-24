@@ -1,149 +1,177 @@
+    *{
+      margin: 0%;
+      padding: 0%;
+    }
+    :root{
+    }
+    .fixBox{
+      position: fixed;
+      min-height: 4vh;
+      border-bottom: 3px solid rgb(176,224,230);
+      background-color: white;
+      z-index: 6;
+      width: 100%;
+      padding-left: 3%;
+      padding-top: 1%;
+      border-radius:0px 20px 20px 20px;
+      overflow:hidden;
+    }
+    .buttonToggle{
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-color: white;
+        border: 10px dashed rgb(0,0,205);
+        z-index:2;
 
-*{
-  margin: 0%;
-  padding: 0%;
-}
-:root{
-}
-.fixBox{
-  position: fixed;
-  min-height: 4vh;
-  border-bottom: 3px solid rgb(176,224,230);
-  background-color: white;
-  z-index: 6;
-  width: 100%;
-  padding-left: 3%;
-  padding-top: 1%;
-  border-radius:0px 20px 20px 20px;
-  overflow:hidden;
-}
-.buttonToggle{
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: white;
-    border: 10px dashed rgb(0,0,205);
-    z-index:2;
-
-}
-nav{
-  display: flex;
-  justify-content:space-between;
-  margin-top: 1.5%;
-  margin-bottom: 1%;
-  margin-left: 5%;
-  font-size: 20px;
-}
-a{
-  text-decoration-line: none;
-}
+    }
+    nav{
+      display: flex;
+      justify-content:space-between;
+      margin-top: 1.5%;
+      margin-bottom: 1%;
+      margin-left: 5%;
+      font-size: 20px;
+    }
+    a{
+      text-decoration-line: none;
+    }
 
 
-header > div:nth-of-type(1){
-    float:right;
-    margin-right: 5%;
-    font-size: 10px;
-}
-header > div:nth-of-type(2){
-    float:right;
-    margin-right: 5%;
-    font-size: 10px;
-}
-.main_background{
-    width:80%;
-    padding-top: 3%;
-}
-header >.logo{
-  font-size: 2rem;
-  font-family: "Oswald", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: bolder;
-}
-div.logo{
-  font-family: "Oswald", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: bolder;
-}
+    header > div:nth-of-type(1){
+        float:right;
+        margin-right: 5%;
+        font-size: 10px;
+    }
+    header > div:nth-of-type(2){
+        float:right;
+        margin-right: 5%;
+        font-size: 10px;
+    }
+    .main_background{
+        width:80%;
+        padding-top: 3%;
+    }
+    header >.logo{
+      font-size: 2rem;
+      font-family: "Oswald", sans-serif;
+      font-optical-sizing: auto;
+      font-style: normal;
+      font-weight: bolder;
+    }
+    div.logo{
+      font-family: "Oswald", sans-serif;
+      font-optical-sizing: auto;
+      font-style: normal;
+      font-weight: bolder;
+    }
 
-@keyframes blink-effect {
-  0% {
-    border: 2px dashed rgb(70,130,180);
-  }
-  50%{
-    border: 1px solid rgb(224, 255, 255);
-  }
-}
-#blink {
-  animation: blink-effect 2s step-end infinite;
-}
+    @keyframes blink-effect {
+      0% {
+        border: 2px dashed rgb(70,130,180);
+      }
+      50%{
+        border: 1px solid rgb(224, 255, 255);
+      }
+    }
+    #blink {
+      animation: blink-effect 2s step-end infinite;
+    }
 
-.field-error {
-  color: #ff0000;
-}
-
+    .field-error {
+      color: #ff0000;
+    }
 
 
 
-//////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////
 
 
 
-.box {
-  text-align:center;
-  width: 990px;
-  height: 100px;
-  border-radius: 5px;
-  box-shadow: 0 2px 30px rgba(black, .2);
-  background: lighten(#f0f4c3, 10%);
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
+    .box {
+      text-align:center;
+      width: 990px;
+      height: 100px;
+      border-radius: 5px;
+      box-shadow: 0 2px 30px rgba(black, .2);
+      background: lighten(#f0f4c3, 10%);
+      position: relative;
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .wave {
+      opacity: .4;
+      position: absolute;
+      top: 100%;
+      left: 12%;
+      background: #0af;
+      width: 1600px;
+      height: 1600px;
+      margin-left: -250px;
+      margin-top: -1450px;
+      transform-origin: 50% 48%;
+      border-radius: 43%;
+      animation: drift 3000ms infinite linear;
+      z-index:-1;
+    }
+
+    .wave.-three {
+      animation: drift 5000ms infinite linear;
+    }
+
+    .wave.-two {
+      animation: drift 7000ms infinite linear;
+      opacity: .1;
+      background: yellow;
+    }
+
+    .box:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(#e8a, 1), rgba(#def, 0) 80%, rgba(white, .5));
+      z-index: 11;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @keyframes drift {
+      from { transform: rotate(0deg); }
+      from { transform: rotate(360deg); }
+    }
+
+
+
+
+
+@media (max-width: 1023px){
+
 }
 
-.wave {
-  opacity: .4;
-  position: absolute;
-  top: 100%;
-  left: 12%;
-  background: #0af;
-  width: 1600px;
-  height: 1600px;
-  margin-left: -250px;
-  margin-top: -1450px;
-  transform-origin: 50% 48%;
-  border-radius: 43%;
-  animation: drift 3000ms infinite linear;
-  z-index:-1;
+@media (max-width: 767px){
+
 }
 
-.wave.-three {
-  animation: drift 5000ms infinite linear;
-}
-
-.wave.-two {
-  animation: drift 7000ms infinite linear;
-  opacity: .1;
-  background: yellow;
-}
-
-.box:after {
-  content: '';
-  display: block;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(#e8a, 1), rgba(#def, 0) 80%, rgba(white, .5));
-  z-index: 11;
-  transform: translate3d(0, 0, 0);
-}
-
-@keyframes drift {
-  from { transform: rotate(0deg); }
-  from { transform: rotate(360deg); }
+@media (max-width: 639px){
+    a{
+        font-size:12px;
+        margin-bottom:20px;
+    }
+    .fixBox{
+        height:70px;
+    }
+    nav div{
+        font-size:12px;
+        margin-bottom:20px;
+    }
+    header div div a{
+        font-size:7px;
+    }
 }

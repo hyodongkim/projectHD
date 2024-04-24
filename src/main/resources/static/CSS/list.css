@@ -57,3 +57,107 @@ button[type=submit] {
 	background-color:rgb(176,224,230);
 	border-radius: 5px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1023px){
+    input{
+        width:200px;
+        height:16px;
+    }
+    table{
+        width:60vw;
+            tr{
+                font-size:12px;
+            }
+            td{
+                font-size:12px;
+            }
+    }
+    section{
+        left:30%;
+    }
+    button[type=submit] {
+    	width: 32px;
+    	height: 16px;
+    	font-size: 5px;
+    	background-color:rgb(176,224,230);
+    	border-radius: 5px;
+    	font-weight:bolder;
+    }
+}
+
+@media (max-width: 767px){
+    table{
+        width:60vw;
+            tr{
+                 font-size:8px;
+            }
+            td{
+                 font-size:8px;
+            }
+    }
+    section{
+        left:25%;
+    }
+
+}
+
+@media (max-width: 639px){
+    table{
+        width:50vw;
+            tr{
+                 font-size:7px;
+            }
+            td{
+                 font-size:7px;
+            }
+        }
+    section{
+        left:17%;
+
+    }
+    #container{
+        font-size:20px;
+    }
+    #next{
+        display:inline-block;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid rgb(176,224,230);/* 화살표 */
+    }
+    a#next{
+        margin-bottom:0px;
+    }
+    #paging{
+        text-align:center;
+    }
+
+
+}
+@media (max-width: 400px){
+    section{
+        left:10%;
+    }
+    #paging{
+        text-align:center;
+    }
+}

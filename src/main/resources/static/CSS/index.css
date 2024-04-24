@@ -33,6 +33,46 @@ img{
 .big-font{
     font-size: xx-large;
     font-family: "Nanum Pen Script", cursive;
-      font-weight: 400;
-      font-style: normal;
+    font-weight: 400;
+    font-style: normal;
+    font-size:30px;
+    width:410px;
+}
+.box-reach{
+    padding-right:20vw;
+    padding-left:10vw;
+}
+
+
+
+
+
+
+@media (max-width: 1023px){
+    .big-font{
+        font-size:20px;
+        width:300px;
+    }
+    .box{
+        padding-right:5w;
+    }
+    .fill-img{
+        padding-left:30px;
+        padding-right:30px;
+    }
+    img{
+        display:none;
+    }
+    .box-reach{
+        padding-right:20vw;
+        padding-left:20vw;
+    }
+}
+
+@media (max-width: 767px){
+
+}
+
+@media (max-width: 639px){
+
 }
