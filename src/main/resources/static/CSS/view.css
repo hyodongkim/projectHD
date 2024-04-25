@@ -41,4 +41,53 @@ button{
 
 
 
+@media (max-width: 1023px){
+    button{
+        width: 64px;
+        height: 32px;
+        font-size: 10px;
+    }
+    button[type=submit] {
+    	width: 64px;
+    	height: 32px;
+    	font-size: 10px;
+    	background-color:rgb(176,224,230);
+    	border-radius: 5px;
+    	font-weight:bolder;
+    }
+    input{
+        width:200px;
+        height:32px;
+    }
+    table{
+        width:60vw;
 
+    }
+    section{
+        left:30%;
+    }
+}
+@media (max-width: 767px){
+    table{
+        width:60vw;
+
+    }
+    section{
+        left:25%;
+    }
+}
+@media (max-width: 639px){
+    table{
+        width:50vw;
+
+
+    }
+    section{
+        left:17%;
+    }
+}
+@media (max-width: 400px){
+    section{
+        left:10%;
+    }
+}

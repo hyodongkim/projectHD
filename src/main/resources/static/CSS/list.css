@@ -137,19 +137,30 @@ button[type=submit] {
         font-size:20px;
     }
     #next{
-        display:inline-block;
-        width: 0;
-        height: 0;
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        border-left: 5px solid rgb(176,224,230);/* 화살표 */
-    }
-    a#next{
-        margin-bottom:0px;
-    }
-    #paging{
-        text-align:center;
-    }
+            display:inline-block;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid rgb(176,224,230);/* 화살표 */
+        }
+        #previous{
+            display:inline-block;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 5px solid rgb(176,224,230);/* 화살표 */
+        }
+        a#next{
+            margin-bottom:0px;
+        }
+        #paging{
+            text-align:center;
+        }
+        a#previous {
+            margin-bottom: 0px;
+        }
 
 
 }

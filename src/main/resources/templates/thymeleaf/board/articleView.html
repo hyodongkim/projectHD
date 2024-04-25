@@ -99,7 +99,7 @@
         </div>
     </form>
     <br>
-    <div class="pull-right" th:each="article : ${article}" style="margin-left:53%;">
+    <div class="pull-right" th:each="article : ${article}">
         <a th:if="${session.loginMember.name == article.name}" th:href="@{/Boards/updateArticle/{articleId}(articleId=${article.articleId})}" class="btn btn-success"><button class="btn btn-warning">게시글수정</button></a>
         <a th:href="@{/Boards}"><button class="btn btn-warning">게시글목록</button></a>
         <a th:if="${session.loginMember.name == article.name || #strings.substring(session.viewSetCount, 0, 4)=='6568' && #strings.substring(session.viewSetHit, 0, 4)=='6865'}"
@@ -154,7 +154,7 @@
 
 </tr>
 
-<div class="pagination-align" style="width:85%;text-align:center;">
+<div class="pagination-align" style="text-align:center;">
 
 
     <div style="display:inline-block;margin-bottom:5px;" th:if="${hasPrevious}"><a id="previous" th:href="@{/Boards(page=${requestPage-2}, search=${param.search})}"></a></div>
@@ -168,6 +168,9 @@
     <div style="display:inline-block;margin-bottom:5px;" th:if="${hasNext}"><a id="next" th:href="@{/Boards(page=${requestPage}, search=${param.search})}"></a></div>
 </div>
 
+    <br><br>
+    <br>
+    <br>
 </section>
 <br>
 </html>
